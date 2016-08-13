@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop
+         				http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+         				http://www.springframework.org/schema/tx 
+         				http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 打开Spring的Annotation支持 -->
+	<context:annotation-config />
+	<!-- 设定Spring 去哪些包中找Annotation -->
+	<context:component-scan base-package="org.lyplay.sflow" />
+	
+	
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+		
+		<property name="driverClass" value="${jdbc.driver}"></property>
+		  <property name="jdbcUrl" value="${jdbc.url}"></property>
+		  <property name="user" value="${jdbc.username}"></property>
+		  <property name="password" value="${jdbc.password}"></property>
+		  <property name="minPoolSize"><value>1</value></property>
+		  <property name="maxPoolSize"><value>10</value></property>
+		  <property name="maxIdleTime"><value>1800</value></property>
+		  <property name="acquireIncrement"><value>2</value></property>
+		  <property name="maxStatements"><value>0</value></property>
+		  <!-- 配置连接池的初始值 -->
+		  <property name="initialPoolSize"><value>2</value></property>
+		  <property name="idleConnectionTestPeriod"><value>1800</value></property>
+		  <property name="acquireRetryAttempts"><value>30</value></property>
+		  <property name="breakAfterAcquireFailure"><value>true</value></property>
+		  
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean name="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:aspectj-autoproxy />
+
+	<aop:config proxy-target-class="true">
+		<aop:advisor pointcut="execution(* com.lyplay.sflow.service..*.*(..))"	advice-ref="txAdvice" order="3"/>
+	</aop:config>	
+	
+
+
+</beans>

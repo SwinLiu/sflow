@@ -1,0 +1,55 @@
+<div class="modal-dialog" ng-controller="loginCtrl">
+	<div class="modal-content">
+		<form method="post" role="form" id="login"  class="form-signin">
+	
+			<div class="modal-header form-group">
+				<h2>log in</h2>
+				<p>Dear user, log in to access the admin area!</p>
+			</div>
+	
+			<div class="modal-body">
+
+				<div class="form-group">
+					<label for="username">Username</label>
+					<input type="text" class="form-control" name="username" id="username" 
+						ng-model="user.username"
+						placeholder="User name / Email / Phone number" />
+				</div>
+		
+				<div class="form-group">
+					<label class="control-label" for="passwd">Password</label>
+					<input type="password" class="form-control" name="passwd" id="passwd" 
+						ng-model="user.passwd"
+						placeholder="password" />
+				</div>
+		
+				<div class="row">
+					<div class="col-lg-6 form-group">
+						<div class="checkbox">
+							<label>
+						  		<input type="checkbox"> Remember me
+							</label>
+						</div>
+					</div>
+					<div class="col-lg-6 form-group">
+						<button type="submit" class="btn btn-primary pull-right" ng-click="login()">
+							<i class="fa-lock"></i> Log In
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-lg-6">
+						<a href="#" class="pull-left">Forgot your password?</a>
+					</div>
+					<div class="col-lg-6">
+						<a href="#" class="pull-right">Create new account</a>
+					</div>
+				</div>
+			</div>
+	
+		</form>
+	</div>
+</div>

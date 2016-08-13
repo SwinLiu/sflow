@@ -1,0 +1,48 @@
+Restful
+
+POST    /scekill/execute/{seckillId}    error
+POST    /seckill/{seckillId}/execution  success
+
+GET     /seckill/delete/{id}            error
+DELETE  /seckill/{id}/delete            success
+
+GET     ->  查询操作
+POST    ->  添加/修改操作
+PUT     ->  修改操作
+DELETE  ->  删除操作
+
+URL 设计
+
+/模块/资源/{标示}/集合1/.....
+
+
+
+
+Spring 注解
+@RequestMapping
+1) 支持标准的URL
+2） Ant风格URL (即？和*和**等字符)
+3） 带{×××} 占位符的URL
+
+1. 请求参数的绑定
+2. 请求方式的限制
+3. 请求转发和重定向
+4. 数据模型赋值
+5. 返回json数据
+6. cookie访问
+
+
+@RequestMapping(value="/{seckillId}/detail",method=RequestMethod.GET,
+produces={"application/json;charset=UTF-8"})
+@ResponseBody
+public RestResult save(@PathVariable("seckillId") Long seckillId,
+@CookieValue(value="killPhone",required = false) Long phone){
+
+
+    return null;
+}
+
+
+
+
+

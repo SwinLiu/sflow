@@ -1,0 +1,24 @@
+#Eclipse.gitignore
+*.project
+*.settings
+*.classpath
+*.pydevproject
+*.externalToolBuilders
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+*.springBeans
+
+# Java class files
+*.class
+
+
+# Maven
+target/
