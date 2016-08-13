@@ -1,12 +1,12 @@
-1) 安装MySQL.
+# 1) 安装MySQL.
 
 在终端输入 sudo apt-get install mysql-server mysql-client mysql-workbench
 
-2) 登录MySQL
+# 2) 登录MySQL
 
 在终端输入 mysql -u root -p 接下来会提示你输入密码，输入正确密码，即可进入。
 
-3) MySQL的一些简单管理：
+# 3) MySQL的一些简单管理：
 
 启动MySQL服务： sudo start mysql
 
@@ -20,7 +20,7 @@ sudo vi /etc/mysql/my.cnf
 
 bind-address = 127.0.0.1 //找到此内容并且注释
 
-4）MySQL安装后的目录结构分析(此结构只针对于使用apt-get install 在线安装情况)：
+# 4）MySQL安装后的目录结构分析(此结构只针对于使用apt-get install 在线安装情况)：
 
 数据库存放目录： /var/lib/mysql/
 
@@ -30,7 +30,7 @@ bind-address = 127.0.0.1 //找到此内容并且注释
 
 启动脚步存放目录： /etc/rc.d/init.d/
 
-5) 查看数据库使用字符集的情况
+# 5) 查看数据库使用字符集的情况
 
 show variables like 'character%' 
 
