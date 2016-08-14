@@ -10,13 +10,58 @@ DROP TABLE IF EXISTS sequence;
 /* Create Tables */
 
 CREATE TABLE `sequence` (
-  `key` varchar(20) NOT NULL,
+  `sequence_name` varchar(20) NOT NULL,
   `prefix` varchar(20) DEFAULT NULL,
-  `curr_value` int(8) NOT NULL,
+  `curr_value` bigint(20) NOT NULL,
   `suffix` varchar(20) DEFAULT NULL,
-  `increment` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`key`)
+  `lpad_length` int(2) NOT NULL DEFAULT 1,
+  `increment` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`sequence_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+/* Create Sequence Procedure */
+DROP procedure IF EXISTS `nextval`;
+
+DELIMITER $$
+CREATE PROCEDURE nextval(IN in_sequence_name varchar(20),
+ OUT out_prefix varchar(20),
+ OUT out_curr_value bigint(20),
+ OUT out_suffix varchar(20)),
+ OUT out_lpad_length varchar(20))
+BEGIN
+	-- get current sequence value
+ 	select prefix,curr_value,suffix,lpad_length 
+      INTO out_prefix,out_curr_value,out_suffix,out_lpad_length
+      from sequence 
+	 WHERE sequence_name = in_sequence_name;
+     
+	-- SET SQL_SAFE_UPDATES = 0;
+	-- update current sequence value
+	UPDATE sequence t
+	   SET t.curr_value = t.curr_value + t.increment  
+	 WHERE t.sequence_name = in_sequence_name;
+	
+    commit;
+END$$
+
+DELIMITER ;
+
+
+/*  Insert test data */
+INSERT INTO sequence (`sequence_name`,`prefix`,`curr_value`,`suffix`,`lpad_length`,`increment`)
+VALUES ('test','q',1,'a',8,1);
+
+
+-- test sql:
+CALL nextval('test',@prefix,@curr_value,@suffix,@lpad_length);
+SELECT @prefix,@curr_value,@suffix,@lpad_length;
+
+
+
+
+
 
 
 
