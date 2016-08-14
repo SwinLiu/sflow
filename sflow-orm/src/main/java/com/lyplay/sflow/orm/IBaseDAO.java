@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.lyplay.sflow.orm.components.Pagination;
 
-public interface IBaseDao{
+public interface IBaseDAO{
 	
 	public <T> List<T> list(String sql, Object[] params, Class<T> clazz);
 	

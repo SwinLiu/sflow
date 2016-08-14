@@ -20,12 +20,12 @@
 		</dependency>
 
 		<!-- other modules -->
-		<!-- 
 		<dependency>
 			<groupId>com.lyplay</groupId>
 			<artifactId>sflow-orm</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>com.lyplay</groupId>
 			<artifactId>sflow-workflow</artifactId>

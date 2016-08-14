@@ -9,13 +9,13 @@ import org.sflow.orm.po.Employee;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import com.lyplay.sflow.orm.IBaseDao;
+import com.lyplay.sflow.orm.IBaseDAO;
 
 @ContextConfiguration(locations = { "classpath:config/spring-test.xml" })
 public class OrmJunitTest extends AbstractJUnit4SpringContextTests {
 
 	@Resource
-	IBaseDao baseDao;
+	IBaseDAO baseDao;
 	
 	@Test
 	public void testSave() throws Exception{

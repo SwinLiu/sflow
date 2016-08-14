@@ -24,7 +24,7 @@ import com.lyplay.sflow.orm.utils.IdUtils;
 import com.lyplay.sflow.orm.utils.ModelSqlUtils;
 
 @Repository("jdbcBaseDao")
-public class JdbcBaseDao implements IBaseDao{
+public class JdbcBaseDAO implements IBaseDAO{
 	
 	@SuppressWarnings("unused")
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
