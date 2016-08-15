@@ -7,4 +7,6 @@ public interface ISequenceDAO{
 
 	public Sequence getNextSequence(String sequenceName);
 	
+	public void saveSequence(Sequence sequence);
+	
 }

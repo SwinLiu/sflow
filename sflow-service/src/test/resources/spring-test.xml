@@ -42,7 +42,23 @@
 	
 	
 	
-	
+	<!-- mailSender配置，qq需要SSL -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.126.com" />
+        <property name="port" value="465" />
+        <property name="username" value="liu_ymail@126.com" />
+        <property name="password" value="520enterit" />
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.timeout">50000</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.socketFactory.port">465</prop>
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <prop key="mail.smtp.socketFactory.fallback">false</prop>
+            </props>
+        </property>
+    </bean>
 	
 
 </beans>

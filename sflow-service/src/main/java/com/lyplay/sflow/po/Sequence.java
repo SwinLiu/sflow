@@ -2,6 +2,8 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Id;
+
 public class Sequence implements Serializable{
 	
 	private static final long serialVersionUID = 3751197697169195543L;
@@ -13,6 +15,24 @@ public class Sequence implements Serializable{
 	private Integer lpadLength;
 	private Integer increment;
 	
+	public Sequence() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Sequence(String sequenceName, String prefix, Long currValue,
+			String suffix, Integer lpadLength, Integer increment) {
+		super();
+		this.sequenceName = sequenceName;
+		this.prefix = prefix;
+		this.currValue = currValue;
+		this.suffix = suffix;
+		this.lpadLength = lpadLength;
+		this.increment = increment;
+	}
+
+
+
+	@Id
 	public String getSequenceName() {
 		return sequenceName;
 	}
