@@ -366,9 +366,9 @@ public class ModelSqlUtils {
 		
 		if(columnName == null || "".equals(columnName)){
 			// 1. ex : name : testName -> test_name
-			//columnName = ColnumNameUtils.camel2underscore(f.getName());
+			columnName = ColnumNameUtils.camel2underscore(f.getName());
 			// 2. ex : name : testName -> testname
-			columnName = f.getName().toLowerCase();
+			//columnName = f.getName().toLowerCase();
 		}
 		return columnName;
 	}
