@@ -12,15 +12,15 @@ public interface IBaseDAO{
 	
 	public int count(String sql, Object[] params);
 	
-	public <T> T load(Object po) throws Exception;
+	public <T> T load(Object po);
 	
-	public void update(Object po) throws Exception;
+	public void update(Object po);
 	
 	public void batchUpdate(String sql,List<Object[]> paramsList);
 	
-	public void save(Object po) throws Exception;
+	public void save(Object po);
 	
-	public void delete(Object po) throws Exception;
+	public void delete(Object po);
 	
 	
 }

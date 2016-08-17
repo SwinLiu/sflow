@@ -1,7 +1,7 @@
 package com.lyplay.sflow.orm.exception;
 
 @SuppressWarnings("serial")
-public class NoDataFoundException extends Exception {
+public class NoDataFoundException extends RuntimeException {
 	
 	@SuppressWarnings("rawtypes")
 	public NoDataFoundException(Class clazz){

@@ -241,6 +241,11 @@
 				<artifactId>jackson-mapper-asl</artifactId>
 				<version>1.9.13</version>
 			</dependency>
+			<dependency>
+			    <groupId>commons-dbutils</groupId>
+			    <artifactId>commons-dbutils</artifactId>
+			    <version>1.6</version>
+			</dependency>
 			
 			<!-- Java Mail -->		
 			<dependency>

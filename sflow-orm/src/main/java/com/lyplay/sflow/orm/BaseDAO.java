@@ -29,12 +29,12 @@ public class BaseDAO implements IBaseDAO{
 	}
 
 	@Override
-	public <T> T load(Object po) throws Exception {
+	public <T> T load(Object po) {
 		return baseDAO.load(po);
 	}
 
 	@Override
-	public void update(Object po) throws Exception {
+	public void update(Object po) {
 		baseDAO.update(po);
 	}
 
@@ -44,12 +44,12 @@ public class BaseDAO implements IBaseDAO{
 	}
 
 	@Override
-	public void save(Object po) throws Exception {
+	public void save(Object po) {
 		baseDAO.save(po);
 	}
 
 	@Override
-	public void delete(Object po) throws Exception {
+	public void delete(Object po) {
 		baseDAO.delete(po);
 	}
 
