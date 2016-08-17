@@ -2,17 +2,13 @@ package com.lyplay.sflow.orm;
 
 import java.util.List;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.lyplay.sflow.orm.components.Pagination;
 
 public interface IBaseDAO{
 	
-	public <T> List<T> list(String sql, Object[] params, Class<T> clazz);
-	
 	public <T> Pagination pageList(String sql, Object[] params, Class<T> clazz, Integer currentPage, Integer numPerPage);
-	
-	public int count(String sql, Object[] params);
-	
-	public <T> T load(Object po);
 	
 	public void update(Object po);
 	
@@ -20,7 +16,10 @@ public interface IBaseDAO{
 	
 	public void save(Object po);
 	
+	public void saveOrUpdate(Object po);
+	
 	public void delete(Object po);
 	
+	public JdbcTemplate getJdbcTemplate();
 	
 }

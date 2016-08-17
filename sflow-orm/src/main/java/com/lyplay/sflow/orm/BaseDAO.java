@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.lyplay.sflow.orm.components.Pagination;
 
 public class BaseDAO implements IBaseDAO{
@@ -13,24 +15,9 @@ public class BaseDAO implements IBaseDAO{
 	
 	
 	@Override
-	public <T> List<T> list(String sql, Object[] params, Class<T> clazz) {
-		return baseDAO.list(sql, params, clazz);
-	}
-
-	@Override
 	public <T> Pagination pageList(String sql, Object[] params, Class<T> clazz,
 			Integer currentPage, Integer numPerPage) {
 		return baseDAO.pageList(sql, params, clazz, currentPage, numPerPage);
-	}
-
-	@Override
-	public int count(String sql, Object[] params) {
-		return baseDAO.count(sql, params);
-	}
-
-	@Override
-	public <T> T load(Object po) {
-		return baseDAO.load(po);
 	}
 
 	@Override
@@ -51,6 +38,16 @@ public class BaseDAO implements IBaseDAO{
 	@Override
 	public void delete(Object po) {
 		baseDAO.delete(po);
+	}
+
+	@Override
+	public void saveOrUpdate(Object po) {
+		baseDAO.saveOrUpdate(po);
+	}
+
+	@Override
+	public JdbcTemplate getJdbcTemplate() {
+		return baseDAO.getJdbcTemplate();
 	}
 
 }
