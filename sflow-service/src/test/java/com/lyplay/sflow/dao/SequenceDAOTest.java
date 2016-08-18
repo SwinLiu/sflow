@@ -9,7 +9,7 @@ import com.lyplay.sflow.po.Sequence;
 
 public class SequenceDAOTest extends BaseTest{
 
-	private String sequenceName = "CodeDemo";
+	private String sequenceName = "CodeDemo2";
 	
 	@Resource
 	private ISequenceDAO sequenceDAO;
@@ -22,10 +22,11 @@ public class SequenceDAOTest extends BaseTest{
 		
 	}
 	
+	@Test
 	public void getTest(){
 		
 		Sequence sequence = sequenceDAO.getNextSequence(sequenceName);
-		
+		System.out.println(sequence);
 	}
 	
 }
