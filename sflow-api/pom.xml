@@ -19,6 +19,12 @@
 		</dependency>
 		
 		
+		<!-- JSP page required -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		
 		
 		<!-- other modules -->
 		<dependency>

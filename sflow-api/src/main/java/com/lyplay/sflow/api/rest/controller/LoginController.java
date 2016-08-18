@@ -1,7 +1,12 @@
 package com.lyplay.sflow.api.rest.controller;
 
+import static com.lyplay.sflow.common.dto.RestResult.fail;
 import static com.lyplay.sflow.common.dto.RestResult.success;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyplay.sflow.common.dto.RestResult;
-import com.lyplay.sflow.common.mail.SpringMail;
+import com.lyplay.sflow.common.util.SHAUtil;
+import com.lyplay.sflow.po.UserAccount;
+import com.lyplay.sflow.service.impl.UserAccountServiceImpl;
 
 /**
  * 
@@ -23,16 +30,30 @@ import com.lyplay.sflow.common.mail.SpringMail;
 @Controller("loginController")
 public class LoginController {
 	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
-	SpringMail springMail;
+	private UserAccountServiceImpl userAccountService;
+	
 	
 	@RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public RestResult save(@RequestParam(value = "username", required = true) String username,
-			@RequestParam(value = "passwd", required = true) String passwd){
+	public RestResult save(@RequestParam(value = "loginAccount", required = true) String loginAccount,
+			@RequestParam(value = "passwd", required = true) String passwd,
+			HttpServletRequest request){
 		
-		springMail.sendMail();
+		String pwd = null;
+		try {
+			pwd = SHAUtil.shaEncode(passwd);
+		} catch (Exception e) {
+			logger.error(" Encdoe password happened issue. ");
+			logger.error(e.getMessage(),e);
+			return fail("password have issue.");
+		}
 		
+		UserAccount userAccount = userAccountService.login(loginAccount, pwd);
+		request.getSession().setAttribute("userAccount", userAccount);
 		return success();
+		
 	}
 }
