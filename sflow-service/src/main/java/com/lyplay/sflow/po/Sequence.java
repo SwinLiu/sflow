@@ -15,9 +15,7 @@ public class Sequence implements Serializable{
 	private Integer lpadLength;
 	private Integer increment;
 	
-	public Sequence() {
-		// TODO Auto-generated constructor stub
-	}
+	public Sequence() {}
 	
 	public Sequence(String sequenceName, String prefix, Long currValue,
 			String suffix, Integer lpadLength, Integer increment) {
