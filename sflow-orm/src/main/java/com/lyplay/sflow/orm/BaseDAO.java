@@ -21,28 +21,28 @@ public class BaseDAO implements IBaseDAO{
 	}
 
 	@Override
-	public void update(Object po) {
-		baseDAO.update(po);
+	public boolean update(Object po) {
+		return baseDAO.update(po);
 	}
 
 	@Override
-	public void batchUpdate(String sql, List<Object[]> paramsList) {
-		baseDAO.batchUpdate(sql, paramsList);
+	public boolean batchUpdate(String sql, List<Object[]> paramsList) {
+		return baseDAO.batchUpdate(sql, paramsList);
 	}
 
 	@Override
-	public void save(Object po) {
-		baseDAO.save(po);
+	public boolean save(Object po) {
+		return baseDAO.save(po);
 	}
 
 	@Override
-	public void delete(Object po) {
-		baseDAO.delete(po);
+	public boolean delete(Object po) {
+		return baseDAO.delete(po);
 	}
 
 	@Override
-	public void saveOrUpdate(Object po) {
-		baseDAO.saveOrUpdate(po);
+	public boolean saveOrUpdate(Object po) {
+		return baseDAO.saveOrUpdate(po);
 	}
 
 	@Override

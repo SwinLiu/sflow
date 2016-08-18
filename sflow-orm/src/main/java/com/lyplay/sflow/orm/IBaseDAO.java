@@ -10,15 +10,15 @@ public interface IBaseDAO{
 	
 	public <T> Pagination pageList(String sql, Object[] params, Class<T> clazz, Integer currentPage, Integer numPerPage);
 	
-	public void update(Object po);
+	public boolean update(Object po);
 	
-	public void batchUpdate(String sql,List<Object[]> paramsList);
+	public boolean batchUpdate(String sql,List<Object[]> paramsList);
 	
-	public void save(Object po);
+	public boolean save(Object po);
 	
-	public void saveOrUpdate(Object po);
+	public boolean saveOrUpdate(Object po);
 	
-	public void delete(Object po);
+	public boolean delete(Object po);
 	
 	public JdbcTemplate getJdbcTemplate();
 	
