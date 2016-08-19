@@ -1,0 +1,18 @@
+package com.lyplay.sflow.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.lyplay.sflow.dao.IUserLoginLogsDAO;
+import com.lyplay.sflow.orm.BaseDAO;
+import com.lyplay.sflow.po.UserLoginLogs;
+
+@Repository
+public class UserLoginLogsDAO extends BaseDAO implements IUserLoginLogsDAO{
+
+	@Override
+	public boolean save(UserLoginLogs loginLog) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -2,7 +2,7 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
-public class LoginLogs implements Serializable {
+public class UserLoginLogs implements Serializable {
 	
 	private static final long serialVersionUID = -6395836781121452836L;
 	

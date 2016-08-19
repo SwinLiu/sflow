@@ -3,7 +3,9 @@ package com.lyplay.sflow.po;
 import java.io.Serializable;
 
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name="")
 public class Sequence implements Serializable{
 	
 	private static final long serialVersionUID = 3751197697169195543L;

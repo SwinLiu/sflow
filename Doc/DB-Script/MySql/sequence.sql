@@ -2,14 +2,14 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE IF EXISTS sequence;
+DROP TABLE IF EXISTS sflow_sequence;
 
 
 
 
 /* Create Tables */
 
-CREATE TABLE `sequence` (
+CREATE TABLE `sflow_sequence` (
   `sequence_name` varchar(20) NOT NULL,
   `prefix` varchar(20) DEFAULT NULL,
   `curr_value` bigint(20) NOT NULL,
@@ -28,18 +28,17 @@ DELIMITER $$
 CREATE PROCEDURE nextval(IN in_sequence_name varchar(20),
  OUT out_prefix varchar(20),
  OUT out_curr_value bigint(20),
- OUT out_suffix varchar(20)),
+ OUT out_suffix varchar(20),
  OUT out_lpad_length varchar(20))
 BEGIN
 	-- get current sequence value
  	select prefix,curr_value,suffix,lpad_length 
       INTO out_prefix,out_curr_value,out_suffix,out_lpad_length
-      from sequence 
+      from sflow_sequence 
 	 WHERE sequence_name = in_sequence_name;
      
-	-- SET SQL_SAFE_UPDATES = 0;
 	-- update current sequence value
-	UPDATE sequence t
+	UPDATE sflow_sequence t
 	   SET t.curr_value = t.curr_value + t.increment  
 	 WHERE t.sequence_name = in_sequence_name;
 	
@@ -50,7 +49,7 @@ DELIMITER ;
 
 
 /*  Insert test data */
-INSERT INTO sequence (`sequence_name`,`prefix`,`curr_value`,`suffix`,`lpad_length`,`increment`)
+INSERT INTO sflow_sequence (`sequence_name`,`prefix`,`curr_value`,`suffix`,`lpad_length`,`increment`)
 VALUES ('test','q',1,'a',8,1);
 
 
