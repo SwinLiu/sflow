@@ -29,8 +29,8 @@ public class UserDAOTest extends BaseTest{
 	public void saveUser(){
 		
 		UserAccount userAccount = new UserAccount();
-		userAccount.setId("U001");
-		userAccount.setUserName("swin.liu");
+		userAccount.setId("U0021");
+		userAccount.setUserName("1swin.liu1");
 		userAccountDAO.saveUserAccount(userAccount);
 		
 	}
