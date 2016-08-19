@@ -2,6 +2,10 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Table(name="sflow_user_account")
 public class UserAccount implements Serializable {
 	
 	private static final long serialVersionUID = -1096831093746801999L;
@@ -12,6 +16,7 @@ public class UserAccount implements Serializable {
 	private String phone;
 	private Integer status;
 	
+	@Id
 	public String getId() {
 		return id;
 	}
