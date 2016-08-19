@@ -4,11 +4,11 @@ import com.lyplay.sflow.po.UserPassword;
 
 public interface IUserPasswordDAO{
 
-	public boolean save(UserPassword userPwd);
+	public boolean savePwd(UserPassword userPwd);
 	
 	public boolean checkPwd(UserPassword userPwd);
 	
-	public boolean update(UserPassword userPwd);
+	public boolean updatePwd(UserPassword userPwd);
 	
 	
 }

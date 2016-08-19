@@ -12,7 +12,7 @@ public class UserPasswordDAO extends BaseDAO implements IUserPasswordDAO{
 	private static final String TABLE_NAME = "sflow_user_password";
 	
 	@Override
-	public boolean save(UserPassword userPwd) {
+	public boolean savePwd(UserPassword userPwd) {
 		return this.save(userPwd);
 	}
 
@@ -23,7 +23,7 @@ public class UserPasswordDAO extends BaseDAO implements IUserPasswordDAO{
 	}
 
 	@Override
-	public boolean update(UserPassword userPwd) {
+	public boolean updatePwd(UserPassword userPwd) {
 		return this.update(userPwd);
 	}
 	

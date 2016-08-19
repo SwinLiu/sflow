@@ -40,12 +40,12 @@ public class UserAccountDAO extends BaseDAO implements IUserAccountDAO{
 	}
 
 	@Override
-	public boolean save(UserAccount userAccount) {
-		return this.update(userAccount);
+	public boolean saveUserAccount(UserAccount userAccount) {
+		return this.save(userAccount);
 	}
 
 	@Override
-	public boolean update(UserAccount userAccount) {
+	public boolean updateUserAccount(UserAccount userAccount) {
 		return this.update(userAccount);
 	}
 

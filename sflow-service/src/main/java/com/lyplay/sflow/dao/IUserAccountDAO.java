@@ -14,8 +14,8 @@ public interface IUserAccountDAO{
 	
 	public UserAccount get(String id);
 	
-	public boolean save(UserAccount userAccount);
+	public boolean saveUserAccount(UserAccount userAccount);
 	
-	public boolean update(UserAccount userAccount);
+	public boolean updateUserAccount(UserAccount userAccount);
 	
 }

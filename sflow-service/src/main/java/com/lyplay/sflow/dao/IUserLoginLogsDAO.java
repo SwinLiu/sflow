@@ -6,6 +6,6 @@ import com.lyplay.sflow.po.UserLoginLogs;
 
 public interface IUserLoginLogsDAO{
 
-	public boolean save(UserLoginLogs loginLog);
+	public boolean saveLog(UserLoginLogs loginLog);
 	
 }

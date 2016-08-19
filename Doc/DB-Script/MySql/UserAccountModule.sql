@@ -24,12 +24,12 @@ CREATE TABLE sflow_user_login_logs
 CREATE TABLE sflow_user_account
 (
 	id varchar(20) NOT NULL,
-	username varchar(20) NOT NULL,
-	email varchar(40) NOT NULL,
-	phone varchar(20) NOT NULL,
+	user_name varchar(20),
+	email varchar(40),
+	phone varchar(20),
 	status int(3),
 	PRIMARY KEY (id),
-	UNIQUE (username),
+	UNIQUE (user_name),
 	UNIQUE (email),
 	UNIQUE (phone)
 );
