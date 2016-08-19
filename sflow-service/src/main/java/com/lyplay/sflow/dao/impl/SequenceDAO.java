@@ -17,6 +17,8 @@ import com.lyplay.sflow.po.Sequence;
 @Repository
 public class SequenceDAO extends BaseDAO implements ISequenceDAO{
 
+	private static final String TABLE_NAME = "sflow_sequence";
+	
 	@Override
 	public Sequence getNextSequence(final String sequenceName) {
 		return this.getJdbcTemplate().execute(new CallableStatementCreator(){

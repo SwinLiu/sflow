@@ -11,8 +11,7 @@ public class UserLoginLogsDAO extends BaseDAO implements IUserLoginLogsDAO{
 
 	@Override
 	public boolean save(UserLoginLogs loginLog) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.save(loginLog);
 	}
 
 }

@@ -35,6 +35,10 @@
 			<groupId>commons-dbutils</groupId>
 			<artifactId>commons-dbutils</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>commons-collections</groupId>
+		    <artifactId>commons-collections</artifactId>
+		</dependency>
 
 		<!-- Log -->
 		<dependency>
