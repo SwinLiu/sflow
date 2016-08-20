@@ -42,9 +42,17 @@ public class UserDAOTest extends BaseTest{
 		userAccount.setId("U001");
 		userAccount.setUserName("swin.liu,asdf");
 		userAccount.setPhone("1234567890");
-		userAccount.setEmail("sqin.liu@gpayroll.com");
-		userAccount.setStatus(123);
+		userAccount.setEmail(null);
+		userAccount.setStatus(null);
 		userAccountDAO.updateUserAccount(userAccount);
+		
+	}
+	
+	@Test
+	public void getUser(){
+		
+		UserAccount userAccount = userAccountDAO.get("U001");
+		System.out.println(userAccount);
 		
 	}
 	

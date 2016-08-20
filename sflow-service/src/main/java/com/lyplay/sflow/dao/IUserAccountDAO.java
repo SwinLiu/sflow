@@ -6,7 +6,7 @@ import com.lyplay.sflow.po.UserAccount;
 
 public interface IUserAccountDAO{
 
-	public String geIdByPhone(String phone);
+	public String getIdByPhone(String phone);
 	
 	public String getIdByEmail(String email);
 	

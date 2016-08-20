@@ -12,11 +12,11 @@ import com.lyplay.sflow.po.UserAccount;
 public class UserAccountDAO extends BaseDAO implements IUserAccountDAO{
 
 	private static final String TABLE_NAME = "sflow_user_account";
-	private static final String COLUMN = "id,username,email,phone,status";
+	private static final String COLUMN = "id,user_name,email,phone,status";
 	private static CommonRowMapper<UserAccount> userAccountRowMapper = new CommonRowMapper<>(UserAccount.class);
 	
 	@Override
-	public String geIdByPhone(String phone) {
+	public String getIdByPhone(String phone) {
 		String sql = String.format(" select id from %s where phone = ? ",TABLE_NAME);
 		return ResultUtil.getFrist(this.getJdbcTemplate().queryForList(sql, String.class, phone));
 	}
@@ -46,7 +46,7 @@ public class UserAccountDAO extends BaseDAO implements IUserAccountDAO{
 
 	@Override
 	public boolean updateUserAccount(UserAccount userAccount) {
-		return this.update(userAccount);
+		return this.saveOrUpdate(userAccount);
 	}
 
 	

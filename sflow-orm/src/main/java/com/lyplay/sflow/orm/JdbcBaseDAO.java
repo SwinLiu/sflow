@@ -17,12 +17,16 @@ import com.lyplay.sflow.orm.components.BatchUpdateSetter;
 import com.lyplay.sflow.orm.components.Pagination;
 import com.lyplay.sflow.orm.components.ReturnIdPreparedStatementCreator;
 import com.lyplay.sflow.orm.components.SqlParamsPairs;
-import com.lyplay.sflow.orm.utils.CatalogUtils;
+import com.lyplay.sflow.orm.exception.IdValueNotEqualsException;
+import com.lyplay.sflow.orm.exception.NoIdAnnotationFoundException;
+import com.lyplay.sflow.orm.exception.NoIdValueFoundException;
 import com.lyplay.sflow.orm.utils.CommonRowMapper;
 import com.lyplay.sflow.orm.utils.IdUtils;
 import com.lyplay.sflow.orm.utils.ModelSqlUtils;
 import com.lyplay.sflow.orm.utils.PagingUtils;
+import com.lyplay.sflow.orm.utils.PoUtil;
 import com.lyplay.sflow.orm.utils.PrintUtil;
+import com.lyplay.sflow.orm.utils.ResultUtil;
 
 @Repository("jdbcBaseDao")
 public class JdbcBaseDAO implements IBaseDAO{
@@ -37,9 +41,6 @@ public class JdbcBaseDAO implements IBaseDAO{
 	public <T> Pagination pageList(String sql, Object[] params, Class<T> clazz,
 			Integer currentPage, Integer numPerPage) {
 		
-		//dynamic change catalog name
-		sql = CatalogUtils.changeCatalog(sql);
-		
 		Pagination page = PagingUtils.getPagination(currentPage,numPerPage);
 		
 		try{
@@ -47,7 +48,7 @@ public class JdbcBaseDAO implements IBaseDAO{
 			StringBuffer totalSQL = new StringBuffer(" SELECT count(*) FROM ( ");
 			totalSQL.append(sql);
 			totalSQL.append(" ) totalTable ");
-			printErrSql(totalSQL.toString(), params);
+			PrintUtil.printErrSql(logger, totalSQL.toString(), params);
 			page.setTotalRows(jdbcTemplate.queryForObject(totalSQL.toString(), params,Integer.class));
 			
 			page.setTotalPages();
@@ -63,13 +64,13 @@ public class JdbcBaseDAO implements IBaseDAO{
 				params = ArrayUtils.add(params, params.length, page.getStartIndex());
 			}
 			
-			printErrSql(sql, params);
+			PrintUtil.printErrSql(logger, sql, params);
 			page.setResultList(jdbcTemplate.query(sql, params, new CommonRowMapper<>(clazz)));
 			
 			return page;
 			
 		}catch(DataAccessException e){
-			printErrSql(sql,params);
+			PrintUtil.printErrSql(logger, sql,params);
 			throw e;
 		}
 		
@@ -86,7 +87,6 @@ public class JdbcBaseDAO implements IBaseDAO{
 			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
-		printDebugSql(sqlAndParams);
 		return update(sqlAndParams);
 		
 	}
@@ -96,13 +96,12 @@ public class JdbcBaseDAO implements IBaseDAO{
 		
 		BatchUpdateSetter batchUpdateSetter = new BatchUpdateSetter(paramsList);
 		
-		sql = CatalogUtils.changeCatalog(sql);
 		try{
-			printDebugSql(sql,paramsList);
+			PrintUtil.printDebugSql(logger, sql,paramsList);
 			jdbcTemplate.batchUpdate(sql, batchUpdateSetter);
 			return true;
 		}catch(DataAccessException e){
-			printErrSql(sql,paramsList);
+			PrintUtil.printErrSql(logger, sql,paramsList);
 			throw e;
 		}
 		
@@ -122,7 +121,6 @@ public class JdbcBaseDAO implements IBaseDAO{
 				return true;
 			}else{
 				SqlParamsPairs sqlAndParams = ModelSqlUtils.getInsertFromObject(po);
-				printDebugSql(sqlAndParams);
 				return update(sqlAndParams);
 			}
 		} catch (Exception e) {
@@ -144,7 +142,6 @@ public class JdbcBaseDAO implements IBaseDAO{
 			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e);
 		}
-		printDebugSql(sqlAndParams);
 		return update(sqlAndParams);	
 	}
 
@@ -161,19 +158,60 @@ public class JdbcBaseDAO implements IBaseDAO{
 
 	@Override
 	public boolean saveOrUpdate(Object po) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		if(po == null){
+			return false;
+		}
+		
+		SqlParamsPairs sqlAndParams = null;
+		
+		try {
+			sqlAndParams = ModelSqlUtils.getLoadFromObject(po);
+		} catch (NoIdAnnotationFoundException e) {
+			logger.error(e.getMessage(), e);
+		} catch (NoIdValueFoundException e) {
+			logger.error(e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		
+		if(sqlAndParams != null){
+			PrintUtil.printDebugSql(logger, sqlAndParams);
+			Object existPo = ResultUtil.getFrist(jdbcTemplate.query(sqlAndParams.getSql(), sqlAndParams.getParams(), new CommonRowMapper<>(po.getClass())));
+			if(existPo == null){
+				return save(po);
+			}else{
+				boolean updateFlag = true;
+				try {
+					updateFlag = PoUtil.PoEquals(po, existPo);
+				} catch (NoIdValueFoundException e) {
+					logger.error(e.getMessage(), e);
+				} catch (IdValueNotEqualsException e) {
+					logger.error(e.getMessage(), e);
+				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
+				}
+				
+				if(updateFlag){
+					logger.info(String.format("%s po value same as database value no need update now.",po.getClass().getName()));
+					return true;
+				}else{
+					return update(po);
+				}
+				
+			}
+		}else{
+			return this.save(po);
+		}
 	}
 
 	
 	private boolean update(SqlParamsPairs sqlAndParams){
-		//dynamic change catalog name
-		sqlAndParams.setSql(CatalogUtils.changeCatalog(sqlAndParams.getSql()));
 		try{
-			printDebugSql(sqlAndParams);
+			PrintUtil.printDebugSql(logger, sqlAndParams);
 			return jdbcTemplate.update(sqlAndParams.getSql(), sqlAndParams.getParams()) > 0;
 		}catch(DataAccessException e){
-			printErrSql(sqlAndParams);
+			PrintUtil.printErrSql(logger, sqlAndParams);
 			throw e;
 		}
 	}
@@ -191,42 +229,14 @@ public class JdbcBaseDAO implements IBaseDAO{
 		ReturnIdPreparedStatementCreator psc = new ReturnIdPreparedStatementCreator(sqlAndParams.getSql(), sqlAndParams.getParams(), autoGeneratedColumnName);
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		try{
-			printDebugSql(sqlAndParams);
+			PrintUtil.printDebugSql(logger, sqlAndParams);
 			jdbcTemplate.update(psc, keyHolder);
 		}catch(DataAccessException e){
-			printErrSql(sqlAndParams);
+			PrintUtil.printErrSql(logger, sqlAndParams);
 			throw e;
 		}
 		
 		return keyHolder.getKey().intValue();
 	}
-	
-	private void printErrSql(String sql, Object[] params){
-		logger.error("Error SQL: " + sql + " Params: " + PrintUtil.printArray(params));
-	}
-	
-	private void printErrSql(SqlParamsPairs sqlParamsPairs){
-		printErrSql(sqlParamsPairs.getSql(), sqlParamsPairs.getParams());
-	}
-	
-	private void printErrSql(String sql, List<Object[]> params){
-		logger.error("Error SQL: " + sql + " Params: " + PrintUtil.printListArray(params));
-	}
-	
-	private void printDebugSql(String sql, Object[] params){
-		logger.debug("Run SQL: " + sql + " Params: " + PrintUtil.printArray(params));
-	}
-	
-	private void printDebugSql(SqlParamsPairs sqlParamsPairs){
-		printDebugSql(sqlParamsPairs.getSql(), sqlParamsPairs.getParams());
-	}
-	
-	private void printDebugSql(String sql, List<Object[]> params){
-		logger.error("Run SQL: " + sql + " Params: " + PrintUtil.printListArray(params));
-	}
-	
-	
-	
-	
 	
 }
