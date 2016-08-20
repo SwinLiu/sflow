@@ -5,10 +5,12 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import com.lyplay.sflow.BaseTest;
+import com.lyplay.sflow.common.util.SHAUtil;
 import com.lyplay.sflow.dao.impl.UserAccountDAO;
 import com.lyplay.sflow.dao.impl.UserLoginLogsDAO;
 import com.lyplay.sflow.dao.impl.UserPasswordDAO;
 import com.lyplay.sflow.po.UserAccount;
+import com.lyplay.sflow.po.UserPassword;
 
 public class UserDAOTest extends BaseTest{
 
@@ -26,12 +28,14 @@ public class UserDAOTest extends BaseTest{
 	
 	
 	@Test
-	public void saveUser(){
+	public void saveUser() throws Exception{
 		
 		UserAccount userAccount = new UserAccount();
-		userAccount.setId("U0021");
-		userAccount.setUserName("1swin.liu1");
+		userAccount.setId("u009");
+		userAccount.setUserName("test");
 		userAccountDAO.saveUserAccount(userAccount);
+		
+		userPasswordDAO.save(new UserPassword("u009",SHAUtil.shaEncode("test")));
 		
 	}
 	

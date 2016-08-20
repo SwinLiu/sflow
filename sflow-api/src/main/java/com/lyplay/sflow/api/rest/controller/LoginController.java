@@ -52,8 +52,12 @@ public class LoginController {
 		}
 		
 		UserAccount userAccount = userAccountService.login(loginAccount, pwd);
-		request.getSession().setAttribute("userAccount", userAccount);
-		return success();
+		if(userAccount != null){
+			request.getSession().setAttribute("userAccount", userAccount);
+			return success();
+		}else{
+			return fail();
+		}
 		
 	}
 }

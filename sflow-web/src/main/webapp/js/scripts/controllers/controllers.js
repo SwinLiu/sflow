@@ -2,11 +2,10 @@ var sFlowCtrls = angular.module('sFlowCtrls', []);
 
 
 sFlowCtrls.controller("loginCtrl", function($scope,$http) {
-	$scope.user = {username: "", passwd: ""};
+	$scope.user = {loginAccount: "", passwd: ""};
     $scope.login = function(){
-    	alert($scope.user.username + " : " + $scope.user.passwd);
     	$http({method:'POST',url:'api/login',params:$scope.user}).success(function(response) {  
-        	if(response.returnCode == 1){
+        	if(response.success){
         		alert("success");
         	}else{
         		alert("failed");

@@ -35,7 +35,7 @@
     <!-- Spring 的监听器可以通过这个上下文参数来获取beans的位置 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-app-*.xml</param-value>
+        <param-value>classpath*:spring-app-*.xml</param-value>
     </context-param>
     
     
