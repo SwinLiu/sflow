@@ -6,9 +6,9 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
     $scope.login = function(){
     	$http({method:'POST',url:'api/login',params:$scope.user}).success(function(response) {  
         	if(response.success){
-        		alert("success");
+        		toastr.success("success");
         	}else{
-        		alert("failed");
+        		toastr.error("failed");
         		
         	}
      	}); 
