@@ -13,6 +13,13 @@ public class UserPassword implements Serializable {
 	private String id;
 	private String password;
 	
+	public UserPassword() { }
+
+	public UserPassword(String id, String password) {
+		this.id = id;
+		this.password = password;
+	}
+	
 	@Id
 	public String getId() {
 		return id;
