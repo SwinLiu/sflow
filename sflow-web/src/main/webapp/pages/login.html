@@ -1,6 +1,6 @@
 <div class="modal-dialog" ng-controller="loginCtrl">
 	<div class="modal-content">
-		<form method="post" role="form" id="login"  class="form-signin">
+		<form method="post" role="form" id="login-frm" name="login-frm"  class="form-signin">
 	
 			<div class="modal-header form-group">
 				<h2>log in</h2>
@@ -13,6 +13,7 @@
 					<label for="username">Username</label>
 					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
 						ng-model="user.loginAccount"
+						title="Please enter the login account"
 						placeholder="User name / Email / Phone number" />
 				</div>
 		
@@ -20,6 +21,7 @@
 					<label class="control-label" for="passwd">Password</label>
 					<input type="password" class="form-control" name="passwd" id="passwd" 
 						ng-model="user.passwd"
+						title="Please enter the password"
 						placeholder="password" />
 				</div>
 		
@@ -32,7 +34,7 @@
 						</div>
 					</div>
 					<div class="col-lg-6 form-group">
-						<button type="submit" class="btn btn-primary pull-right" ng-click="login()">
+						<button type="submit" class="btn btn-primary pull-right">
 							<i class="fa-lock"></i> Log In
 						</button>
 					</div>

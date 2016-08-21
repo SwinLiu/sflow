@@ -30,7 +30,7 @@ public class RestResult implements Serializable {
 	}
 
 	public static RestResult fail() {
-		return fail("System Error, Please Contact Our Support.");
+		return fail(null);
 	}
 
 	public static RestResult fail(String message) {
