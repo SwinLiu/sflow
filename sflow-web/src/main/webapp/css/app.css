@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+.login-bg{
+	background-image : url('../images/bgs/bg.jpg');
+}
+
+.modal-dialog {  
+   	position: absolute;
+	top: 40%;
+	left: 50%;
+	transform: translate(-50%, -50%); 
+} 
