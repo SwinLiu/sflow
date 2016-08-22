@@ -38,8 +38,13 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
             	if(response.success){
             		alert.topCenter(true).success("success.");
             	}else{
-            		alert.topCenter(true).error("failed.");
-            		
+            		var html = new Array();
+            		html.push('<div class="alert alert-danger alert-dismissible" role="alert">');
+            		html.push('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+            		html.push('<strong>Error!</strong> <span>Login account or password error.</span>');
+            		html.push('</div>');
+					$("#login-msg-area").empty().html(html.join(''));
+					$("#login-msg-area").removeClass('hidden');
             	}
          	});
         }
