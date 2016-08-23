@@ -12,17 +12,15 @@
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
-						ng-model="user.loginAccount"
-						title="Please enter the login account"
-						placeholder="User name / Email / Phone number" />
+						ng-model="user.loginAccount" maxlength="20"
+						title="Please enter the login account" placeholder="User name / Email / Phone number" />
 				</div>
 		
 				<div class="form-group">
 					<label class="control-label" for="passwd">Password</label>
 					<input type="password" class="form-control" name="passwd" id="passwd" 
-						ng-model="user.passwd"
-						title="Please enter the password"
-						placeholder="password" />
+						ng-model="user.passwd" maxlength="20"
+						title="Please enter the password" placeholder="password" />
 				</div>
 		
 				<div class="row">

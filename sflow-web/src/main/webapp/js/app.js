@@ -55,8 +55,6 @@ sFlowApp.config(['$httpProvider', function($httpProvider){
 			return query.length ? query.substr(0, query.length - 1) : query;
 		};
 
-		return angular.isObject(data) && String(data) !== '[object File]'
-				? param(data)
-				: data;
+		return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
 	}];
 }]);

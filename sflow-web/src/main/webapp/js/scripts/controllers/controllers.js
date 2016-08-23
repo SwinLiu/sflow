@@ -8,17 +8,24 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         rules: {
             loginAccount: {
                 required: true,
-                email: true
+                maxlength:20
             },
-            passwd: 'required'
+            passwd: {
+            	required : true,
+            	rangelength : [6,20]
+            } 
         },
         messages: {
         	loginAccount: {
-                required: "Please enter the login account",
-                email: "Please enter the correct login account"
+                required: "Please enter the login account"
             },
-            passwd: "Please enter the password"
+            passwd: {
+            	required: "Please enter the password"
+            }
         },
+        onkeyup:false,
+        onclick:false,
+        onfocusout:false,
         errorClass: "error",
         success: 'valid',
         unhighlight: function (element, errorClass, validClass) { //验证通过
@@ -26,8 +33,7 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         },
         //highlight: function (element, errorClass, validClass) { //未通过验证
         //    // TODO
-        //}
-        //,
+        //},
         errorPlacement: function (label, element) {
             $(element).tooltip('destroy'); //必需
             $(element).attr('title', $(label).text()).tooltip('show'); 
