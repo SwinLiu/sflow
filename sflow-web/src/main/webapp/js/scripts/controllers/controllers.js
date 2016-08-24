@@ -8,7 +8,7 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         rules: {
             loginAccount: {
                 required: true,
-                maxlength:20
+                maxlength:40
             },
             passwd: {
             	required : true,

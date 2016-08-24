@@ -1,10 +1,8 @@
 @CHARSET "UTF-8";
 
 .error {
-    color: red;
     border-color:red;
 }
 
 .valid {
-    color: black;
 }
