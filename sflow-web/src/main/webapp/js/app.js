@@ -4,7 +4,7 @@ sFlowApp.config(['$routeProvider', function($routeProvider){
     $routeProvider.when('/login', {
         templateUrl: 'pages/login.html',
         controller: 'loginCtrl'
-    }).when('/index',{
+    }).when('/dashboard',{
     	templateUrl:'pages/home.html'
     }).when('/register',{
     	templateUrl:'pages/register.html'
