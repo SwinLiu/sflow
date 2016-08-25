@@ -13,33 +13,58 @@
 					<label for="username">Username</label>
 					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
 						ng-model="user.userName" maxlength="40"
-						title="Please enter the user name" placeholder="User name" />
+						title="Please enter the user name" />
 				</div>
 		
 				<div class="form-group">
 					<label class="control-label" for="passwd">Password</label>
 					<input type="password" class="form-control" name="passwd" id="passwd" 
 						ng-model="user.password" maxlength="20"
-						title="Please enter the password" placeholder="password" />
+						title="Please enter the password" />
 				</div>
-		
+				
+				<div class="form-group">
+					<label class="control-label" for="passwd">Re-type Your Password</label>
+					<input type="password" class="form-control" name="passwd_confirm" id="passwd_confirm" 
+						ng-model="user.passwdConfirm" maxlength="20"
+						title="Please Re-type Your Password" />
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label" for="passwd">Email</label>
+					<input type="text" class="form-control" name="passwd" id="passwd" 
+						ng-model="user.email" maxlength="20"
+						title="Please enter the password" />
+				</div>
+				
+				<div class="form-group">
+					<label class="control-label" for="passwd">Phone</label>
+					<input type="text" class="form-control" name="passwd" id="passwd" 
+						ng-model="user.phone" maxlength="20"
+						title="Please enter the password" />
+				</div>
+				
 				<div class="row">
-					<div class="col-lg-6 form-group">
+					<div class="col-lg-12 form-group">
 						<div class="checkbox">
 							<label>
-						  		<input type="checkbox"> Remember me
+						  		<input type="checkbox"> 
+						  		<span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
 							</label>
 						</div>
 					</div>
-					<div class="col-lg-6 form-group">
+				</div>
+		
+				<div class="row">
+					<div class="col-lg-12 form-group">
 						<button type="submit" class="btn btn-primary pull-right">
-							<i class="fa-lock"></i> Log In
+							<i class="fa-lock"></i><span>Sign Up</span>
 						</button>
 					</div>
 				</div>
 				
 				<div class="row">
-					<div class="col-lg-12 form-group hidden" id="login-msg-area" >
+					<div class="col-lg-12 form-group hidden" id="register-msg-area" >
 						
 					</div>
 				</div>
@@ -48,10 +73,10 @@
 			<div class="modal-footer">
 				<div class="row">
 					<div class="col-lg-6">
-						<a href="#" class="pull-left">Forgot your password?</a>
+						<a href="#forget" class="pull-left">Forgot your password?</a>
 					</div>
 					<div class="col-lg-6">
-						<a href="#" class="pull-right">Create new account</a>
+						<a href="#login" class="pull-right">Login with your account</a>
 					</div>
 				</div>
 			</div>

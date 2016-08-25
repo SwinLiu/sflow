@@ -6,8 +6,12 @@ sFlowApp.config(['$routeProvider', function($routeProvider){
         controller: 'loginCtrl'
     }).when('/index',{
     	templateUrl:'pages/home.html'
+    }).when('/register',{
+    	templateUrl:'pages/register.html'
+    }).when('/forget',{
+    	templateUrl:'pages/forgetPasswd.html'
     }).otherwise({
-        redirectTo: '/login'
+        redirectTo: '/register'
     })
 }]);
 

@@ -1,0 +1,47 @@
+<div class="modal-dialog" ng-controller="registerCtrl">
+	<div class="modal-content">
+		<form method="post" role="form" id="register-frm" name="register-frm"  class="form-signin">
+	
+			<div class="modal-header form-group">
+				<h2>Forget Password ?</h2>
+				<p>Enter your e-mail address below to reset your password.</p>
+			</div>
+	
+			<div class="modal-body">
+
+				<div class="form-group">
+					<label class="control-label" for="passwd">Email</label>
+					<input type="password" class="form-control" name="passwd" id="passwd" 
+						ng-model="user.password" maxlength="20"
+						title="Please enter the password" />
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12 form-group">
+						<button type="submit" class="btn btn-primary pull-right">
+							<i class="fa-lock"></i><span>Submit</span>
+						</button>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12 form-group hidden" id="forget-msg-area" >
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="row">
+					<div class="col-lg-6">
+						<a href="#register" class="pull-left">Sign Up a new account</a>
+					</div>
+					<div class="col-lg-6">
+						<a href="#login" class="pull-right">Login with your account</a>
+					</div>
+				</div>
+			</div>
+	
+		</form>
+	</div>
+</div>
