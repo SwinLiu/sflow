@@ -11,7 +11,7 @@ sFlowApp.config(['$routeProvider', function($routeProvider){
     }).when('/forget',{
     	templateUrl:'pages/forgetPasswd.html'
     }).otherwise({
-        redirectTo: '/register'
+        redirectTo: '/login'
     })
 }]);
 

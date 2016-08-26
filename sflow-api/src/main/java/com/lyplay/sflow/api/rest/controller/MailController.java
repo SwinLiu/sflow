@@ -28,7 +28,7 @@ public class MailController {
 	}
 	
 	
-	@RequestMapping(value = "/{seckillId}/detail", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
+	@RequestMapping(value = "/api/{seckillId}/detail", method = RequestMethod.GET, produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public RestResult save(@PathVariable("seckillId") Long seckillId,
 			@CookieValue(value = "killPhone", required = false) Long phone) {

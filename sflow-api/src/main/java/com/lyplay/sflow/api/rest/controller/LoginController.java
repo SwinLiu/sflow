@@ -60,4 +60,12 @@ public class LoginController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/api/data", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public RestResult save(HttpServletRequest request){
+		
+		return success();
+		
+	}
 }

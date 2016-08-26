@@ -9,7 +9,7 @@
 
 	<!-- 默认根文件 -->
 	<welcome-file-list>
-		<welcome-file>login.html</welcome-file>
+		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 	
 	<error-page>
@@ -56,8 +56,6 @@
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-
 
 	<!-- 设置字符集 -->  
 	<filter>
