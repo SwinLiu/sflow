@@ -1,12 +1,13 @@
 var sFlowCtrls = angular.module('sFlowCtrls', []);
 
-
+/**
+ * Login page controller method
+ */
 sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 	$scope.user = {loginAccount: "", passwd: ""};
-	
     $("#login-frm").validate({
         rules: {
-            loginAccount: {
+        	loginAccount: {
                 required: true,
                 maxlength:40
             },
@@ -17,10 +18,10 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         },
         messages: {
         	loginAccount: {
-                required: "Please enter the login account"
+                required: "Login account cann't be null."
             },
             passwd: {
-            	required: "Please enter the password"
+            	required: "Password word cann't be null."
             }
         },
         onkeyup:false,
@@ -28,28 +29,31 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         onfocusout:false,
         errorClass: "error",
         success: 'valid',
-        unhighlight: function (element, errorClass, validClass) { //验证通过
-            $(element).tooltip('destroy').removeClass(errorClass);
-        },
-        //highlight: function (element, errorClass, validClass) { //未通过验证
-        //    // TODO
-        //},
-        errorPlacement: function (label, element) {
-            $(element).tooltip('destroy'); //必需
-            $(element).attr('title', $(label).text()).tooltip('show'); 
-        },
+        focusInvalid:false,//提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）会获得焦点
+        focusCleanup:true,//当未通过验证的元素获得焦点时，移除错误提示（避免和 focusInvalid 一起使用）
+//        unhighlight: function (element, errorClass, validClass) { 
+//        	//验证通过
+//        },
+//        highlight: function (element, errorClass, validClass) { 
+//        	//未通过验证
+//        },
+//        errorPlacement: function (errorLabel, element) {
+//        	//指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+//        	msgDiv.error("#login-msg-area",errorLabel.html(),true);
+//			$("#login-msg-area").removeClass('hidden');
+//        },
+        errorContainer: "#login-msg-area",
+        errorLabelContainer: $("#login-msg-div"),
+        errorElement:"li",
+        wrapper:"ul",
         submitHandler: function (form) {
-            alert.topCenter(true).success('验证通过,提交远程验证');
+        	//通过验证后运行的函数，里面要加上表单提交的函数，否则表单不会提交。
             $http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) {  
             	if(response.success){
             		alert.topCenter(true).success("success.");
             	}else{
-            		var html = new Array();
-            		html.push('<div class="alert alert-danger alert-dismissible" role="alert">');
-            		html.push('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
-            		html.push('<strong>Error!</strong> <span>Login account or password error.</span>');
-            		html.push('</div>');
-					$("#login-msg-area").empty().html(html.join(''));
+            		var msg = '<strong>Error!</strong> <span>Login account or password error.</span>';
+            		msgDiv.error("#login-msg-area",msg,true);
 					$("#login-msg-area").removeClass('hidden');
             	}
          	});
