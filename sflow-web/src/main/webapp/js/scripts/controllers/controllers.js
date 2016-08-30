@@ -62,6 +62,65 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 
 });
 
+
 /**
- * 这里接着往下写，如果控制器的数量非常多，需要分给多个开发者，可以借助于grunt来合并代码
+ * Login page controller method
  */
+sFlowCtrls.controller("registerCtrl", function($scope,$http) {
+	
+	$scope.user = {userName: "", email: "", phone: ""};
+	$scope.password = "";
+	
+	$("#register-frm").validate({
+        rules: {
+        	userName: {
+                required: true,
+                maxlength:40
+            },
+            password: {
+            	required : true,
+            	rangelength : [6,20]
+            },
+            passwdConfirm:{
+            	required : true,
+            	equalsTo : "#password"
+            },
+            email:{
+            	required : true,
+            	email : true
+            },
+            phone:{
+            	maxlength:20
+            }
+        },
+        messages: {
+        	userName: {
+            },
+            password: {
+            },
+            passwdConfirm:{
+            },
+            email:{
+            },
+            phone:{
+            }
+        },
+        onkeyup:false,
+        onclick:false,
+        onfocusout:false,
+        errorClass: "error",
+        success: 'valid',
+        focusInvalid:false,//提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）会获得焦点
+        focusCleanup:true,//当未通过验证的元素获得焦点时，移除错误提示（避免和 focusInvalid 一起使用）
+        errorContainer: "#login-msg-area",
+        errorLabelContainer: $("#login-msg-div"),
+        errorElement:"li",
+        wrapper:"ul",
+        submitHandler: function (form) {
+        	
+        }
+    });
+	
+	
+});
+
