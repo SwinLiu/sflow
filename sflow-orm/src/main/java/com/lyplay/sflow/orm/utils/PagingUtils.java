@@ -6,8 +6,8 @@ import com.lyplay.sflow.orm.components.Pagination;
 public class PagingUtils {
 	
 	
-	public static Pagination getPagination(Integer currentPage, Integer numPerPage) {
-		Pagination page = new Pagination();
+	public static <T> Pagination<T> getPagination(Integer currentPage, Integer numPerPage) {
+		Pagination<T> page = new Pagination<T>();
 		
 		if(currentPage == null || currentPage < 1 ){
 			page.setCurrentPage(Pagination.DEFAULT_CURRENT_PAGE);

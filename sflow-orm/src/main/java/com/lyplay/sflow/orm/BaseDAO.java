@@ -8,20 +8,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.lyplay.sflow.orm.components.Pagination;
 
-public class BaseDAO implements IBaseDAO{
+public class BaseDAO<T> implements IBaseDAO<T>{
 
 	@Resource(name="jdbcBaseDao")
-	private IBaseDAO baseDAO;
+	private IBaseDAO<T> baseDAO;
 	
 	
 	@Override
-	public <T> Pagination pageList(String sql, Object[] params, Class<T> clazz,
+	public Pagination<T> pageList(String sql, Object[] params, Class<T> clazz,
 			Integer currentPage, Integer numPerPage) {
 		return baseDAO.pageList(sql, params, clazz, currentPage, numPerPage);
 	}
 
 	@Override
-	public boolean update(Object po) {
+	public boolean update(T po) {
 		return baseDAO.update(po);
 	}
 
@@ -31,17 +31,17 @@ public class BaseDAO implements IBaseDAO{
 	}
 
 	@Override
-	public boolean save(Object po) {
+	public boolean save(T po) {
 		return baseDAO.save(po);
 	}
 
 	@Override
-	public boolean delete(Object po) {
+	public boolean delete(T po) {
 		return baseDAO.delete(po);
 	}
 
 	@Override
-	public boolean saveOrUpdate(Object po) {
+	public boolean saveOrUpdate(T po) {
 		return baseDAO.saveOrUpdate(po);
 	}
 

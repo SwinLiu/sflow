@@ -2,7 +2,7 @@ package com.lyplay.sflow.orm.components;
 
 import java.util.List;
 
-public class Pagination {
+public class Pagination<T> {
 
 	public static final int DEFAULT_PER_PAGE = 10;
 	public static final int DEFAULT_CURRENT_PAGE = 1;
@@ -19,7 +19,7 @@ public class Pagination {
 
 	private int lastIndex;
 
-	private List<?> resultList;
+	private List<T> resultList;
 
 	public int getNumPerPage() {
 		return numPerPage;
@@ -80,11 +80,11 @@ public class Pagination {
 		}
 	}
 
-	public List<?> getResultList() {
+	public List<T> getResultList() {
 		return resultList;
 	}
 
-	public void setResultList(List<?> resultList) {
+	public void setResultList(List<T> resultList) {
 		this.resultList = resultList;
 	}
 
