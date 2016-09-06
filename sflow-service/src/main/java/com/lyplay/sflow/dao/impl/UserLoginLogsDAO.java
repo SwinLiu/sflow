@@ -7,7 +7,7 @@ import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.po.UserLoginLogs;
 
 @Repository
-public class UserLoginLogsDAO extends BaseDAO implements IUserLoginLogsDAO{
+public class UserLoginLogsDAO extends BaseDAO<UserLoginLogs> implements IUserLoginLogsDAO{
 
 	@Override
 	public boolean saveLog(UserLoginLogs loginLog) {

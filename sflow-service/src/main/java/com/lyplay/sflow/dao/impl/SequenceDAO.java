@@ -15,7 +15,7 @@ import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.po.Sequence;
 
 @Repository
-public class SequenceDAO extends BaseDAO implements ISequenceDAO{
+public class SequenceDAO extends BaseDAO<Sequence> implements ISequenceDAO{
 
 	private static final String TABLE_NAME = "sflow_sequence";
 	

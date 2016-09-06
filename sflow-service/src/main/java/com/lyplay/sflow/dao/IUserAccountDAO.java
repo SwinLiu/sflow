@@ -1,10 +1,11 @@
 package com.lyplay.sflow.dao;
 
+import com.lyplay.sflow.orm.IBaseDAO;
 import com.lyplay.sflow.po.UserAccount;
 
 
 
-public interface IUserAccountDAO{
+public interface IUserAccountDAO extends IBaseDAO<UserAccount>{
 
 	public String getIdByPhone(String phone);
 	

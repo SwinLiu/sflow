@@ -9,7 +9,7 @@ import com.lyplay.sflow.orm.utils.ResultUtil;
 import com.lyplay.sflow.po.UserAccount;
 
 @Repository
-public class UserAccountDAO extends BaseDAO implements IUserAccountDAO{
+public class UserAccountDAO extends BaseDAO<UserAccount> implements IUserAccountDAO{
 
 	private static final String TABLE_NAME = "sflow_user_account";
 	private static final String COLUMN = "id,user_name,email,phone,status";

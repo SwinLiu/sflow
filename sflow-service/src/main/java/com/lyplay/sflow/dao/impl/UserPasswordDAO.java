@@ -7,7 +7,7 @@ import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.po.UserPassword;
 
 @Repository
-public class UserPasswordDAO extends BaseDAO implements IUserPasswordDAO{
+public class UserPasswordDAO extends BaseDAO<UserPassword> implements IUserPasswordDAO{
 
 	private static final String TABLE_NAME = "sflow_user_password";
 	
