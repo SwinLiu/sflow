@@ -12,12 +12,16 @@ import org.springframework.stereotype.Repository;
 
 import com.lyplay.sflow.dao.ISequenceDAO;
 import com.lyplay.sflow.orm.BaseDAO;
+import com.lyplay.sflow.orm.utils.CommonRowMapper;
+import com.lyplay.sflow.orm.utils.PoUtil;
 import com.lyplay.sflow.po.Sequence;
 
 @Repository
 public class SequenceDAO extends BaseDAO<Sequence> implements ISequenceDAO{
 
-	private static final String TABLE_NAME = "sflow_sequence";
+	private static final String TABLE_NAME = PoUtil.getTableName(Sequence.class);
+	private static final String COLUMN = PoUtil.getTableColumns(Sequence.class);
+	private static CommonRowMapper<Sequence> sequenceRowMapper = new CommonRowMapper<>(Sequence.class);
 	
 	@Override
 	public Sequence getNextSequence(final String sequenceName) {

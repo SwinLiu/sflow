@@ -146,5 +146,45 @@ public class PoUtil {
 		// 2. ex: className : DemoTest  -->  tableName : demotest 
 		//return className.substring(className.lastIndexOf(".")+1).toLowerCase();
 	}
+	
+	public static <T> String getTableColumns(Class<T> clazz){
+		
+		StringBuffer columns = new StringBuffer();
+		
+		Field[] fields = clazz.getDeclaredFields();
+		
+		int count = 0;
+		
+		for (int i = 0; i < fields.length; i++) {
+			
+			Field f = fields[i];
+			
+			if("serialVersionUID".equals(f.getName())){
+				continue;
+			}
+			
+			Method getter = PoUtil.getGetter(clazz,f);
+			
+			if(getter == null){
+				continue;
+			}
+			
+			Transient tranAnno = getter.getAnnotation(Transient.class);
+			if(tranAnno != null){
+				continue;
+			}
+			
+			String columnName = PoUtil.getColumnNameFromGetter(getter, f);
+			
+			if(count!=0){
+				columns.append(",");
+			}
+			columns.append(columnName);
+			count++;
+			
+		}
+		
+		return columns.toString();
+	}
  
 }

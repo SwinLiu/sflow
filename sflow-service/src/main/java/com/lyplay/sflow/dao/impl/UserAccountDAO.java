@@ -5,14 +5,15 @@ import org.springframework.stereotype.Repository;
 import com.lyplay.sflow.dao.IUserAccountDAO;
 import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.orm.utils.CommonRowMapper;
+import com.lyplay.sflow.orm.utils.PoUtil;
 import com.lyplay.sflow.orm.utils.ResultUtil;
 import com.lyplay.sflow.po.UserAccount;
 
 @Repository
 public class UserAccountDAO extends BaseDAO<UserAccount> implements IUserAccountDAO{
 
-	private static final String TABLE_NAME = "sflow_user_account";
-	private static final String COLUMN = "id,user_name,email,phone,status";
+	private static final String TABLE_NAME = PoUtil.getTableName(UserAccount.class);
+	private static final String COLUMN = PoUtil.getTableColumns(UserAccount.class);
 	private static CommonRowMapper<UserAccount> userAccountRowMapper = new CommonRowMapper<>(UserAccount.class);
 	
 	@Override

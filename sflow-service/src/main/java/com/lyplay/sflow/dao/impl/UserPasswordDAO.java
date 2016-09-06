@@ -4,12 +4,16 @@ import org.springframework.stereotype.Repository;
 
 import com.lyplay.sflow.dao.IUserPasswordDAO;
 import com.lyplay.sflow.orm.BaseDAO;
+import com.lyplay.sflow.orm.utils.CommonRowMapper;
+import com.lyplay.sflow.orm.utils.PoUtil;
 import com.lyplay.sflow.po.UserPassword;
 
 @Repository
 public class UserPasswordDAO extends BaseDAO<UserPassword> implements IUserPasswordDAO{
 
-	private static final String TABLE_NAME = "sflow_user_password";
+	private static final String TABLE_NAME = PoUtil.getTableName(UserPassword.class);
+	private static final String COLUMN = PoUtil.getTableColumns(UserPassword.class);
+	private static CommonRowMapper<UserPassword> userPasswordRowMapper = new CommonRowMapper<>(UserPassword.class);
 	
 	@Override
 	public boolean savePwd(UserPassword userPwd) {
