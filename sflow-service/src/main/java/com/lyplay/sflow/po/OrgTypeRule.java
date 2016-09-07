@@ -18,6 +18,7 @@ public class OrgTypeRule implements Serializable{
 	
 	private static final long serialVersionUID = 7612377508526313874L;
 	
+	@Id
 	private String id;
 	/**
 	 * parent id
@@ -32,7 +33,6 @@ public class OrgTypeRule implements Serializable{
 	 */
 	private Integer num;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

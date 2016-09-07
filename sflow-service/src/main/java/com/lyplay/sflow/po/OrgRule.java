@@ -18,12 +18,12 @@ public class OrgRule implements Serializable{
 	
 	private static final long serialVersionUID = -3806230227922572154L;
 	
+	@Id
 	private String id;
 	private String orgId;
 	private String managerType;
 	private String managerOrg;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

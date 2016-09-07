@@ -1,5 +1,7 @@
 package com.lyplay.sflow.dao;
 
+import java.util.List;
+
 import com.lyplay.sflow.orm.IBaseDAO;
 import com.lyplay.sflow.po.OrgType;
 
@@ -10,6 +12,9 @@ import com.lyplay.sflow.po.OrgType;
  */
 
 public interface IOrgTypeDAO extends IBaseDAO<OrgType>{
-
+	
+	public List<OrgType> list();
+	
+	
 	
 }

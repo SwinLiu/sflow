@@ -22,10 +22,11 @@ public class OrgType implements Serializable{
 	
 	private static final long serialVersionUID = -6286594645841276713L;
 	
+	@Id
 	private String id;
 	private String name;
 	
-	@Id
+	
 	public String getId() {
 		return id;
 	}

@@ -18,11 +18,11 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 5941819848560615642L;
 	
+	@Id
 	private String id;
 	private String name;
 	private int sex;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

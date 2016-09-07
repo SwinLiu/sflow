@@ -10,6 +10,7 @@ public class UserPassword implements Serializable {
 	
 	private static final long serialVersionUID = -1572606659751091731L;
 	
+	@Id
 	private String id;
 	private String password;
 	
@@ -20,7 +21,6 @@ public class UserPassword implements Serializable {
 		this.password = password;
 	}
 	
-	@Id
 	public String getId() {
 		return id;
 	}

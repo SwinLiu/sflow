@@ -18,6 +18,7 @@ public class Organization implements Serializable{
 	
 	private static final long serialVersionUID = -5862651851019953885L;
 	
+	@Id
 	private String id;
 	/**
 	 * 组织机构名字
@@ -36,7 +37,7 @@ public class Organization implements Serializable{
 	 */
 	private String pid;
 	
-	@Id
+	
 	public String getId() {
 		return id;
 	}

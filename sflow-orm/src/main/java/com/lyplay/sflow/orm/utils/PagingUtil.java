@@ -3,7 +3,7 @@ package com.lyplay.sflow.orm.utils;
 import com.lyplay.sflow.orm.components.Pagination;
 
 
-public class PagingUtils {
+public class PagingUtil {
 	
 	
 	public static <T> Pagination<T> getPagination(Integer currentPage, Integer numPerPage) {

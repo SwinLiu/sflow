@@ -18,10 +18,10 @@ public class Position implements Serializable{
 	
 	private static final long serialVersionUID = 3343662737395229366L;
 	
+	@Id
 	private String id;
 	private String name;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

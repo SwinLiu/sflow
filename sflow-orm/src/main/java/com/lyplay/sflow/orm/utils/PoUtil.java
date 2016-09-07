@@ -55,7 +55,7 @@ public class PoUtil {
 				continue;
 			}
 			
-			Transient tranAnno = sourceGetter.getAnnotation(Transient.class);
+			Transient tranAnno = srcf.getAnnotation(Transient.class);
 			if(tranAnno != null){
 				continue;
 			}
@@ -63,7 +63,7 @@ public class PoUtil {
 			Object sourceValue = sourceGetter.invoke(source);
 			Object targetValue = sourceGetter.invoke(target);
 			
-			Id idAnno = sourceGetter.getAnnotation(Id.class);
+			Id idAnno = srcf.getAnnotation(Id.class);
 			if(idAnno != null){
 				if(sourceValue == null || targetValue == null){
 					throw new NoIdValueFoundException(srcClass);
@@ -96,7 +96,7 @@ public class PoUtil {
     }
  
     public static <T> Method getGetter(Class<T> clazz, Field f){
-		String getterName = "get" + ColnumNameUtils.capitalize(f.getName());
+		String getterName = "get" + ColnumNameUtil.capitalize(f.getName());
 		Method getter = null;
 		try {
 			getter = clazz.getMethod(getterName);
@@ -114,16 +114,16 @@ public class PoUtil {
 	 * @return
 	 * @throws NoColumnAnnotationFoundException
 	 */
-	public static String getColumnNameFromGetter(Method getter,Field f){
+	public static String getColumnNameFromGetter(Field f){
 		String columnName = "";
-		Column columnAnno = getter.getAnnotation(Column.class);
+		Column columnAnno = f.getAnnotation(Column.class);
 		if(columnAnno != null){
 			columnName = columnAnno.name();
 		}
 		
 		if(columnName == null || "".equals(columnName)){
 			// 1. ex : name : testName -> test_name
-			columnName = ColnumNameUtils.camel2underscore(f.getName());
+			columnName = ColnumNameUtil.camel2underscore(f.getName());
 			// 2. ex : name : testName -> testname
 			//columnName = f.getName().toLowerCase();
 		}
@@ -142,7 +142,7 @@ public class PoUtil {
 		//if Table annotation is null
 		String className = clazz.getName();
 		// 1. ex: className : DemoTest  -->  tableName : demo_test 
-		return ColnumNameUtils.camel2underscore(className.substring(className.lastIndexOf(".")+1));
+		return ColnumNameUtil.camel2underscore(className.substring(className.lastIndexOf(".")+1));
 		// 2. ex: className : DemoTest  -->  tableName : demotest 
 		//return className.substring(className.lastIndexOf(".")+1).toLowerCase();
 	}
@@ -169,12 +169,12 @@ public class PoUtil {
 				continue;
 			}
 			
-			Transient tranAnno = getter.getAnnotation(Transient.class);
+			Transient tranAnno = f.getAnnotation(Transient.class);
 			if(tranAnno != null){
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(getter, f);
+			String columnName = PoUtil.getColumnNameFromGetter(f);
 			
 			if(count!=0){
 				columns.append(",");

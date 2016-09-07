@@ -12,7 +12,7 @@ import com.lyplay.sflow.orm.components.SqlParamsPairs;
 import com.lyplay.sflow.orm.exception.NoIdAnnotationFoundException;
 import com.lyplay.sflow.orm.exception.NoIdValueFoundException;
 
-public class ModelSqlUtils {
+public class ModelSqlUtil {
 
 	public static <T> SqlParamsPairs getInsertFromObject(T po) throws Exception{
 		
@@ -49,12 +49,12 @@ public class ModelSqlUtils {
 				continue;
 			}
 			
-			Transient tranAnno = getter.getAnnotation(Transient.class);
+			Transient tranAnno = f.getAnnotation(Transient.class);
 			if(tranAnno != null){
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(getter, f);
+			String columnName = PoUtil.getColumnNameFromGetter(f);
 			
 			if(count!=0){
 				insertSql.append(",");
@@ -109,15 +109,15 @@ public class ModelSqlUtils {
 				continue;
 			}
 			
-			Transient tranAnno = getter.getAnnotation(Transient.class);
+			Transient tranAnno = f.getAnnotation(Transient.class);
 			if(tranAnno != null){
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(getter,f);
+			String columnName = PoUtil.getColumnNameFromGetter(f);
 			Object value = getter.invoke(po);
 			
-			Id idAnno = getter.getAnnotation(Id.class);
+			Id idAnno = f.getAnnotation(Id.class);
 			if(idAnno != null){
 				if(value == null){
 					throw new NoIdValueFoundException(po.getClass());
@@ -189,12 +189,12 @@ public class ModelSqlUtils {
 				continue;
 			}
 			
-			idAnno = getter.getAnnotation(Id.class);
+			idAnno = f.getAnnotation(Id.class);
 			if(idAnno == null){
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(getter,f);
+			String columnName = PoUtil.getColumnNameFromGetter(f);
 			
 			if(whereSql.length() > 0){
 				whereSql.append("and");
@@ -246,12 +246,12 @@ public class ModelSqlUtils {
 				continue;
 			}
 			
-			Transient tranAnno = getter.getAnnotation(Transient.class);
+			Transient tranAnno = f.getAnnotation(Transient.class);
 			if(tranAnno != null){
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(getter, f);
+			String columnName = PoUtil.getColumnNameFromGetter(f);
 			
 			if(count!=0){
 				selectSql.append(",");
@@ -259,7 +259,7 @@ public class ModelSqlUtils {
 			selectSql.append(columnName);
 			count++;
 			
-			Id idAnno = getter.getAnnotation(Id.class);
+			Id idAnno = f.getAnnotation(Id.class);
 			if(idAnno == null){
 				continue;
 			}

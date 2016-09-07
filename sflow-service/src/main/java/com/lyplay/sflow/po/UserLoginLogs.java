@@ -10,12 +10,12 @@ public class UserLoginLogs implements Serializable {
 	
 	private static final long serialVersionUID = -6395836781121452836L;
 	
+	@Id
 	private String id;
 	private String userId;
 	private String loginIp;
 	private String loginTime;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

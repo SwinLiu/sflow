@@ -10,13 +10,13 @@ public class UserAccount implements Serializable {
 	
 	private static final long serialVersionUID = -1096831093746801999L;
 	
+	@Id
 	private String id;
 	private String userName;
 	private String email;
 	private String phone;
 	private Integer status;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

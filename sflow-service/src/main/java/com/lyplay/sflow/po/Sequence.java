@@ -10,6 +10,7 @@ public class Sequence implements Serializable{
 	
 	private static final long serialVersionUID = 3751197697169195543L;
 	
+	@Id
 	private String sequenceName;
 	private String prefix;
 	private Long currValue;
@@ -32,7 +33,6 @@ public class Sequence implements Serializable{
 
 
 
-	@Id
 	public String getSequenceName() {
 		return sequenceName;
 	}

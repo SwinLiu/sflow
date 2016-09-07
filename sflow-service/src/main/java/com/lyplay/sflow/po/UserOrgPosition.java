@@ -18,12 +18,12 @@ public class UserOrgPosition implements Serializable{
 	
 	private static final long serialVersionUID = -4005197459551131066L;
 	
+	@Id
 	private String id;
 	private String userId;
 	private String orgId;
 	private String posId;
 	
-	@Id
 	public String getId() {
 		return id;
 	}

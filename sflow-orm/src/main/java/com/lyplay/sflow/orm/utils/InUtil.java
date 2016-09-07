@@ -10,7 +10,7 @@ import com.lyplay.sflow.orm.components.SqlParamsPairs;
  * Used to deal with "IN" in sql.
  *
  */
-public class InUtils {
+public class InUtil {
 	
 	/**
 	 * Change sql if found array in params
