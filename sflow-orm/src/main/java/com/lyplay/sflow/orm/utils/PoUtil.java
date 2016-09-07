@@ -114,7 +114,7 @@ public class PoUtil {
 	 * @return
 	 * @throws NoColumnAnnotationFoundException
 	 */
-	public static String getColumnNameFromGetter(Field f){
+	public static String getColumnName(Field f){
 		String columnName = "";
 		Column columnAnno = f.getAnnotation(Column.class);
 		if(columnAnno != null){
@@ -147,6 +147,11 @@ public class PoUtil {
 		//return className.substring(className.lastIndexOf(".")+1).toLowerCase();
 	}
 	
+	public static <T> String getClassName(Class<T> clazz){
+		String className = clazz.getName();
+		return className.substring(className.lastIndexOf(".")+1);
+	}
+	
 	public static <T> String getTableColumns(Class<T> clazz){
 		
 		StringBuffer columns = new StringBuffer();
@@ -174,7 +179,7 @@ public class PoUtil {
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(f);
+			String columnName = PoUtil.getColumnName(f);
 			
 			if(count!=0){
 				columns.append(",");

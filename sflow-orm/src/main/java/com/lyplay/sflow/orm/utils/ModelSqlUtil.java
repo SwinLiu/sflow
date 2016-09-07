@@ -54,7 +54,7 @@ public class ModelSqlUtil {
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(f);
+			String columnName = PoUtil.getColumnName(f);
 			
 			if(count!=0){
 				insertSql.append(",");
@@ -114,7 +114,7 @@ public class ModelSqlUtil {
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(f);
+			String columnName = PoUtil.getColumnName(f);
 			Object value = getter.invoke(po);
 			
 			Id idAnno = f.getAnnotation(Id.class);
@@ -194,7 +194,7 @@ public class ModelSqlUtil {
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(f);
+			String columnName = PoUtil.getColumnName(f);
 			
 			if(whereSql.length() > 0){
 				whereSql.append("and");
@@ -251,7 +251,7 @@ public class ModelSqlUtil {
 				continue;
 			}
 			
-			String columnName = PoUtil.getColumnNameFromGetter(f);
+			String columnName = PoUtil.getColumnName(f);
 			
 			if(count!=0){
 				selectSql.append(",");
