@@ -32,21 +32,24 @@ public class PoDDLUtil {
 		
 		String tableName = PoUtil.getTableName(clazz);
 		
+		createSql.append(NEW_LINE);
 		createSql.append(String.format("-- Delete table %s for PO %s ", tableName, PoUtil.getClassName(clazz))).append(NEW_LINE);
 		
 		createSql.append(generateDeleteSql(tableName));
 		
+		createSql.append(NEW_LINE);
 		createSql.append(String.format("-- Create table %s for PO %s ", tableName, PoUtil.getClassName(clazz))).append(NEW_LINE);
 		
-		createSql.append("CREATE TABLE  " + tableName + " ( ");
+		createSql.append(String.format("CREATE TABLE %s ( ", tableName));
 		
 		Field[] fields = clazz.getDeclaredFields();
 		List<String> primaryKeys = new ArrayList<String>();
 		List<String> uniqueKeys = new ArrayList<String>();
 		int count = 0;
 		for (int i = 0; i < fields.length; i++) {
-			
-			createSql.append(NEW_LINE);
+			if(i!=0){
+				createSql.append(NEW_LINE);
+			}
 			
 			Field f = fields[i];
 			
@@ -103,6 +106,7 @@ public class PoDDLUtil {
 	public static String generatePrimaryKey(String tableName, List<String> primaryKeys){
 		StringBuffer primaryKeySql = new StringBuffer();
 		if(CollectionUtils.isNotEmpty(primaryKeys)){
+			primaryKeySql.append(NEW_LINE);
 			primaryKeySql.append(String.format("-- Create Primary Key for Table %s ", tableName, tableName));
 			primaryKeySql.append(NEW_LINE);
 			primaryKeySql.append(String.format("ALTER TABLE %s ADD CONSTRAINT pk_%s PRIMARY KEY (%s)",
@@ -115,6 +119,7 @@ public class PoDDLUtil {
 	public static String generateUnionKey(String tableName, List<String> uniqueKeys){
 		StringBuffer uniqueKeySql = new StringBuffer();
 		if(CollectionUtils.isNotEmpty(uniqueKeys)){
+			uniqueKeySql.append(NEW_LINE);
 			uniqueKeySql.append(String.format("-- Create Unique Key for Table %s ", tableName, tableName));
 			uniqueKeySql.append(NEW_LINE);
 			uniqueKeySql.append(String.format("ALTER TABLE %s ADD CONSTRAINT uk_%s UNIQUE (%s)",

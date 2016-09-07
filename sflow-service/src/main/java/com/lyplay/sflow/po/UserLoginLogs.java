@@ -1,6 +1,7 @@
 package com.lyplay.sflow.po;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,7 +15,7 @@ public class UserLoginLogs implements Serializable {
 	private String id;
 	private String userId;
 	private String loginIp;
-	private String loginTime;
+	private Date loginTime;
 	
 	public String getId() {
 		return id;
@@ -34,10 +35,10 @@ public class UserLoginLogs implements Serializable {
 	public void setLoginIp(String loginIp) {
 		this.loginIp = loginIp;
 	}
-	public String getLoginTime() {
+	public Date getLoginTime() {
 		return loginTime;
 	}
-	public void setLoginTime(String loginTime) {
+	public void setLoginTime(Date loginTime) {
 		this.loginTime = loginTime;
 	}
 	

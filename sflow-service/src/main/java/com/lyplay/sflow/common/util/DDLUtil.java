@@ -2,6 +2,7 @@ package com.lyplay.sflow.common.util;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.net.JarURLConnection;
@@ -27,17 +28,37 @@ public class DDLUtil {
         String pkg = "com.lyplay.sflow.po";
         
         // 指定输出文件
-        String outPath = "";
+        String outPath = "/home/lyplay/";
         
         List<Class<?>> list = null;  
 //      list = getClassList(pkg, recursive, null);  
         // 增加 Table.class的过滤项，即可只选出加了Table annotation 的类  
         list = getClassList(pkg, recursive, Table.class);
         
+        StringBuffer sqlContent = new StringBuffer();
         for(int i = 0;i < list.size(); i ++){  
-        	System.out.println(PoDDLUtil.generateCreateSql(list.get(i)));
+        	sqlContent.append(PoDDLUtil.generateCreateSql(list.get(i)));
         }
         
+        File file = new File(outPath+"newfile.sql");
+        try {
+        	FileOutputStream fop = new FileOutputStream(file);
+        	// if file doesn't exists, then create it
+        	if (!file.exists()) {
+        		file.createNewFile();
+        	}
+        	
+        	// get the content in bytes
+        	byte[] contentInBytes = sqlContent.toString().getBytes();
+
+        	fop.write(contentInBytes);
+        	fop.flush();
+        	fop.close();
+
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+        	   
 	}
 	
 	
