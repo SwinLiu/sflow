@@ -2,6 +2,7 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -11,7 +12,10 @@ public class UserPassword implements Serializable {
 	private static final long serialVersionUID = -1572606659751091731L;
 	
 	@Id
+	@Column(length=20)
 	private String id;
+	
+	@Column(length=50,nullable=false)
 	private String password;
 	
 	public UserPassword() { }

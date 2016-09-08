@@ -33,6 +33,8 @@ public class UserDAOTest extends BaseTest{
 		UserAccount userAccount = new UserAccount();
 		userAccount.setId("u009");
 		userAccount.setUserName("test");
+		userAccount.setEmail("test@test.com");
+		userAccount.setStatus(1);
 		userAccountDAO.saveUserAccount(userAccount);
 		
 		userPasswordDAO.save(new UserPassword("u009",SHAUtil.shaEncode("test")));
@@ -42,12 +44,9 @@ public class UserDAOTest extends BaseTest{
 	@Test
 	public void updateUser(){
 		
-		UserAccount userAccount = new UserAccount();
-		userAccount.setId("U001");
+		UserAccount userAccount = userAccountDAO.get("u009");
 		userAccount.setUserName("swin.liu,asdf");
 		userAccount.setPhone("1234567890");
-		userAccount.setEmail(null);
-		userAccount.setStatus(null);
 		userAccountDAO.updateUserAccount(userAccount);
 		
 	}

@@ -2,6 +2,7 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,18 +20,22 @@ public class OrgTypeRule implements Serializable{
 	private static final long serialVersionUID = 7612377508526313874L;
 	
 	@Id
+	@Column(length = 20)
 	private String id;
 	/**
 	 * parent id
 	 */
+	@Column(length = 20, nullable = false)
 	private String pid;
 	/**
 	 * children id
 	 */
+	@Column(length = 20, nullable = false)
 	private String cid;
 	/**
 	 * 两者之间的数量，-1 代表无限个
 	 */
+	@Column(length = 4, nullable = false)
 	private Integer num;
 	
 	public String getId() {

@@ -2,6 +2,7 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,9 +20,16 @@ public class UserOrgPosition implements Serializable{
 	private static final long serialVersionUID = -4005197459551131066L;
 	
 	@Id
+	@Column(length = 20)
 	private String id;
+	
+	@Column(length = 20, nullable = false)
 	private String userId;
+	
+	@Column(length = 20, nullable = false)
 	private String orgId;
+	
+	@Column(length = 20, nullable = false)
 	private String posId;
 	
 	public String getId() {

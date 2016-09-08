@@ -2,24 +2,37 @@ package com.lyplay.sflow.po;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name="sflow_sequence")
-public class Sequence implements Serializable{
-	
+@Table(name = "sflow_sequence")
+public class Sequence implements Serializable {
+
 	private static final long serialVersionUID = 3751197697169195543L;
-	
+
 	@Id
+	@Column(length = 20)
 	private String sequenceName;
+
+	@Column(length = 20)
 	private String prefix;
+
+	@Column(length = 20, unique = true, nullable = false)
 	private Long currValue;
+
+	@Column(length = 20)
 	private String suffix;
+
+	@Column(length = 3, nullable = false)
 	private Integer lpadLength;
+
+	@Column(length = 3, nullable = false)
 	private Integer increment;
-	
-	public Sequence() {}
-	
+
+	public Sequence() {
+	}
+
 	public Sequence(String sequenceName, String prefix, Long currValue,
 			String suffix, Integer lpadLength, Integer increment) {
 		super();
@@ -31,44 +44,54 @@ public class Sequence implements Serializable{
 		this.increment = increment;
 	}
 
-
-
 	public String getSequenceName() {
 		return sequenceName;
 	}
+
 	public void setSequenceName(String sequenceName) {
 		this.sequenceName = sequenceName;
 	}
+
 	public String getPrefix() {
 		return prefix;
 	}
+
 	public void setPrefix(String prefix) {
 		this.prefix = prefix;
 	}
+
 	public Long getCurrValue() {
 		return currValue;
 	}
+
 	public void setCurrValue(Long currValue) {
 		this.currValue = currValue;
 	}
+
 	public String getSuffix() {
 		return suffix;
 	}
+
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
 	}
+
 	public Integer getLpadLength() {
 		return lpadLength;
 	}
+
 	public void setLpadLength(Integer lpadLength) {
 		this.lpadLength = lpadLength;
 	}
+
 	public Integer getIncrement() {
 		return increment;
 	}
+
 	public void setIncrement(Integer increment) {
 		this.increment = increment;
 	}
+
 	@Override
 	public String toString() {
 		return "Sequence [sequenceName=" + sequenceName + ", prefix=" + prefix
@@ -76,6 +99,5 @@ public class Sequence implements Serializable{
 				+ ", lpadLength=" + lpadLength + ", increment=" + increment
 				+ "]";
 	}
-	
-	
+
 }

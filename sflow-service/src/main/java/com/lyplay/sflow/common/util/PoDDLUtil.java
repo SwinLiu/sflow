@@ -22,7 +22,7 @@ public class PoDDLUtil {
 	private static final int DEFAULT_LENGTH = 50;
 	
 	public static <T> String generateDeleteSql(String tableName){
-		return String.format("Drop table %s ;%s", tableName, NEW_LINE);
+		return String.format("Drop table  IF EXISTS %s ;%s", tableName, NEW_LINE);
 	}
 	
 	public static <T> String generateCreateSql(Class<T> clazz){
@@ -109,7 +109,7 @@ public class PoDDLUtil {
 			primaryKeySql.append(NEW_LINE);
 			primaryKeySql.append(String.format("-- Create Primary Key for Table %s ", tableName, tableName));
 			primaryKeySql.append(NEW_LINE);
-			primaryKeySql.append(String.format("ALTER TABLE %s ADD CONSTRAINT pk_%s PRIMARY KEY (%s)",
+			primaryKeySql.append(String.format("ALTER TABLE %s ADD CONSTRAINT pk_%s PRIMARY KEY (%s); ",
 					tableName, tableName, StringUtils.join(primaryKeys.toArray(),",")));
 			primaryKeySql.append(NEW_LINE);
 		}
@@ -121,9 +121,14 @@ public class PoDDLUtil {
 		if(CollectionUtils.isNotEmpty(uniqueKeys)){
 			uniqueKeySql.append(NEW_LINE);
 			uniqueKeySql.append(String.format("-- Create Unique Key for Table %s ", tableName, tableName));
-			uniqueKeySql.append(NEW_LINE);
-			uniqueKeySql.append(String.format("ALTER TABLE %s ADD CONSTRAINT uk_%s UNIQUE (%s)",
-					tableName, tableName, StringUtils.join(uniqueKeys.toArray(),",")));
+			
+			int idx = 1;
+			for(String columnName : uniqueKeys){
+				uniqueKeySql.append(NEW_LINE);
+				uniqueKeySql.append(String.format("ALTER TABLE %s ADD CONSTRAINT uk%s_%s UNIQUE (%s);",
+						tableName, idx, tableName, columnName));
+				idx++;
+			}
 			uniqueKeySql.append(NEW_LINE);
 		}
 		return uniqueKeySql.toString();
