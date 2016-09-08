@@ -19,6 +19,36 @@ public class OrgTypeDAO extends BaseDAO<OrgType> implements IOrgTypeDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean addOrgTypeRule(int pid, int cid, int num) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean delOrgTypeRule(int pid, int cid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean updateOrgTypeRule(int pid, int cid, int num) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<OrgType> listByRule(int pid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getNum(int pid, int cid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 }
