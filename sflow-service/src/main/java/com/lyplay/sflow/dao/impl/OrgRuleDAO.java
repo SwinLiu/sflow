@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.lyplay.sflow.dao.IOrgRuleDAO;
 import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.orm.components.Po;
-import com.lyplay.sflow.po.OrgRule;
+import com.lyplay.sflow.po.org.OrgRule;
 
 @Repository
 public class OrgRuleDAO extends BaseDAO<OrgRule> implements IOrgRuleDAO{

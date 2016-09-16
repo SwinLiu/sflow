@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.lyplay.sflow.po.model.Principal;
+
 /**
  * 人员表
  * 
@@ -14,7 +16,7 @@ import javax.persistence.Table;
  */
 
 @Table(name = "sflow_user")
-public class User implements Serializable {
+public class User implements Principal,Serializable {
 
 	private static final long serialVersionUID = 5941819848560615642L;
 

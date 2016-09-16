@@ -5,7 +5,7 @@ import java.util.List;
 import com.lyplay.sflow.dto.TreeDto;
 import com.lyplay.sflow.orm.IBaseDAO;
 import com.lyplay.sflow.orm.components.Pagination;
-import com.lyplay.sflow.po.Organization;
+import com.lyplay.sflow.po.org.Organization;
 
 
 /**

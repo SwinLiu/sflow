@@ -1,4 +1,4 @@
-package com.lyplay.sflow.po;
+package com.lyplay.sflow.po.org;
 
 import java.io.Serializable;
 
@@ -7,22 +7,22 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 组织机构类型对象，用来设定系统中存在有哪些组织类型 e.g. 总公司 子公司 部门
+ * Position 职位表
  * 
  * @author lyplay
  *
  */
 
-@Table(name = "sflow_org_type")
-public class OrgType implements Serializable {
+@Table(name = "sflow_position")
+public class Position implements Serializable {
 
-	private static final long serialVersionUID = -6286594645841276713L;
+	private static final long serialVersionUID = 3343662737395229366L;
 
 	@Id
 	@Column(length = 20)
 	private String id;
 
-	@Column(length = 20, nullable = false)
+	@Column(length = 50, nullable = false)
 	private String name;
 
 	public String getId() {

@@ -9,7 +9,7 @@ import com.lyplay.sflow.dto.TreeDto;
 import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.orm.components.Pagination;
 import com.lyplay.sflow.orm.components.Po;
-import com.lyplay.sflow.po.Organization;
+import com.lyplay.sflow.po.org.Organization;
 
 @Repository
 public class OrganizationDAO extends BaseDAO<Organization> implements IOrganizationDAO{

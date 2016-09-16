@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.lyplay.sflow.dao.IOrgTypeDAO;
 import com.lyplay.sflow.orm.BaseDAO;
 import com.lyplay.sflow.orm.components.Po;
-import com.lyplay.sflow.po.OrgType;
+import com.lyplay.sflow.po.org.OrgType;
 
 @Repository
 public class OrgTypeDAO extends BaseDAO<OrgType> implements IOrgTypeDAO{

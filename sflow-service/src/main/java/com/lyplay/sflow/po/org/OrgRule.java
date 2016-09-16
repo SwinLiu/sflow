@@ -1,4 +1,4 @@
-package com.lyplay.sflow.po;
+package com.lyplay.sflow.po.org;
 
 import java.io.Serializable;
 
