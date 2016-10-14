@@ -1,6 +1,6 @@
 package com.lyplay.sflow.orm.utils;
 
-public class ColnumNameUtil {
+public class ColumnNameUtil {
 	
 	/**
 	 * convert camel name to underscore name

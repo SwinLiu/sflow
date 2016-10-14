@@ -96,7 +96,7 @@ public class PoUtil {
     }
  
     public static <T> Method getGetter(Class<T> clazz, Field f){
-		String getterName = "get" + ColnumNameUtil.capitalize(f.getName());
+		String getterName = "get" + ColumnNameUtil.capitalize(f.getName());
 		Method getter = null;
 		try {
 			getter = clazz.getMethod(getterName);
@@ -123,7 +123,7 @@ public class PoUtil {
 		
 		if(columnName == null || "".equals(columnName)){
 			// 1. ex : name : testName -> test_name
-			columnName = ColnumNameUtil.camel2underscore(f.getName());
+			columnName = ColumnNameUtil.camel2underscore(f.getName());
 			// 2. ex : name : testName -> testname
 			//columnName = f.getName().toLowerCase();
 		}
@@ -142,7 +142,7 @@ public class PoUtil {
 		//if Table annotation is null
 		String className = clazz.getName();
 		// 1. ex: className : DemoTest  -->  tableName : demo_test 
-		return ColnumNameUtil.camel2underscore(className.substring(className.lastIndexOf(".")+1));
+		return ColumnNameUtil.camel2underscore(className.substring(className.lastIndexOf(".")+1));
 		// 2. ex: className : DemoTest  -->  tableName : demotest 
 		//return className.substring(className.lastIndexOf(".")+1).toLowerCase();
 	}
