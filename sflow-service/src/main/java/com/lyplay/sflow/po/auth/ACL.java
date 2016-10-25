@@ -4,12 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 权限表
  * @author lyplay
  *
  */
+@Table(name = "sflow_acl")
 public class ACL implements Serializable {
 
 	private static final long serialVersionUID = 5921863824277705710L;
@@ -42,11 +44,11 @@ public class ACL implements Serializable {
 		this.id = id;
 	}
 
-	public String getpType() {
+	public String getPType() {
 		return pType;
 	}
 
-	public void setpType(String pType) {
+	public void setPType(String pType) {
 		this.pType = pType;
 	}
 
@@ -58,11 +60,11 @@ public class ACL implements Serializable {
 		this.pid = pid;
 	}
 
-	public String getrType() {
+	public String getRType() {
 		return rType;
 	}
 
-	public void setrType(String rType) {
+	public void setRType(String rType) {
 		this.rType = rType;
 	}
 
@@ -81,5 +83,5 @@ public class ACL implements Serializable {
 	public void setAclState(Integer aclState) {
 		this.aclState = aclState;
 	}
-	
+
 }

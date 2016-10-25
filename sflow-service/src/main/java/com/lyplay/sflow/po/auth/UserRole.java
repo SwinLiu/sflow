@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "sflow_user_role")
 public class UserRole implements Serializable {
 
 	private static final long serialVersionUID = -6741029720099675617L;

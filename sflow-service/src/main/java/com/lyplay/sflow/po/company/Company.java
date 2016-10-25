@@ -12,7 +12,7 @@ import javax.persistence.Table;
  *
  */
 
-@Table
+@Table(name = "sflow_company")
 public class Company implements Serializable{
 	
 	private static final long serialVersionUID = -4672672311575667360L;
