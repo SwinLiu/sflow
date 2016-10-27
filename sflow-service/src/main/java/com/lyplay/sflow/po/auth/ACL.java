@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.lyplay.sflow.enums.PrincipalType;
+import com.lyplay.sflow.enums.ResourceType;
+import com.lyplay.sflow.exception.SysException;
+
 /**
  * 权限表
  * @author lyplay
@@ -33,7 +37,7 @@ public class ACL implements Serializable {
 	@Column(length=20)
 	private String rid;
 	
-	@Column(length=20)
+	@Column(length=4)
 	private Integer aclState;
 
 	public String getId() {
@@ -83,5 +87,49 @@ public class ACL implements Serializable {
 	public void setAclState(Integer aclState) {
 		this.aclState = aclState;
 	}
+	
+	public void setPrincipalType(PrincipalType principalType) {
+		this.pType = principalType.getValue();
+	}
+	
+	public void setRourceType(ResourceType resourceType) {
+		this.rType = resourceType.getValue();
+	}
+	
+	public void setPermission(int index, boolean permit){
+		
+		if(index < 0 || index > 31){
+			throw new SysException("permission index should between 0 ~ 31 .");
+		}
+		
+		this.aclState = setBit(this.aclState, index, permit );
+		
+		
+	}
+	
+	public int setBit(int state, int index, boolean permit){
+		int temp = 1;
+		temp = temp << index;
+		if(permit){
+			state = state | temp;
+		}else{
+			temp = ~temp;
+			state = state & temp;
+		}
+		return state;
+	}
+	
+	
+	
+	
+	public boolean checkPermission(int index){
+		
+		
+		return false;
+	}
+	
+	
+	
+	
 
 }
