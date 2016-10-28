@@ -6,19 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
  * 组织对象,该表可以生成完整的组织树
- * 		
+ * 
  * @author lyplay
  *
  */
 
-@Table(name="sflow_org")
-public class Organization implements Serializable{
-	
+@Table(name = "sflow_org")
+public class Organization implements Serializable {
+
 	private static final long serialVersionUID = -5862651851019953885L;
-	
+
 	@Id
 	@Column(length = 20)
 	private String id;
@@ -36,43 +35,55 @@ public class Organization implements Serializable{
 	 * 组织机构的排序号
 	 */
 	@Column(length = 4, nullable = false)
-	private Integer orderNo;
+	private Integer orderNum;
 	/**
 	 * 父组织的id
 	 */
 	@Column(length = 20, nullable = false)
-	private String pid;
-	
-	
+	private String parentId;
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getTypeId() {
 		return typeId;
 	}
+
 	public void setTypeId(String typeId) {
 		this.typeId = typeId;
 	}
-	public Integer getOrderNo() {
-		return orderNo;
+
+	public Integer getOrderNum() {
+		return orderNum;
 	}
-	public void setOrderNo(Integer orderNo) {
-		this.orderNo = orderNo;
+
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
 	}
-	public String getPid() {
-		return pid;
+
+	public String getParentId() {
+		return parentId;
 	}
-	public void setPid(String pid) {
-		this.pid = pid;
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 }

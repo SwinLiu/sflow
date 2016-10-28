@@ -1,7 +1,7 @@
 package com.lyplay.sflow.dao;
 
 import com.lyplay.sflow.orm.IBaseDAO;
-import com.lyplay.sflow.po.company.Company;
+import com.lyplay.sflow.po.Company;
 
 
 /**

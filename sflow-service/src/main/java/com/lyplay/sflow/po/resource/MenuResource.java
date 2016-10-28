@@ -8,35 +8,35 @@ import javax.persistence.Table;
 
 import com.lyplay.sflow.po.model.Resource;
 
-@Table(name="sflow_menu_res")
-public class MenuResource implements Resource, Serializable{
+@Table(name = "sflow_menu_res")
+public class MenuResource implements Resource, Serializable {
 
 	private static final long serialVersionUID = -4858405128969894327L;
-	
+
 	@Id
-	@Column(length=20)
+	@Column(length = 20)
 	private String id;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String name;
-	
-	@Column(length=20)
+
+	@Column(length = 20)
 	private String menuPos;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String href;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String icon;
-	
-	@Column(length=5)
-	private Integer order;
-	
-	@Column(length=2)
+
+	@Column(length = 5)
+	private Integer orderNum;
+
+	@Column(length = 2)
 	private Integer dispaly;
-	
-	@Column(length=20)
-	private String pId;
+
+	@Column(length = 20)
+	private String parentId;
 
 	public String getId() {
 		return id;
@@ -78,15 +78,14 @@ public class MenuResource implements Resource, Serializable{
 		this.icon = icon;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public Integer getOrderNum() {
+		return orderNum;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
 	}
 
-	
 	public Integer getDispaly() {
 		return dispaly;
 	}
@@ -95,12 +94,12 @@ public class MenuResource implements Resource, Serializable{
 		this.dispaly = dispaly;
 	}
 
-	public String getPId() {
-		return pId;
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setPId(String pId) {
-		this.pId = pId;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 }

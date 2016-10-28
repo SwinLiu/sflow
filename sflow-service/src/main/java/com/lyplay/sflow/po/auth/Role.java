@@ -20,9 +20,9 @@ public class Role implements Principal, Serializable {
 	private static final long serialVersionUID = -4371785434259863415L;
 
 	@Id
-	@Column(length=20)
+	@Column(length = 20)
 	private String id;
-	
+
 	@Column(length = 20, nullable = false)
 	private String roleName;
 

@@ -8,22 +8,22 @@ import javax.persistence.Table;
 
 import com.lyplay.sflow.po.model.Resource;
 
-@Table(name="sflow_controller_res")
-public class ControllerResource implements Resource, Serializable{
+@Table(name = "sflow_controller_res")
+public class ControllerResource implements Resource, Serializable {
 
 	private static final long serialVersionUID = -4858405128969894327L;
-	
+
 	@Id
-	@Column(length=20)
+	@Column(length = 20)
 	private String id;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
 	private String name;
-	
-	@Column(length=50,nullable=false)
+
+	@Column(length = 50, nullable = false)
 	private String className;
-	
-	@Column(length=5)
+
+	@Column(length = 5)
 	private Integer order;
 
 	public String getId() {
@@ -57,6 +57,5 @@ public class ControllerResource implements Resource, Serializable{
 	public void setOrder(Integer order) {
 		this.order = order;
 	}
-	
-	
+
 }

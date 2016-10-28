@@ -6,10 +6,18 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "sflow_user_role")
-public class UserRole implements Serializable {
+import com.lyplay.sflow.po.model.Principal;
 
-	private static final long serialVersionUID = -6741029720099675617L;
+/**
+ * 用户权限组表
+ * 
+ * @author lyplay
+ *
+ */
+@Table(name = "sflow_user_access_group")
+public class UserAccessGroup implements Principal, Serializable {
+
+	private static final long serialVersionUID = 2070912993664409572L;
 
 	@Id
 	@Column(length = 20)
@@ -19,10 +27,7 @@ public class UserRole implements Serializable {
 	private String userId;
 
 	@Column(length = 20, nullable = false)
-	private String compId;
-
-	@Column(length = 20, nullable = false)
-	private String roleId;
+	private String accessGrpId;
 
 	public String getId() {
 		return id;
@@ -40,20 +45,12 @@ public class UserRole implements Serializable {
 		this.userId = userId;
 	}
 
-	public String getCompId() {
-		return compId;
+	public String getAccessGrpId() {
+		return accessGrpId;
 	}
 
-	public void setCompId(String compId) {
-		this.compId = compId;
-	}
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setAccessGrpId(String accessGrpId) {
+		this.accessGrpId = accessGrpId;
 	}
 
 }

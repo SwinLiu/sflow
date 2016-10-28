@@ -16,17 +16,17 @@ import com.lyplay.sflow.po.model.Principal;
  */
 
 @Table(name = "sflow_user")
-public class User implements Principal,Serializable {
+public class User implements Principal, Serializable {
 
 	private static final long serialVersionUID = 5941819848560615642L;
 
 	@Id
 	@Column(length = 20)
 	private String id;
-	
+
 	@Column(length = 40, nullable = false)
 	private String name;
-	
+
 	@Column(length = 1)
 	private Integer sex;
 

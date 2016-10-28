@@ -6,12 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.lyplay.sflow.enums.ACLAction;
 import com.lyplay.sflow.enums.PrincipalType;
 import com.lyplay.sflow.enums.ResourceType;
 import com.lyplay.sflow.exception.SysException;
 
 /**
  * 权限表
+ * 
  * @author lyplay
  *
  */
@@ -19,25 +21,43 @@ import com.lyplay.sflow.exception.SysException;
 public class ACL implements Serializable {
 
 	private static final long serialVersionUID = 5921863824277705710L;
-	
 
+	/**
+	 * 主键Id
+	 */
 	@Id
-	@Column(length=20)
+	@Column(length = 20)
 	private String id;
 
-	@Column(length=20)
+	/**
+	 * 主体类型
+	 */
+	@Column(length = 20)
 	private String pType;
-	
-	@Column(length=20)
-	private String pid;
-	
-	@Column(length=20)
+
+	/**
+	 * 主体主键Id
+	 */
+	@Column(length = 20)
+	private String pId;
+
+	/**
+	 * 资源类型
+	 */
+	@Column(length = 20)
 	private String rType;
-	
-	@Column(length=20)
-	private String rid;
-	
-	@Column(length=4)
+
+	/**
+	 * 资源主键Id
+	 */
+	@Column(length = 20)
+	private String rId;
+
+	/**
+	 * 权限状态, 二进制位置表示权限。 4 -> 0000000100<br> 
+	 * Create : 第一位 Red : 第二位 Update : 第三位 Delete : 第四位 Other : design by developer
+	 */
+	@Column(length = 4)
 	private Integer aclState;
 
 	public String getId() {
@@ -56,12 +76,12 @@ public class ACL implements Serializable {
 		this.pType = pType;
 	}
 
-	public String getPid() {
-		return pid;
+	public String getPId() {
+		return pId;
 	}
 
-	public void setPid(String pid) {
-		this.pid = pid;
+	public void setPId(String pId) {
+		this.pId = pId;
 	}
 
 	public String getRType() {
@@ -72,12 +92,12 @@ public class ACL implements Serializable {
 		this.rType = rType;
 	}
 
-	public String getRid() {
-		return rid;
+	public String getRId() {
+		return rId;
 	}
 
-	public void setRid(String rid) {
-		this.rid = rid;
+	public void setRId(String rId) {
+		this.rId = rId;
 	}
 
 	public Integer getAclState() {
@@ -87,49 +107,79 @@ public class ACL implements Serializable {
 	public void setAclState(Integer aclState) {
 		this.aclState = aclState;
 	}
-	
+
 	public void setPrincipalType(PrincipalType principalType) {
+		if (principalType == null) {
+			throw new SysException("Principal Type can not be null.");
+		}
 		this.pType = principalType.getValue();
 	}
-	
+
 	public void setRourceType(ResourceType resourceType) {
+		if (resourceType == null) {
+			throw new SysException("Resource Type can not be null.");
+		}
 		this.rType = resourceType.getValue();
 	}
-	
-	public void setPermission(int index, boolean permit){
-		
-		if(index < 0 || index > 31){
+
+	public void setPermission(ACLAction action, boolean permit) {
+		if (action == null) {
+			throw new SysException("ACL Action can not be null.");
+		}
+		setPermission(action.getIndex(), permit);
+	}
+
+	/**
+	 * 
+	 * @param index
+	 * @param permit
+	 */
+	public void setPermission(int index, boolean permit) {
+
+		if (index < 0 || index > 31) {
 			throw new SysException("permission index should between 0 ~ 31 .");
 		}
-		
-		this.aclState = setBit(this.aclState, index, permit );
-		
-		
+
+		this.aclState = setBit(this.aclState, index, permit);
+
 	}
-	
-	public int setBit(int state, int index, boolean permit){
+
+	/**
+	 * 
+	 * @param state
+	 * @param index
+	 * @param permit
+	 * @return
+	 */
+	public int setBit(int state, int index, boolean permit) {
 		int temp = 1;
 		temp = temp << index;
-		if(permit){
+		if (permit) {
 			state = state | temp;
-		}else{
+		} else {
 			temp = ~temp;
 			state = state & temp;
 		}
 		return state;
 	}
-	
-	
-	
-	
-	public boolean checkPermission(int index){
-		
-		
-		return false;
+
+	public boolean checkPermission(ACLAction action) {
+		if (action == null) {
+			throw new SysException("ACL Action can not be null.");
+		}
+		return checkPermission(action.getIndex());
 	}
-	
-	
-	
-	
+
+	/**
+	 * 
+	 * @param index
+	 * @return
+	 */
+	public boolean checkPermission(int index) {
+		int temp = 1;
+		temp = temp << index;
+		int num = this.aclState & temp;
+		return num > 0;
+	}
 
 }
