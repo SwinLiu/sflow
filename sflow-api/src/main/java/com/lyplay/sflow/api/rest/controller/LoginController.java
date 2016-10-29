@@ -49,23 +49,29 @@ public class LoginController {
 	public RestResult login(
 			@RequestParam(value = "loginAccount", required = true) String loginAccount,
 			@RequestParam(value = "passwd", required = true) String passwd,
-			HttpServletRequest request) {
+			@RequestParam(value = "captchaCode") String captchaCode,
+			HttpSession session) {
 
+		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
+		if(!StringUtils.equals(sessionCaptchaCode, captchaCode)){
+			return fail("ERR_01");
+		}
+		
 		String pwd = null;
 		try {
 			pwd = SHAUtil.shaEncode(passwd);
 		} catch (Exception e) {
 			logger.error(" Encdoe password happened issue. ");
 			logger.error(e.getMessage(), e);
-			return fail("password have issue.");
+			return fail("ERR_02");//password have issue.
 		}
 
 		UserAccount userAccount = userAccountService.login(loginAccount, pwd);
 		if (userAccount != null) {
-			request.getSession().setAttribute("userAccount", userAccount);
+			session.setAttribute("userAccount", userAccount);
 			return success();
 		} else {
-			return fail();
+			return fail("ERR_02"); // userAccount or Password have issue.
 		}
 
 	}
@@ -106,8 +112,6 @@ public class LoginController {
 		
 		session.setAttribute(Constant.CAPTCHA_CODE, captchaImageCode.getCode());
 		captchaImageCode.write(response.getOutputStream());
-		
-		
 
 	}
 }

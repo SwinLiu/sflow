@@ -4,8 +4,45 @@ var sFlowCtrls = angular.module('sFlowCtrls', []);
  * Login page controller method
  */
 sFlowCtrls.controller("loginCtrl", function($scope,$http) {
+	
 	$scope.user = {loginAccount: "", passwd: "", captchaCode: ""};
-    $("#login-frm").validate({
+	
+	$("#captchaCodeImg").unbind("click").click(function(){
+		var imgSrc = $(this).attr("src");
+		var realLength = imgSrc.indexOf('?');
+		imgSrc = imgSrc.substring(0, realLength > 0 ? realLength : imgSrc.length); 
+		imgSrc = imgSrc + "?random=" + Math.random();
+		$(this).attr("src",imgSrc);
+		console.log($scope.user);
+	});
+	
+	$("#login_btn").unbind("click").click(function(){
+		if(validator.form()){
+	    	//通过验证后运行的函数，里面要加上表单提交的函数，否则表单不会提交。
+	        $http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) {  
+	        	if(response.success){
+	        		alert.topCenter(true).success("success.");
+	        	}else{
+	        		
+	        		if(response.message == "ERR_01"){
+	        			var msg = 'Captcha Code Error.';
+	            		msgDiv.error("#login-msg-area",null,msg,true);
+						$("#login-msg-area").show();
+	        		}else{
+	        			var msg = 'Login account or password error.';
+	            		msgDiv.error("#login-msg-area",null,msg,true);
+						$("#login-msg-area").show();
+						
+						$("#captchaCodeImg").click();
+						$scope.user.captchaCode = "";
+						
+	        		}
+	        	}
+	     	});
+		}
+	});
+		
+	var validator = $("#login-frm").validate({
         rules: {
         	loginAccount: {
                 required: true,
@@ -49,22 +86,14 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 //			$("#login-msg-area").removeClass('hidden');
 //        },
         errorContainer: "#login-msg-area",
-        errorLabelContainer: $("#login-msg-div"),
+        errorLabelContainer: $("#login-msg-div")//,
         //errorElement:"li",
         //wrapper:"ul",
-        submitHandler: function (form) {
-        	//通过验证后运行的函数，里面要加上表单提交的函数，否则表单不会提交。
-            $http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) {  
-            	if(response.success){
-            		alert.topCenter(true).success("success.");
-            	}else{
-            		var msg = 'Login account or password error.';
-            		msgDiv.error("#login-msg-area",null,msg,true);
-					$("#login-msg-area").show();//removeClass('hidden');
-            	}
-         	});
-        }
+//        submitHandler: function (form) {
+//        	form.submit();
+//        }
     });
+    
 
 });
 
