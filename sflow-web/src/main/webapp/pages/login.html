@@ -10,7 +10,7 @@
 			<div class="modal-body">
 
 				<div class="form-group">
-					<label for="username">Login account</label>
+					<label class="control-label" for="username">Login Account</label>
 					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
 						ng-model="user.loginAccount" maxlength="40" placeholder="User name / Email / Phone number" />
 				</div>
@@ -21,11 +21,17 @@
 						ng-model="user.passwd" maxlength="20" placeholder="password" />
 				</div>
 				
-				<div class="form-group">
-					<label class="control-label" for="passwd">Verification code</label>
-					<img src="#" width="100%" height="40" id="verificationCode" >
-					<input type="password" class="form-control" name="passwd" id="passwd" 
-						ng-model="user.passwd" maxlength="20" placeholder="password" />
+				<div class="form-group input-group">
+					<label class="control-label" for="captchaCode">Captcha Code</label>
+					<div>
+						<input type="text" class="form-control" name="captchaCode" id="captchaCode" 
+							maxlength="10" placeholder="Captcha Code" />
+							<img class="img-thumbnail" src="api/captcha/200x30x4x0" id="verificationCode" >
+						</span>
+					</div>
+					
+					
+					
 				</div>
 				
 				<div class="row">
