@@ -1,37 +1,46 @@
 <div class="modal-dialog" ng-controller="loginCtrl">
 	<div class="modal-content">
-		<form method="post" role="form" id="login-frm" name="login-frm"  class="form-signin">
-	
-			<div class="modal-header form-group">
-				<h2>Login</h2>
-				<p>Dear user, log in to access the admin area!</p>
-			</div>
-	
-			<div class="modal-body">
+		
+		<div class="modal-header form-group">
+			<h2>Login</h2>
+			<p>Dear user, log in to access the admin area!</p>
+		</div>
 
+		<div class="modal-body">
+
+			<form method="post" role="form" id="login-frm" name="login-frm"  class="form-signin">
+			
 				<div class="form-group">
-					<label class="control-label" for="username">Login Account</label>
+					<label for="username">Login Account</label>
 					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
 						ng-model="user.loginAccount" maxlength="40" placeholder="User name / Email / Phone number" />
 				</div>
 		
 				<div class="form-group">
-					<label class="control-label" for="passwd">Password</label>
+					<label for="passwd">Password</label>
 					<input type="password" class="form-control" name="passwd" id="passwd" 
 						ng-model="user.passwd" maxlength="20" placeholder="password" />
 				</div>
 				
-				<div class="form-group input-group">
-					<label class="control-label" for="captchaCode">Captcha Code</label>
-					<div>
-						<input type="text" class="form-control" name="captchaCode" id="captchaCode" 
-							maxlength="10" placeholder="Captcha Code" />
-							<img class="img-thumbnail" src="api/captcha/200x30x4x0" id="verificationCode" >
-						</span>
+				<div class="form-group">
+					<label for="captchaCode">Captcha Code</label>
+					<div class="row">
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="captchaCode" id="captchaCode" 
+								ng-model="user.captchaCode" maxlength="10" placeholder="Captcha Code" />
+						</div>
+						<div class="col-lg-4">
+							<img class="img-thumbnail" src="api/captcha/160x30x6x0" id="verificationCode" >
+						</div>
 					</div>
-					
-					
-					
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12 form-group" style="display: none;" id="login-msg-area" >
+						<div class="alert alert-danger" id="login-msg-div" >
+							
+						</div>
+					</div>
 				</div>
 				
 				<div class="row">
@@ -49,26 +58,22 @@
 					</div>
 				</div>
 				
-				<div class="row">
-					<div class="col-lg-12 form-group" style="display: none;" id="login-msg-area" >
-						<div class="alert alert-danger" id="login-msg-div" >
-							
-						</div>
-					</div>
-				</div>
-			</div>
+				
+			
+			</form>
+			
+		</div>
 
-			<div class="modal-footer">
-				<div class="row">
-					<div class="col-lg-6">
-						<a href="#forget" class="pull-left">Forgot your password?</a>
-					</div>
-					<div class="col-lg-6">
-						<a href="#register" class="pull-right">Create new account</a>
-					</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-lg-6">
+					<a href="#forget" class="pull-left">Forgot your password?</a>
+				</div>
+				<div class="col-lg-6">
+					<a href="#register" class="pull-right">Create new account</a>
 				</div>
 			</div>
-	
-		</form>
+		</div>
+		
 	</div>
 </div>

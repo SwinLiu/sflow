@@ -86,23 +86,23 @@ var msgDiv = (function(){
 		
 		return msgDiv;
 		
-		function success(obj,msg,closeBtn){
-			showMsgDiv(obj,msg,'alert-success',closeBtn);
+		function success(obj,title,msg,closeBtn){
+			showMsgDiv(obj,title,msg,'alert-success',closeBtn);
 		}
 		
-		function info(obj,msg,closeBtn){
-			showMsgDiv(obj,msg,'alert-info',closeBtn);
+		function info(obj,title,msg,closeBtn){
+			showMsgDiv(obj,title,msg,'alert-info',closeBtn);
 		}
 		
-		function warning(obj,msg,closeBtn){
-			showMsgDiv(obj,msg,'alert-warning',closeBtn);
+		function warning(obj,title,msg,closeBtn){
+			showMsgDiv(obj,title,msg,'alert-warning',closeBtn);
 		}
 		
-		function error(obj,msg,closeBtn){
-			showMsgDiv(obj,msg,'alert-danger',closeBtn);
+		function error(obj,title,msg,closeBtn){
+			showMsgDiv(obj,title,msg,'alert-danger',closeBtn);
 		}
 		
-		function showMsgDiv(obj,msg,type,closeBtn){
+		function showMsgDiv(obj,title,msg,type,closeBtn){
 			closeBtn = closeBtn || false;
 			var html = new Array();
 			html.push('<div class="alert '+ type);
@@ -113,7 +113,15 @@ var msgDiv = (function(){
 			if(closeBtn){
 				html.push('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
 			}
+			if(title != null){
+				html.push('<strong>');
+				html.push(title);
+				html.push('</strong>&nbsp;');
+			}
+			html.push('<span>');
 			html.push(msg);
+			html.push('</span>');
+			
 			html.push('</div>');
 			$(obj).empty().html(html.join(''));
 		}

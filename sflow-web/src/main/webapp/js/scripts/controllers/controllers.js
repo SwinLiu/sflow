@@ -4,7 +4,7 @@ var sFlowCtrls = angular.module('sFlowCtrls', []);
  * Login page controller method
  */
 sFlowCtrls.controller("loginCtrl", function($scope,$http) {
-	$scope.user = {loginAccount: "", passwd: ""};
+	$scope.user = {loginAccount: "", passwd: "", captchaCode: ""};
     $("#login-frm").validate({
         rules: {
         	loginAccount: {
@@ -14,14 +14,20 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
             passwd: {
             	required : true,
             	rangelength : [6,20]
-            } 
+            },
+            captchaCode: {
+            	required : true
+            }
         },
         messages: {
         	loginAccount: {
-                required: "Login account cann't be null."
+                required: "Login account cann't be null. "
             },
             passwd: {
-            	required: "Password word cann't be null."
+            	required: "Password word cann't be null. "
+            },
+            captchaCode: {
+            	required: "Captcha Code cann't be null. "
             }
         },
         onkeyup:false,
@@ -30,7 +36,7 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         errorClass: "error",
         success: 'valid',
         focusInvalid:false,//提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）会获得焦点
-        focusCleanup:true,//当未通过验证的元素获得焦点时，移除错误提示（避免和 focusInvalid 一起使用）
+        focusCleanup:false,//当未通过验证的元素获得焦点时，移除错误提示（避免和 focusInvalid 一起使用）
 //        unhighlight: function (element, errorClass, validClass) { 
 //        	//验证通过
 //        },
@@ -44,17 +50,17 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 //        },
         errorContainer: "#login-msg-area",
         errorLabelContainer: $("#login-msg-div"),
-        errorElement:"li",
-        wrapper:"ul",
+        //errorElement:"li",
+        //wrapper:"ul",
         submitHandler: function (form) {
         	//通过验证后运行的函数，里面要加上表单提交的函数，否则表单不会提交。
             $http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) {  
             	if(response.success){
             		alert.topCenter(true).success("success.");
             	}else{
-            		var msg = '<strong>Error!</strong> <span>Login account or password error.</span>';
-            		msgDiv.error("#login-msg-area",msg,true);
-					$("#login-msg-area").removeClass('hidden');
+            		var msg = 'Login account or password error.';
+            		msgDiv.error("#login-msg-area",null,msg,true);
+					$("#login-msg-area").show();//removeClass('hidden');
             	}
          	});
         }
