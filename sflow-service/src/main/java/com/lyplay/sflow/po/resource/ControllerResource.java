@@ -24,7 +24,7 @@ public class ControllerResource implements Resource, Serializable {
 	private String className;
 
 	@Column(length = 5)
-	private Integer order;
+	private Integer orderNum;
 
 	public String getId() {
 		return id;
@@ -50,12 +50,13 @@ public class ControllerResource implements Resource, Serializable {
 		this.className = className;
 	}
 
-	public Integer getOrder() {
-		return order;
+	public Integer getOrderNum() {
+		return orderNum;
 	}
 
-	public void setOrder(Integer order) {
-		this.order = order;
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
 	}
+
 
 }

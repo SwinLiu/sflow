@@ -97,7 +97,7 @@ public class PoDDLUtil {
 		
 		createSql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8;").append(NEW_LINE);
 		createSql.append(generatePrimaryKey(tableName,primaryKeys));
-		createSql.append(generateUnionKey(tableName,uniqueKeys));
+		//createSql.append(generateUnionKey(tableName,uniqueKeys));
 		createSql.append(NEW_LINE);
 	    return createSql.toString();
 	    
