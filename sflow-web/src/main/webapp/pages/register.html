@@ -1,86 +1,104 @@
 <div class="modal-dialog" ng-controller="registerCtrl">
 	<div class="modal-content">
-		<form method="post" role="form" id="register-frm" name="register-frm"  class="form-signin">
-	
-			<div class="modal-header form-group">
-				<h2>Sign Up</h2>
-				<p>Enter your account details below:</p>
-			</div>
-	
-			<div class="modal-body">
 
+		<div class="modal-header form-group">
+			<h2>Sign Up</h2>
+			<p>Enter your account details below:</p>
+		</div>
+
+		<div class="modal-body">
+
+			<form method="post" role="form" id="register-frm" name="register-frm"  class="form-signin">
 				<div class="form-group">
-					<label for="username">Username</label>
-					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
-						ng-model="user.userName" maxlength="40"
-						title="Please enter the user name" />
+					<label for="username">User Name</label>
+					<input type="text" class="form-control" name="userName" id="userName" 
+						ng-model="user.userName" maxlength="40" />
 				</div>
 		
 				<div class="form-group">
 					<label class="control-label" for="passwd">Password</label>
 					<input type="password" class="form-control" name="passwd" id="passwd" 
-						ng-model="password" maxlength="20"
-						title="Please enter the password" />
+						ng-model="user.password" maxlength="20" />
 				</div>
 				
 				<div class="form-group">
 					<label class="control-label" for="passwd">Re-type Your Password</label>
-					<input type="password" class="form-control" name="passwd_confirm" id="passwd_confirm" 
-						ng-model="passwdConfirm" maxlength="20"
-						title="Please Re-type Your Password" />
+					<input type="password" class="form-control" name="passwdConfirm" id="passwdConfirm" 
+						maxlength="20" />
 				</div>
 				
 				<div class="form-group">
 					<label class="control-label" for="passwd">Email</label>
-					<input type="text" class="form-control" name="passwd" id="passwd" 
-						ng-model="user.email" maxlength="20"
-						title="Please enter the password" />
+					<input type="text" class="form-control" name="email" id="email" 
+						ng-model="user.email" maxlength="20" />
 				</div>
 				
 				<div class="form-group">
 					<label class="control-label" for="passwd">Phone</label>
-					<input type="text" class="form-control" name="passwd" id="passwd" 
-						ng-model="user.phone" maxlength="20"
-						title="Please enter the password" />
+					<input type="text" class="form-control" name="phone" id="phone" 
+						ng-model="user.phone" maxlength="20" />
+				</div>
+				
+				<div class="form-group">
+					<label for="captchaCode">Captcha Code</label>
+					<div class="row">
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="captchaCode" id="captchaCode" 
+								ng-model="user.captchaCode" maxlength="6" placeholder="Captcha Code" />
+						</div>
+						<div class="col-lg-4">
+							<img class="img-thumbnail" id="captchaCodeImg" src="api/captcha/160x30x6x0" id="verificationCode" >
+						</div>
+					</div>
 				</div>
 				
 				<div class="row">
 					<div class="col-lg-12 form-group">
 						<div class="checkbox">
 							<label>
-						  		<input type="checkbox"> 
+						  		<input type="checkbox" id="agree" name="agree" > 
 						  		<span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
 							</label>
 						</div>
 					</div>
 				</div>
 		
-				<div class="row">
-					<div class="col-lg-12 form-group">
-						<button type="submit" class="btn btn-primary pull-right">
-							<i class="fa-lock"></i><span>Sign Up</span>
-						</button>
-					</div>
-				</div>
-				
-				<div class="row">
-					<div class="col-lg-12 form-group hidden" id="register-msg-area" >
+			</form>
+			
+			<div class="row">
+				<div class="col-lg-12 form-group" style="display: none;" id="register-msg-area" >
+					<div class="alert alert-danger" id="register-msg-div" >
 						
 					</div>
 				</div>
 			</div>
-
-			<div class="modal-footer">
-				<div class="row">
-					<div class="col-lg-6">
-						<a href="#forget" class="pull-left">Forgot your password?</a>
-					</div>
-					<div class="col-lg-6">
-						<a href="#login" class="pull-right">Login with your account</a>
-					</div>
+			
+			<div class="row">
+				<div class="col-lg-12 form-group">
+					<button type="button" class="btn btn-primary pull-right" id="register_btn">
+						<i class="fa-lock"></i><span>Sign Up</span>
+					</button>
 				</div>
 			</div>
+			
+			<div class="row">
+				<div class="col-lg-12 form-group hidden" id="register-msg-area" >
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-lg-6">
+					<a href="#forget" class="pull-left">Forgot your password?</a>
+				</div>
+				<div class="col-lg-6">
+					<a href="#login" class="pull-right">Login with your account</a>
+				</div>
+			</div>
+		</div>
 	
-		</form>
+
 	</div>
 </div>
