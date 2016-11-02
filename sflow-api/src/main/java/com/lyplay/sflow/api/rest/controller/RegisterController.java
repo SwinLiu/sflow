@@ -1,9 +1,11 @@
 package com.lyplay.sflow.api.rest.controller;
 
+import static com.lyplay.sflow.common.dto.RestResult.fail;
 import static com.lyplay.sflow.common.dto.RestResult.success;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyplay.sflow.common.dto.RestResult;
+import com.lyplay.sflow.common.util.Constant;
+import com.lyplay.sflow.dto.RegisterUser;
 import com.lyplay.sflow.service.impl.UserAccountServiceImpl;
 
 /**
@@ -34,10 +38,12 @@ public class RegisterController {
 
 	@RequestMapping(value = "/api/register", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public RestResult register(
-			@RequestParam(value = "captchaCode") String captchaCode,
-			HttpSession session) {
-
+	public RestResult register(RegisterUser registerUser, HttpSession session) {
+		
+		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
+		if(!StringUtils.equals(sessionCaptchaCode, registerUser.getCaptchaCode())){
+			return fail("ERR_01");
+		}
 		
 		return success();
 

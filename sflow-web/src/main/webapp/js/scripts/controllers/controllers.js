@@ -44,7 +44,7 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         rules: {
         	loginAccount: {
                 required: true,
-                maxlength:40
+                rangelength : [4,40]
             },
             passwd: {
             	required : true,
@@ -56,10 +56,12 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         },
         messages: {
         	loginAccount: {
-                required: "Login account cann't be null. "
+                required: "Login account cann't be null. ",
+                rangelength: $.validator.format( "Please enter a login account between {0} and {1} characters long." )
             },
             passwd: {
-            	required: "Password word cann't be null. "
+            	required: "Password word cann't be null. ",
+            	rangelength: $.validator.format( "Please enter a password between {0} and {1} characters long." )
             },
             captchaCode: {
             	required: "Captcha Code cann't be null. "
@@ -68,14 +70,23 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
         onkeyup:false,
         onclick:false,
         onfocusout:false,
-        errorClass: "error",
+        errorClass: "error",	//指定错误提示的 css 类名，可以自定义错误提示的样式。
         success: 'valid',
         focusInvalid:false,//提交表单后，未通过验证的表单（第一个或提交之前获得焦点的未通过验证的表单）会获得焦点
         focusCleanup:false,//当未通过验证的元素获得焦点时，移除错误提示（避免和 focusInvalid 一起使用）
-        errorContainer: "#login-msg-area",
-        errorLabelContainer: $("#login-msg-div"),
-        errorElement:"li",
-        wrapper:"ul"
+        errorContainer: "#login-msg-area",	//显示或者隐藏验证信息，可以自动实现有错误信息出现时把容器属性变为显示，无错误时隐藏
+        //errorLabelContainer: $("#login-msg-div"),	//把错误信息统一放在一个容器里面。
+        errorElement:"li",	//用什么标签标记错误，默认是 label，可以改成 em。
+        wrapper:"ul",	//用什么标签再把上边的 errorELement 包起来。
+        errorPlacement: function(error, element) {  // 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+        	if($("#login-msg-div").length == 0){
+        		$("#login-msg-area").html('<div class="alert alert-danger" id="login-msg-div" ></div>');
+        	}
+        	$("#login-msg-div").append(error);
+        },
+        success: function(label) {
+            label.parent().remove();
+        }
     });
     
 
@@ -91,7 +102,7 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
 	
 	$("#register_btn").unbind("click").click(function(){
 		if($scope.validator.form()){
-			console.log($scope.user);
+			
 	        $http({method:'POST',url:'api/register',data:$scope.user}).success(function(response) {  
 	        	if(response.success){
 	        		alert.topCenter(true).success("success.");
@@ -99,12 +110,12 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
 	        		
 	        		if(response.message == "ERR_01"){
 	        			var msg = 'Captcha Code Error.';
-	            		msgDiv.error("#login-msg-area",null,msg,true);
-						$("#login-msg-area").show();
+	            		msgDiv.error("#register-msg-area",null,msg,true);
+						$("#register-msg-area").show();
 	        		}else{
 	        			var msg = 'Login account or password error.';
-	            		msgDiv.error("#login-msg-area",null,msg,true);
-						$("#login-msg-area").show();
+	            		msgDiv.error("#register-msg-area",null,msg,true);
+						$("#register-msg-area").show();
 						
 						$("#captchaCodeImg").click();
 						$scope.user.captchaCode = "";
@@ -127,7 +138,7 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
             },
             passwdConfirm:{
             	required : true,
-            	equalsTo : "#passwd"
+            	equalTo: "#passwd"
             },
             email:{
             	required : true,
@@ -154,7 +165,7 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
             },
             passwdConfirm:{
             	required: "Confirm password cann't be null. ",
-            	equalTo: "Please enter the same password again. "
+            	equalTo: "Please enter the same password again."
             },
             email:{
             	required: "Email cann't be null. "
@@ -174,9 +185,16 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
         focusInvalid:false,
         focusCleanup:false,
         errorContainer: "#register-msg-area",
-        errorLabelContainer: $("#register-msg-div"),
+        //errorLabelContainer: $("#register-msg-div"),
         errorElement:"li",
         wrapper:"ul",
+        errorPlacement: function(error, element) {  // 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
+        	console.log(error);
+        	if($("#register-msg-div").length == 0){
+        		$("#register-msg-area").html('<div class="alert alert-danger" id="register-msg-div" ></div>');
+        	}
+        	$("#register-msg-div").append(error);
+        },
         success: function(label) {
             label.parent().remove();
         }
