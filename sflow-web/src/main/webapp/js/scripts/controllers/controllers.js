@@ -22,12 +22,12 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 	        		alert.topCenter(true).success("success.");
 	        	}else{
 	        		
-	        		if(response.message == "ERR_01"){
-	        			var msg = 'Captcha Code Error.';
+	        		if(response.returnCode == returnCode.CAPTCHA_ERROR){
+	        			var msg = returnCode.CAPTCHA_ERROR_MSG;
 	            		msgDiv.error("#login-msg-area",null,msg,true);
 						$("#login-msg-area").show();
 	        		}else{
-	        			var msg = 'Login account or password error.';
+	        			var msg = returnCode.LOGIN_ERROR_MSG;
 	            		msgDiv.error("#login-msg-area",null,msg,true);
 						$("#login-msg-area").show();
 						
@@ -108,8 +108,8 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
 	        		alert.topCenter(true).success("success.");
 	        	}else{
 	        		
-	        		if(response.message == "ERR_01"){
-	        			var msg = 'Captcha Code Error.';
+	        		if(response.message == returnCode.CAPTCHA_ERROR){
+	        			var msg = returnCode.CAPTCHA_ERROR_MSG;
 	            		msgDiv.error("#register-msg-area",null,msg,true);
 						$("#register-msg-area").show();
 	        		}else{

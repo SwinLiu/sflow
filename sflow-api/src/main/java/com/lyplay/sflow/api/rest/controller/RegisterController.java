@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyplay.sflow.common.dto.RestResult;
+import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
 import com.lyplay.sflow.dto.RegisterUser;
 import com.lyplay.sflow.service.impl.UserAccountServiceImpl;
@@ -42,7 +42,7 @@ public class RegisterController {
 		
 		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
 		if(!StringUtils.equals(sessionCaptchaCode, registerUser.getCaptchaCode())){
-			return fail("ERR_01");
+			return fail(ErrorCode.CAPTCHA_ERROR); 
 		}
 		
 		return success();

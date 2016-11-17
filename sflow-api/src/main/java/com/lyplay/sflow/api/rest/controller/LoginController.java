@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyplay.sflow.common.dto.RestResult;
+import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
 import com.lyplay.sflow.common.util.SHAUtil;
 import com.lyplay.sflow.po.UserAccount;
@@ -47,7 +48,7 @@ public class LoginController {
 
 		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
 		if(!StringUtils.equals(sessionCaptchaCode, captchaCode)){
-			return fail("ERR_01");
+			return fail(ErrorCode.CAPTCHA_ERROR);
 		}
 		
 		String pwd = null;
@@ -56,7 +57,7 @@ public class LoginController {
 		} catch (Exception e) {
 			logger.error(" Encdoe password happened issue. ");
 			logger.error(e.getMessage(), e);
-			return fail("ERR_02");//password have issue.
+			return fail(ErrorCode.LOGIN_ERROR);//password have issue.
 		}
 
 		UserAccount userAccount = userAccountService.login(loginAccount, pwd);
@@ -64,7 +65,7 @@ public class LoginController {
 			session.setAttribute("userAccount", userAccount);
 			return success();
 		} else {
-			return fail("ERR_02"); // userAccount or Password have issue.
+			return fail(ErrorCode.LOGIN_ERROR); // userAccount or Password have issue.
 		}
 
 	}
