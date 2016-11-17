@@ -30,8 +30,6 @@ import com.lyplay.sflow.tools.util.PropertiesUtil;
 /**
  * Generate JdbcTemplate Code by table
  * 
- * @author edwin.tang
- * 
  */
 public class JdbcTemplateCodeGenerator {
 	private static Logger logger = LoggerFactory.getLogger(JdbcTemplateCodeGenerator.class);
