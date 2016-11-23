@@ -1,11 +1,12 @@
 package com.lyplay.sflow.po;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.lyplay.sflow.orm.components.DateColumn;
 
 @Table(name = "sflow_user_login_logs")
 public class UserLoginLogs implements Serializable {
@@ -22,8 +23,9 @@ public class UserLoginLogs implements Serializable {
 	@Column(length = 20, nullable = false)
 	private String loginIp;
 
+	@DateColumn
 	@Column(length = 20, nullable = false)
-	private Date loginTime;
+	private Long loginTime;
 
 	public String getId() {
 		return id;
@@ -49,11 +51,11 @@ public class UserLoginLogs implements Serializable {
 		this.loginIp = loginIp;
 	}
 
-	public Date getLoginTime() {
+	public Long getLoginTime() {
 		return loginTime;
 	}
 
-	public void setLoginTime(Date loginTime) {
+	public void setLoginTime(Long loginTime) {
 		this.loginTime = loginTime;
 	}
 

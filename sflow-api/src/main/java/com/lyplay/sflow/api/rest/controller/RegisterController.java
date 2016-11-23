@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
+import com.lyplay.sflow.common.util.SHAUtil;
 import com.lyplay.sflow.dto.RegisterUser;
-import com.lyplay.sflow.service.impl.UserAccountServiceImpl;
+import com.lyplay.sflow.po.UserAccount;
+import com.lyplay.sflow.po.UserPassword;
+import com.lyplay.sflow.service.IUserAccountService;
 
 /**
  * 
@@ -34,7 +37,7 @@ public class RegisterController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private UserAccountServiceImpl userAccountService;
+	private IUserAccountService userAccountService;
 
 	@RequestMapping(value = "/api/register", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
@@ -45,7 +48,30 @@ public class RegisterController {
 			return fail(ErrorCode.CAPTCHA_ERROR); 
 		}
 		
-		return success();
+		UserAccount userAccount = new UserAccount();
+		userAccount.setEmail(registerUser.getEmail());
+		userAccount.setPhone(registerUser.getPhone());
+		userAccount.setUserName(registerUser.getUserName());
+		
+		String pwd = null;
+		try {
+			pwd = SHAUtil.shaEncode(registerUser.getPassword());
+		} catch (Exception e) {
+			logger.error(" Encdoe password happened issue. ");
+			logger.error(e.getMessage(), e);
+			return fail();//password have issue.
+		}
+		
+		UserPassword userPwd = new UserPassword();
+		userPwd.setPassword(pwd);
+		
+		if(userAccountService.register(userAccount, userPwd)){
+			return success();
+		} else {
+			return fail();
+		}
+		
+		
 
 	}
 

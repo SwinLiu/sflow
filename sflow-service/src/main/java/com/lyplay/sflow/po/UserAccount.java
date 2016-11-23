@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.lyplay.sflow.common.enums.AccountStatusEnum;
+
 @Table(name = "sflow_user_account")
 public class UserAccount implements Serializable {
 
@@ -65,6 +67,10 @@ public class UserAccount implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public void setStatus(AccountStatusEnum accountStatus) {
+		this.status = accountStatus.getStatus();
 	}
 
 }

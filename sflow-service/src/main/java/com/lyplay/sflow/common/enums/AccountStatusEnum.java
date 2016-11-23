@@ -1,4 +1,4 @@
-package com.lyplay.sflow.enums;
+package com.lyplay.sflow.common.enums;
 
 public enum AccountStatusEnum {
 	

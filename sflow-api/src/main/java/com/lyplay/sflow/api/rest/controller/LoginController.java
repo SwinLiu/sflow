@@ -20,7 +20,7 @@ import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
 import com.lyplay.sflow.common.util.SHAUtil;
 import com.lyplay.sflow.po.UserAccount;
-import com.lyplay.sflow.service.impl.UserAccountServiceImpl;
+import com.lyplay.sflow.service.IUserAccountService;
 
 /**
  * 
@@ -36,7 +36,7 @@ public class LoginController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private UserAccountServiceImpl userAccountService;
+	private IUserAccountService userAccountService;
 
 	@RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody

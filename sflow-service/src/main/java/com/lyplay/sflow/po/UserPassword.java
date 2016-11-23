@@ -1,11 +1,13 @@
 package com.lyplay.sflow.po;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.lyplay.sflow.common.enums.PasswdStatusEnum;
+import com.lyplay.sflow.orm.components.DateColumn;
 
 @Table(name = "sflow_user_password")
 public class UserPassword implements Serializable {
@@ -22,8 +24,9 @@ public class UserPassword implements Serializable {
 	@Column(length = 2, nullable = false)
 	private Integer status;
 	
+	@DateColumn
 	@Column
-	private Date lockTime;
+	private Long lockTime;
 
 	public UserPassword() {
 	}
@@ -56,12 +59,16 @@ public class UserPassword implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	
+	public void setStatus(PasswdStatusEnum passwdStatus) {
+		this.status = passwdStatus.getStatus();
+	}
 
-	public Date getLockTime() {
+	public Long getLockTime() {
 		return lockTime;
 	}
 
-	public void setLockTime(Date lockTime) {
+	public void setLockTime(Long lockTime) {
 		this.lockTime = lockTime;
 	}
 	

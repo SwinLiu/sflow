@@ -17,7 +17,7 @@ public class SequenceDAOTest extends BaseTest{
 	@Test
 	public void saveTest(){
 		
-		Sequence sequence = new Sequence(sequenceName, "P", 1L, "S", 10, 1);
+		Sequence sequence = new Sequence(sequenceName, "P", 1L, "S", 10, '0', 1);
 		sequenceDAO.saveSequence(sequence);
 		
 	}

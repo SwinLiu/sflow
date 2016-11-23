@@ -6,6 +6,10 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
+import com.lyplay.sflow.common.util.DateUtil;
+
 @Table(name = "sflow_sequence")
 public class Sequence implements Serializable {
 
@@ -26,6 +30,9 @@ public class Sequence implements Serializable {
 
 	@Column(length = 3, nullable = false)
 	private Integer lpadLength;
+	
+	@Column(length = 1, nullable = false)
+	private char lpadChar;
 
 	@Column(length = 3, nullable = false)
 	private Integer increment;
@@ -34,13 +41,14 @@ public class Sequence implements Serializable {
 	}
 
 	public Sequence(String sequenceName, String prefix, Long currValue,
-			String suffix, Integer lpadLength, Integer increment) {
+			String suffix, Integer lpadLength, char lpadChar, Integer increment) {
 		super();
 		this.sequenceName = sequenceName;
 		this.prefix = prefix;
 		this.currValue = currValue;
 		this.suffix = suffix;
 		this.lpadLength = lpadLength;
+		this.lpadChar = lpadChar;
 		this.increment = increment;
 	}
 
@@ -84,6 +92,14 @@ public class Sequence implements Serializable {
 		this.lpadLength = lpadLength;
 	}
 
+	public char getLpadChar() {
+		return lpadChar;
+	}
+
+	public void setLpadChar(char lpadChar) {
+		this.lpadChar = lpadChar;
+	}
+
 	public Integer getIncrement() {
 		return increment;
 	}
@@ -96,8 +112,33 @@ public class Sequence implements Serializable {
 	public String toString() {
 		return "Sequence [sequenceName=" + sequenceName + ", prefix=" + prefix
 				+ ", currValue=" + currValue + ", suffix=" + suffix
-				+ ", lpadLength=" + lpadLength + ", increment=" + increment
-				+ "]";
+				+ ", lpadLength=" + lpadLength + ", lpadChar=" + lpadChar
+				+ ", increment=" + increment + "]";
+	}
+	
+	public String getSequenceStr(boolean dateStr){
+		if(dateStr){
+			return getSequenceStr(DateUtil.getCurrDateStr());
+		}else{
+			return getSequenceStr(null);
+		}
+	}
+	
+	public String getSequenceStr(String middleStr){
+		
+		StringBuffer sb = new StringBuffer();
+		if(StringUtils.isNotEmpty(this.getPrefix())){
+			sb.append(this.getPrefix());
+		}
+		
+		sb.append(middleStr);
+		
+		sb.append(StringUtils.leftPad(this.getCurrValue().toString(), this.getLpadLength(), this.getLpadChar()));
+		
+		if(StringUtils.isNotEmpty(this.getSuffix())){
+			sb.append(this.getSuffix());
+		}
+		return sb.toString();
 	}
 
 }

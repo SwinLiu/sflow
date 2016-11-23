@@ -45,23 +45,11 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
 	<bean name="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="*" propagation="REQUIRED" />
-		</tx:attributes>
-	</tx:advice>
-
-	<aop:aspectj-autoproxy />
-
-	<aop:config proxy-target-class="true">
-		<aop:advisor pointcut="execution(* com.lyplay.sflow.service..*.*(..))"	advice-ref="txAdvice" order="3"/>
-	</aop:config>	
-	
-
-
 </beans>
