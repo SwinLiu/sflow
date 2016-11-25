@@ -1,5 +1,7 @@
 package com.lyplay.sflow.api.rest.controller;
 
+import static com.lyplay.sflow.common.dto.RestResult.success;
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,25 +15,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.util.CaptchaImageCode;
 import com.lyplay.sflow.common.util.Constant;
 
 /**
  * 
- * Captcha Rest API Functions
+ * Cecurity Rest API Functions
  * 
  * @author lyplay.com
  *
  */
 
-@Controller("captchaController")
-public class CaptchaController {
+@Controller("cecurityController")
+public class CecurityController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping(value = "/api/captcha/{size}", method = RequestMethod.GET, produces = "application/json")
-	public void save(@PathVariable("size") String size,
+	public void getCaptchaPic(@PathVariable("size") String size,
 			HttpServletResponse response, HttpSession session)
 			throws IOException {
 
@@ -68,4 +72,19 @@ public class CaptchaController {
 		captchaImageCode.write(response.getOutputStream());
 
 	}
+	
+	@RequestMapping(value = "/api/secret", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public RestResult getEncryptKey(HttpSession session) {
+
+		String rsaPublicKey = (String) session.getAttribute(Constant.RSA_PUBLIC_KEY);
+		if(StringUtils.isEmpty(rsaPublicKey)){
+			
+			session.setAttribute(Constant.RSA_PUBLIC_KEY, "");
+			session.setAttribute(Constant.RSA_PRIVATE_KEY, "");
+		}
+		return success(rsaPublicKey);
+	}
+	
+	
 }
