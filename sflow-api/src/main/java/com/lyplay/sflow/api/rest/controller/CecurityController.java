@@ -3,6 +3,7 @@ package com.lyplay.sflow.api.rest.controller;
 import static com.lyplay.sflow.common.dto.RestResult.success;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.util.CaptchaImageCode;
 import com.lyplay.sflow.common.util.Constant;
+import com.lyplay.sflow.common.util.RSAUtil;
 
 /**
  * 
@@ -75,13 +77,15 @@ public class CecurityController {
 	
 	@RequestMapping(value = "/api/secret", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public RestResult getEncryptKey(HttpSession session) {
+	public RestResult getEncryptKey(HttpSession session) throws Exception {
 
 		String rsaPublicKey = (String) session.getAttribute(Constant.RSA_PUBLIC_KEY);
 		if(StringUtils.isEmpty(rsaPublicKey)){
-			
-			session.setAttribute(Constant.RSA_PUBLIC_KEY, "");
-			session.setAttribute(Constant.RSA_PRIVATE_KEY, "");
+			Map<String, String> map = RSAUtil.getKeyPair();
+			rsaPublicKey = map.get(RSAUtil.PUBLIC_KEY);
+			String rsaprivateKey = map.get(RSAUtil.PRIVATE_KEY);
+			session.setAttribute(Constant.RSA_PUBLIC_KEY, rsaPublicKey);
+			session.setAttribute(Constant.RSA_PRIVATE_KEY, rsaprivateKey);
 		}
 		return success(rsaPublicKey);
 	}

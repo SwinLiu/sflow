@@ -5,6 +5,7 @@ var sFlowCtrls = angular.module('sFlowCtrls', []);
  */
 sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 	
+	$scope.password;
 	$scope.user = {loginAccount: "", passwd: "", captchaCode: ""};
 	
 	$("#captchaCodeImg").unbind("click").click(function(){
@@ -17,26 +18,40 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
 	
 	$("#login_btn").unbind("click").click(function(){
 		if($scope.validator.form()){
-	        $http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) {  
-	        	if(response.success){
-	        		alert.topCenter(true).success("success.");
+			
+			$http({method:'GET',url:'api/secret'}).success(function(response) {
+				if(response.success){
+					var publicKey = response.result;
+					$scope.user.passwd = CommonUtil.encryptPasswd($scope.user.loginAccount, $scope.password, publicKey);
+					
+					$http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) {  
+			        	if(response.success){
+			        		alert.topCenter(true).success("success.");
+			        	}else{
+			        		
+			        		if(response.returnCode == returnCode.CAPTCHA_ERROR){
+			        			var msg = returnCode.CAPTCHA_ERROR_MSG;
+			            		msgDiv.error("#login-msg-area",null,msg,true);
+								$("#login-msg-area").show();
+			        		}else{
+			        			var msg = returnCode.LOGIN_ERROR_MSG;
+			            		msgDiv.error("#login-msg-area",null,msg,true);
+								$("#login-msg-area").show();
+								
+								$("#captchaCodeImg").click();
+								$scope.user.captchaCode = "";
+								
+			        		}
+			        	}
+			     	});
+					
+					
+					
+					
 	        	}else{
-	        		
-	        		if(response.returnCode == returnCode.CAPTCHA_ERROR){
-	        			var msg = returnCode.CAPTCHA_ERROR_MSG;
-	            		msgDiv.error("#login-msg-area",null,msg,true);
-						$("#login-msg-area").show();
-	        		}else{
-	        			var msg = returnCode.LOGIN_ERROR_MSG;
-	            		msgDiv.error("#login-msg-area",null,msg,true);
-						$("#login-msg-area").show();
-						
-						$("#captchaCodeImg").click();
-						$scope.user.captchaCode = "";
-						
-	        		}
+	        		alert.topCenter(true).success("System error, Please try later.");
 	        	}
-	     	});
+			});
 		}
 	});
 		

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
-import com.lyplay.sflow.common.util.SHAUtil;
+import com.lyplay.sflow.common.util.RSAUtil;
 import com.lyplay.sflow.po.UserAccount;
 import com.lyplay.sflow.service.IUserAccountService;
 
@@ -44,21 +44,19 @@ public class LoginController {
 			@RequestParam(value = "loginAccount", required = true) String loginAccount,
 			@RequestParam(value = "passwd", required = true) String passwd,
 			@RequestParam(value = "captchaCode") String captchaCode,
-			HttpSession session) {
+			HttpSession session) throws Exception {
 
 		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
 		if(!StringUtils.equals(sessionCaptchaCode, captchaCode)){
 			return fail(ErrorCode.CAPTCHA_ERROR);
 		}
 		
-		String pwd = null;
-		try {
-			pwd = SHAUtil.shaEncode(passwd);
-		} catch (Exception e) {
-			logger.error(" Encdoe password happened issue. ");
-			logger.error(e.getMessage(), e);
-			return fail(ErrorCode.LOGIN_ERROR);//password have issue.
+		String rsaPrivateKey = (String) session.getAttribute(Constant.RSA_PRIVATE_KEY);
+		String pwd = getPasswd(loginAccount, passwd, rsaPrivateKey);
+		if(StringUtils.isEmpty(pwd)){
+			return fail(ErrorCode.LOGIN_ERROR); // userAccount or Password have issue.
 		}
+		
 
 		UserAccount userAccount = userAccountService.login(loginAccount, pwd);
 		if (userAccount != null) {
@@ -68,6 +66,17 @@ public class LoginController {
 			return fail(ErrorCode.LOGIN_ERROR); // userAccount or Password have issue.
 		}
 
+	}
+	
+	private String getPasswd(String loginAccount, String passwd, String rsaPrivateKey) throws Exception{
+		
+		String data = RSAUtil.decryptByPrivateKey(passwd, rsaPrivateKey);
+		String[] passwdGroup = data.split(Constant.SPLIT_STR);
+		String realPasswd = StringUtils.EMPTY;
+		if(StringUtils.equals(passwdGroup[0], loginAccount)){
+			realPasswd = passwdGroup[1];
+		}
+		return realPasswd;
 	}
 
 	

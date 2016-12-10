@@ -73,8 +73,8 @@ public class RSAUtil {
     	Map<String, Object> keyPair = genKeyPair();
     	RSAPublicKey publicKey = getPublicKey(keyPair);
     	RSAPrivateKey privateKey = getPrivateKey(keyPair);
-    	String publicKeyStr = Base64.encodeBase64String(publicKey.getEncoded());
-    	String privateKeyStr = Base64.encodeBase64String(privateKey.getEncoded());
+    	String publicKeyStr = encryptBASE64(publicKey.getEncoded());
+    	String privateKeyStr = encryptBASE64(privateKey.getEncoded());
     	
     	Map<String, String> keyStrMap = new HashMap<String, String>(2);
     	keyStrMap.put(PUBLIC_KEY, publicKeyStr);
@@ -91,7 +91,8 @@ public class RSAUtil {
     }
     
     public static String encryptBASE64(byte[] key) throws Exception {  
-        return Base64.encodeBase64String(key);  
+        //return Base64.encodeBase64URLSafeString(key);  
+    	return Base64.encodeBase64String(key);
     }
     
     public static byte[] decryptBASE64(String key) throws Exception {  
