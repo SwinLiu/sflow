@@ -17,6 +17,8 @@ import java.util.Map;
 
 import javax.crypto.Cipher;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class RSAUtil {
 
     /**
@@ -54,16 +56,53 @@ public class RSAUtil {
      * 生成密钥对(公钥和私钥)
      * </p>
      */
-    public static Map<String, String> genKeyPair() throws Exception {
+    public static Map<String, Object> genKeyPair() throws Exception {
         KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
         keyPairGen.initialize(1024);
         KeyPair keyPair = keyPairGen.generateKeyPair();
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-        Map<String, String> keyMap = new HashMap<String, String>(2);
-        keyMap.put(PUBLIC_KEY, String.valueOf(publicKey.getEncoded()));
-        keyMap.put(PRIVATE_KEY, String.valueOf(privateKey.getEncoded()));
+        Map<String, Object> keyMap = new HashMap<String, Object>(2);
+        keyMap.put(PUBLIC_KEY, publicKey);
+        keyMap.put(PRIVATE_KEY, privateKey);
         return keyMap;
+    }
+    
+    
+    public static Map<String, String> getKeyPair() throws Exception {
+    	Map<String, Object> keyPair = genKeyPair();
+    	RSAPublicKey publicKey = getPublicKey(keyPair);
+    	RSAPrivateKey privateKey = getPrivateKey(keyPair);
+    	String publicKeyStr = Base64.encodeBase64String(publicKey.getEncoded());
+    	String privateKeyStr = Base64.encodeBase64String(privateKey.getEncoded());
+    	
+    	Map<String, String> keyStrMap = new HashMap<String, String>(2);
+    	keyStrMap.put(PUBLIC_KEY, publicKeyStr);
+    	keyStrMap.put(PRIVATE_KEY, privateKeyStr);
+        return keyStrMap;
+    }
+    
+    public static RSAPublicKey getPublicKey(Map<String, Object> keyPair){
+    	return (RSAPublicKey) keyPair.get(PUBLIC_KEY);
+    }
+    
+    public static RSAPrivateKey getPrivateKey(Map<String, Object> keyPair){
+    	return (RSAPrivateKey) keyPair.get(PRIVATE_KEY);
+    }
+    
+    public static String encryptBASE64(byte[] key) throws Exception {  
+        return Base64.encodeBase64String(key);  
+    }
+    
+    public static byte[] decryptBASE64(String key) throws Exception {  
+        return Base64.decodeBase64(key);
+    } 
+    
+    public static String sign(String dataStr, String privateKeyStr) throws Exception {
+    	byte[] data =  dataStr.getBytes();
+    	byte[] privateKey = decryptBASE64(privateKeyStr);
+    	byte[] signature = sign(data, privateKey);
+    	return encryptBASE64(signature);
     }
     
     /**
@@ -81,6 +120,14 @@ public class RSAUtil {
         return signature.sign();
     }
 
+    public static boolean verify(String dataStr, String publicKeyStr, String signStr)
+            throws Exception {
+    	
+    	byte[] data = decryptBASE64(dataStr);
+    	byte[] publicKey = decryptBASE64(publicKeyStr);
+    	byte[] sign = decryptBASE64(signStr);
+    	return verify(data, publicKey, sign);
+    }
     /**
      * <p>
      * 校验数字签名
@@ -97,6 +144,14 @@ public class RSAUtil {
         return signature.verify(sign);
     }
 
+    
+    public static String decryptByPrivateKey(String encryptedDataStr, String privateKeyStr)
+            throws Exception {
+    	byte[] encryptedData = decryptBASE64(encryptedDataStr);
+    	byte[] privateKey = decryptBASE64(privateKeyStr);
+    	byte[] data = decryptByPrivateKey(encryptedData, privateKey);
+    	return new String(data);
+    }
     /**
      * <P>
      * 私钥解密
@@ -135,6 +190,14 @@ public class RSAUtil {
         return decryptedData;
     }
 
+    public static String decryptByPublicKey(String encryptedDataStr, String publicKeyStr)
+            throws Exception {
+    	byte[] encryptedData = decryptBASE64(encryptedDataStr);
+    	byte[] publicKey = decryptBASE64(publicKeyStr);
+    	byte[] data = decryptByPublicKey(encryptedData, publicKey);
+    	return new String(data);
+    }
+    
     /**
      * <p>
      * 公钥解密
@@ -173,6 +236,14 @@ public class RSAUtil {
         return decryptedData;
     }
 
+    public static String encryptByPublicKey(String dataStr, String publicKeyStr)
+            throws Exception {
+    	byte[] data = dataStr.getBytes();
+    	byte[] publicKey = decryptBASE64(publicKeyStr);
+    	byte[] encryptData = encryptByPublicKey(data, publicKey);
+    	return encryptBASE64(encryptData);
+    }
+    
     /**
      * <p>
      * 公钥加密
@@ -212,6 +283,14 @@ public class RSAUtil {
         return encryptedData;
     }
 
+    public static String encryptByPrivateKey(String dataStr, String privateKeyStr)
+            throws Exception {
+    	byte[] data = dataStr.getBytes();
+    	byte[] privateKey = decryptBASE64(privateKeyStr);
+    	byte[] encryptData = encryptByPrivateKey(data, privateKey);
+    	return encryptBASE64(encryptData);
+    }
+    
     /**
      * <p>
      * 私钥加密

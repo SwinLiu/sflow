@@ -25,11 +25,28 @@ public class UtilTest {
 	@Test
 	public void rsaUtil() throws Exception{
 		
-		Map<String, String> map = RSAUtil.genKeyPair();
+		Map<String, String> map = RSAUtil.getKeyPair();
+		String publicKeyStr = map.get(RSAUtil.PUBLIC_KEY);
+		String privateKeyStr = map.get(RSAUtil.PRIVATE_KEY);
 		
-		System.out.println(map.get(RSAUtil.PRIVATE_KEY));
-		System.out.println(map.get(RSAUtil.PUBLIC_KEY));
 		
+		
+		System.out.println(RSAUtil.PRIVATE_KEY + " : ");
+		System.out.println(privateKeyStr);
+		System.out.println(RSAUtil.PUBLIC_KEY + " : ");
+		System.out.println(publicKeyStr);
+		
+		String data = "haha";
+		
+		System.out.println("before : " + data);
+		
+		String encryptString = RSAUtil.encryptByPublicKey(data, publicKeyStr);
+		System.out.println("encryptByPublicKey : ");
+		System.out.println(encryptString);
+		
+		String decryptString = RSAUtil.decryptByPrivateKey(encryptString, privateKeyStr);
+		System.out.println("decryptByPrivateKey : ");
+		System.out.println(decryptString);
 		
 	}
 	
