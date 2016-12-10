@@ -22,6 +22,7 @@ import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.util.CaptchaImageCode;
 import com.lyplay.sflow.common.util.Constant;
 import com.lyplay.sflow.common.util.RSAUtil;
+import com.lyplay.sflow.common.util.ResponseUtil;
 
 /**
  * 
@@ -62,15 +63,8 @@ public class CecurityController {
 
 		CaptchaImageCode captchaImageCode = new CaptchaImageCode(params[0], params[1],
 				params[2], params[3]);
-		
-		// 设置响应的类型格式为图片格式
-		response.setContentType("image/jpeg"); 
-		// 禁止图像缓存。
-		response.setHeader("Pragma", "no-cache");
-		response.setHeader("Cache-Control", "no-cache");
-		response.setDateHeader("Expires", 0);
-		
 		session.setAttribute(Constant.CAPTCHA_CODE, captchaImageCode.getCode());
+		ResponseUtil.setJpeg(response);
 		captchaImageCode.write(response.getOutputStream());
 
 	}

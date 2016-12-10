@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.ErrorCode;
-import com.lyplay.sflow.common.util.Constant;
-import com.lyplay.sflow.common.util.RSAUtil;
+import com.lyplay.sflow.common.util.PasswdUtil;
 import com.lyplay.sflow.po.UserAccount;
 import com.lyplay.sflow.service.IUserAccountService;
 
@@ -46,13 +45,11 @@ public class LoginController {
 			@RequestParam(value = "captchaCode") String captchaCode,
 			HttpSession session) throws Exception {
 
-		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
-		if(!StringUtils.equals(sessionCaptchaCode, captchaCode)){
-			return fail(ErrorCode.CAPTCHA_ERROR);
+		if(PasswdUtil.checkCaptchaCode(session, captchaCode)){
+			return fail(ErrorCode.CAPTCHA_ERROR); 
 		}
 		
-		String rsaPrivateKey = (String) session.getAttribute(Constant.RSA_PRIVATE_KEY);
-		String pwd = getPasswd(loginAccount, passwd, rsaPrivateKey);
+		String pwd = PasswdUtil.getPasswd(session, loginAccount, passwd);
 		if(StringUtils.isEmpty(pwd)){
 			return fail(ErrorCode.LOGIN_ERROR); // userAccount or Password have issue.
 		}
@@ -67,17 +64,5 @@ public class LoginController {
 		}
 
 	}
-	
-	private String getPasswd(String loginAccount, String passwd, String rsaPrivateKey) throws Exception{
-		
-		String data = RSAUtil.decryptByPrivateKey(passwd, rsaPrivateKey);
-		String[] passwdGroup = data.split(Constant.SPLIT_STR);
-		String realPasswd = StringUtils.EMPTY;
-		if(StringUtils.equals(passwdGroup[0], loginAccount)){
-			realPasswd = passwdGroup[1];
-		}
-		return realPasswd;
-	}
-
 	
 }

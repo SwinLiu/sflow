@@ -113,31 +113,42 @@ sFlowCtrls.controller("loginCtrl", function($scope,$http) {
  */
 sFlowCtrls.controller("registerCtrl", function($scope,$http) {
 	
+	$scope.password;
 	$scope.user = {userName: "", password: "", email: "", phone: "", captchaCode: ""};
 	
 	$("#register_btn").unbind("click").click(function(){
 		if($scope.validator.form()){
 			
-	        $http({method:'POST',url:'api/register',data:$scope.user}).success(function(response) {  
-	        	if(response.success){
-	        		alert.topCenter(true).success("success.");
-	        	}else{
-	        		
-	        		if(response.message == returnCode.CAPTCHA_ERROR){
-	        			var msg = returnCode.CAPTCHA_ERROR_MSG;
-	            		msgDiv.error("#register-msg-area",null,msg,true);
-						$("#register-msg-area").show();
-	        		}else{
-	        			var msg = 'Login account or password error.';
-	            		msgDiv.error("#register-msg-area",null,msg,true);
-						$("#register-msg-area").show();
-						
-						$("#captchaCodeImg").click();
-						$scope.user.captchaCode = "";
-						
-	        		}
-	        	}
-	     	});
+			
+			$http({method:'GET',url:'api/secret'}).success(function(response) {
+				if(response.success){
+					var publicKey = response.result;
+					$scope.user.password = CommonUtil.encryptPasswd(null, $scope.password, publicKey);
+					
+			        $http({method:'POST',url:'api/register',data:$scope.user}).success(function(response) {  
+			        	if(response.success){
+			        		alert.topCenter(true).success("success.");
+			        	}else{
+			        		
+			        		if(response.message == returnCode.CAPTCHA_ERROR){
+			        			var msg = returnCode.CAPTCHA_ERROR_MSG;
+			            		msgDiv.error("#register-msg-area",null,msg,true);
+								$("#register-msg-area").show();
+			        		}else{
+			        			var msg = 'Login account or password error.';
+			            		msgDiv.error("#register-msg-area",null,msg,true);
+								$("#register-msg-area").show();
+								
+								$("#captchaCodeImg").click();
+								$scope.user.captchaCode = "";
+								
+			        		}
+			        	}
+			     	});
+				} else {
+					alert.topCenter(true).success("System error, Please try later.");
+				}
+			});
 		}
 	});
 	
@@ -204,7 +215,6 @@ sFlowCtrls.controller("registerCtrl", function($scope,$http) {
         errorElement:"li",
         wrapper:"ul",
         errorPlacement: function(error, element) {  // 指明错误放置的位置，默认情况是：error.appendTo(element.parent());即把错误信息放在验证的元素后面。
-        	console.log(error);
         	if($("#register-msg-div").length == 0){
         		$("#register-msg-area").html('<div class="alert alert-danger" id="register-msg-div" ></div>');
         	}

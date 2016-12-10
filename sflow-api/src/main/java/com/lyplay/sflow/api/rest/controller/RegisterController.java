@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.ErrorCode;
-import com.lyplay.sflow.common.util.Constant;
-import com.lyplay.sflow.common.util.SHAUtil;
+import com.lyplay.sflow.common.util.PasswdUtil;
 import com.lyplay.sflow.dto.RegisterUser;
 import com.lyplay.sflow.po.UserAccount;
 import com.lyplay.sflow.po.UserPassword;
@@ -41,26 +40,21 @@ public class RegisterController {
 
 	@RequestMapping(value = "/api/register", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
-	public RestResult register(RegisterUser registerUser, HttpSession session) {
+	public RestResult register(RegisterUser registerUser, HttpSession session) throws Exception {
 		
-		String sessionCaptchaCode = (String) session.getAttribute(Constant.CAPTCHA_CODE);
-		if(!StringUtils.equals(sessionCaptchaCode, registerUser.getCaptchaCode())){
+		if(PasswdUtil.checkCaptchaCode(session, registerUser.getCaptchaCode())){
 			return fail(ErrorCode.CAPTCHA_ERROR); 
+		}
+		
+		String pwd = PasswdUtil.getPasswd(session, registerUser.getPassword());
+		if(StringUtils.isEmpty(pwd)){
+			return fail(); // userAccount or Password have issue.
 		}
 		
 		UserAccount userAccount = new UserAccount();
 		userAccount.setEmail(registerUser.getEmail());
 		userAccount.setPhone(registerUser.getPhone());
 		userAccount.setUserName(registerUser.getUserName());
-		
-		String pwd = null;
-		try {
-			pwd = SHAUtil.shaEncode(registerUser.getPassword());
-		} catch (Exception e) {
-			logger.error(" Encdoe password happened issue. ");
-			logger.error(e.getMessage(), e);
-			return fail();//password have issue.
-		}
 		
 		UserPassword userPwd = new UserPassword();
 		userPwd.setPassword(pwd);

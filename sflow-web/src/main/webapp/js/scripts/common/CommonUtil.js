@@ -31,7 +31,11 @@ var CommonUtil = (function(){
 	        var shaObj = new jsSHA("SHA-1", "TEXT");
 	        shaObj.update(password);
 	        
-	        var encryptStr = loginAccount + splitStr + shaObj.getHash("HEX") + splitStr + randomString(8);
+	        var encryptStr = "";
+	        if(loginAccount != null){
+	        	encryptStr = loginAccount + splitStr;
+	        }
+	        encryptStr += shaObj.getHash("HEX") + splitStr + randomString(8);
 	        
 	        return encrypt.encrypt(encryptStr);
 		};
