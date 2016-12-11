@@ -10,6 +10,9 @@ sFlowApp.config(['$routeProvider', function($routeProvider){
     	templateUrl:'pages/register.html'
     }).when('/forget',{
     	templateUrl:'pages/forgetPasswd.html'
+    }).when('/qqlogin',{
+    	templateUrl:'pages/qq_login.html'
+    
     }).otherwise({
         redirectTo: '/login'
     })
