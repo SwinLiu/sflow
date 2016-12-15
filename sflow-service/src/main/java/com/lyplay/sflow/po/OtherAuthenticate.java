@@ -23,7 +23,6 @@ public class OtherAuthenticate implements Serializable {
 	
 	@Column(length = 200, nullable = false)
 	private String oauthId;
-
 	
 	@Column(length = 200, nullable = false)
 	private String oauthAccessToken;
