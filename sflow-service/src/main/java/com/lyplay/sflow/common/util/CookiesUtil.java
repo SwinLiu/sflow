@@ -2,7 +2,7 @@ package com.lyplay.sflow.common.util;
 
 public class CookiesUtil {
 
-	private static final String secretStr = "SFLOW_SECRET";
+	private static final String secretStr = "Sf1ow&*E321f";
 	
 	public static String generateCookies(String userId, Long time){
 		
