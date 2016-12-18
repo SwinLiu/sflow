@@ -1,0 +1,95 @@
+<!--tpl/auth/signin.html-->
+
+<div class="modal-dialog" ng-controller="LoginController">
+	<div class="modal-content">
+		
+		<div class="modal-header form-group">
+			<h2>Login @ {{app.name}}</h2>
+			<p>Dear user, log in to access the admin area!</p>
+		</div>
+
+		<div class="modal-body">
+
+			<form method="post" action="#" role="form" id="login-frm" name="login-frm"  class="form-signin">
+			
+				<div class="form-group">
+					<label for="username">Login Account</label>
+					<input type="text" class="form-control" name="loginAccount" id="loginAccount" 
+						ng-model="user.loginAccount" maxlength="40" placeholder="User name / Email / Phone number" />
+				</div>
+		
+				<div class="form-group">
+					<label for="passwd">Password</label>
+					<input type="password" class="form-control" name="passwd" id="passwd" 
+						ng-model="password" maxlength="20" placeholder="password" />
+				</div>
+				
+				<div class="form-group">
+					<label for="captchaCode">Captcha Code</label>
+					<div class="row">
+						<div class="col-lg-8">
+							<input type="text" class="form-control" name="captchaCode" id="captchaCode"
+								ng-model="user.captchaCode" maxlength="6" placeholder="Captcha Code" />
+						</div>
+						<div class="col-lg-4">
+							<img class="img-thumbnail" id="captchaCodeImg" src="api/captcha/160x30x6x0" id="verificationCode" >
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-12 form-group" style="display: none;" id="login-msg-area" >
+						<div class="alert alert-danger" id="login-msg-div" ></div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-lg-6 form-group">
+						<div class="checkbox">
+							<label>
+						  		<input type="checkbox"> Remember me
+							</label>
+						</div>
+					</div>
+					<div class="col-lg-6 form-group">
+						<button type="button" id="login_btn" class="btn btn-primary pull-right">
+							<span translate="signin.login" >Log In</span>
+						</button>
+					</div>
+				</div>
+			
+			</form>
+			
+			<div class="row">
+				<div class="col-lg-12">
+					<span>其它帐号登录：</span>
+					<a href="https://graph.qq.com/oauth2.0/authorize?response_type=token&client_id=1105878186&redirect_uri=localhost:8443/sflow/#/qqlogin&scope=get_user_info">
+						<img id="qqLoginImg" src="images/oauth/QQ.png" />
+					</a>
+					<a href="http://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=VqP1XlSIge7Wh68eZ63vYOPc&redirect_uri=https://localhost:8443/sflow/#/qqlogin">
+						<img id="qqLoginImg" src="images/oauth/baidu_16.png" />
+					</a>
+				</div>
+			</div>
+			
+		</div>
+
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-lg-6">
+					<a href="#forget" class="pull-left">Forgot your password?</a>
+				</div>
+				<div class="col-lg-6">
+					<a href="#register" class="pull-right">Create new account</a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+
+
+
+
+
+

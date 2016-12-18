@@ -12,6 +12,7 @@ angular.module('app')
 
       // config
       $scope.app = {
+    	host: "https://localhost:8443",
         name: 'sFlow',
         version: '1.0.0',
         // for chart colors

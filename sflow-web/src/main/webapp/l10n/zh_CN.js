@@ -1,5 +1,7 @@
 {
-
+"signin" : {
+	"login" : "登陆"
+},
 "header" : {
   "navbar" : {
     "UPLOAD" : "Upload",

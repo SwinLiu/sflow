@@ -1,5 +1,7 @@
 {
-
+"signin" : {
+	"login" : "Log in"
+},
 "header" : {
   "navbar" : {
     "UPLOAD" : "Upload",

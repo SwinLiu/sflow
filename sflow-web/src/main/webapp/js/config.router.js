@@ -16,27 +16,37 @@ angular.module('app')
     [          '$stateProvider', '$urlRouterProvider',
       function ($stateProvider,   $urlRouterProvider) {
           
-          $urlRouterProvider
-              .otherwise('/app/dashboard-v1');
+    	  $urlRouterProvider
+    	  	  .otherwise('/auth/loading');
+    	
           $stateProvider
+	          .state('auth',{
+	              abstract: true,
+	              url:'/auth',
+	              template: '<div ui-view class="fade-in"></div>',
+	              resolve: {
+	                  deps: ['$ocLazyLoad',
+	                    function( $ocLazyLoad ){
+	                      return $ocLazyLoad.load('js/controllers/auth.js');
+	                  }]
+	              }
+	          })
+	          .state('auth.loading',{
+	              url:'/loading',
+	              templateUrl:'tpl/auth/loading.html',
+	          })
+	          .state('auth.login',{
+	              url:'/login',
+	              templateUrl:'tpl/auth/signin.html',
+	          })
               .state('app', {
                   abstract: true,
                   url: '/app',
                   templateUrl: 'tpl/app.html'
               })
-              .state('app.dashboard-v1', {
-                  url: '/dashboard-v1',
-                  templateUrl: 'tpl/app_dashboard_v1.html',
-                  resolve: {
-                    deps: ['$ocLazyLoad',
-                      function( $ocLazyLoad ){
-                        return $ocLazyLoad.load(['js/controllers/chart.js']);
-                    }]
-                  }
-              })
-              .state('app.dashboard-v2', {
-                  url: '/dashboard-v2',
-                  templateUrl: 'tpl/app_dashboard_v2.html',
+              .state('app.dashboard', {
+                  url: '/dashboard',
+                  templateUrl: 'tpl/app_dashboard.html',
                   resolve: {
                     deps: ['$ocLazyLoad',
                       function( $ocLazyLoad ){
