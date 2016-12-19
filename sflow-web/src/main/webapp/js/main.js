@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 
-    function(              $scope,   $translate,   $localStorage,   $window ) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', '$http', '$state',
+    function(              $scope,   $translate,   $localStorage,   $window ,  $http,   $state ) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
@@ -13,6 +13,8 @@ angular.module('app')
       // config
       $scope.app = {
     	host: "https://localhost:8443",
+    	appUri: "sflow",
+    	appUrl: "https://localhost:8443/sflow",
         name: 'sFlow',
         version: '1.0.0',
         // for chart colors
@@ -66,6 +68,14 @@ angular.module('app')
         $scope.lang.isopen = !$scope.lang.isopen;
       };
 
+      $scope.user = $localStorage.session_user.userAccount;
+      
+      $scope.logout = function(){
+    	  $http.defaults.headers.common['X-API-Token'] = "";
+  		  $localStorage.token = null;
+  		  $state.go('auth.login');
+      }
+      
       function isSmartDevice( $window )
       {
           // Adapted from http://www.detectmobilebrowsers.com

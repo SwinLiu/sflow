@@ -10,4 +10,9 @@ public class Constant {
 	
 	public static String SPLIT_STR = "_@_";
 	
+	public static String USER_SESSION = "USER_SESSION";
+	
+	public static String USER_TOKEN = "USER_TOKEN";
+	public static String TOKEN_EXPIRES = "TOKEN_EXPIRES";
+	
 }

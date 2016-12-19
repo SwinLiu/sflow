@@ -1,14 +1,19 @@
-app.controller('LoadingController',function($scope,$resource,$state){
-    var $com = $resource($scope.app.host + "/auth/info/?");
-    $com.get(function(){
-        $state.go('app.dashboard');
-    },function(){	
-        $state.go('auth.login');
-    })  
+app.controller('LoadingController',function($scope,$resource,$state,$localStorage){
+    if($localStorage.token != null){
+    	var $com = $resource($scope.app.appUrl + "/api/auth");
+        $com.get(function(){
+            $state.go('app.dashboard');
+        },function(){	
+            $state.go('auth.login');
+        }); 
+    }else{
+    	$state.go('auth.login');
+    }
+	 
 });
 
 
-app.controller('LoginController',function($scope,$state,$http,$resource){
+app.controller('LoginController',function($scope,$state,$http,$localStorage){
         
     $scope.password;
 	$scope.user = {loginAccount: "", passwd: "", captchaCode: ""};
@@ -32,7 +37,11 @@ app.controller('LoginController',function($scope,$state,$http,$resource){
 					$http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) { 
 						
 			        	if(response.success){
-			        		alert.topCenter(true).success("success.");
+			        		$http.defaults.headers.common['X-API-Token'] = response.result.USER_TOKEN;
+			        		$localStorage.token = response.result.USER_TOKEN;
+
+			        		$scope.session_user = $localStorage.session_user = response.result.USER_SESSION; //保存用户信息
+			        		
 			        		$state.go('app.dashboard');
 			        	}else{
 			        		

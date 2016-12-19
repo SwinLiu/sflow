@@ -5,8 +5,9 @@
  */
 angular.module('app')
   .run(
-    [          '$rootScope', '$state', '$stateParams',
-      function ($rootScope,   $state,   $stateParams) {
+    [          '$rootScope', '$state', '$stateParams', '$http', '$localStorage',
+      function ($rootScope,   $state,   $stateParams,   $http,   $localStorage) {
+    	  $http.defaults.headers.common['X-API-Token'] = $localStorage.token;
           $rootScope.$state = $state;
           $rootScope.$stateParams = $stateParams;        
       }
