@@ -118,6 +118,12 @@
 		    <groupId>javax.mail</groupId>
 		    <artifactId>mail</artifactId>
 		</dependency>
+		
+		<!-- JWT -->		
+		<dependency>
+           	<groupId>io.jsonwebtoken</groupId>
+           	<artifactId>jjwt</artifactId>
+     	</dependency>
 
 		
 	</dependencies>

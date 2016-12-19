@@ -263,6 +263,13 @@
 			    <version>1.10</version>
 			</dependency>
 			
+			<!-- JWT -->
+			<dependency>
+              	<groupId>io.jsonwebtoken</groupId>
+              	<artifactId>jjwt</artifactId>
+              	<version>0.6.0</version>
+        	</dependency>
+			
 			<!-- Java Mail -->		
 			<dependency>
 			    <groupId>javax.mail</groupId>
