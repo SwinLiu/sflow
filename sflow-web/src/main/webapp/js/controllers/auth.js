@@ -13,10 +13,27 @@ app.controller('LoadingController',function($scope,$resource,$state,$localStorag
 });
 
 
-app.controller('LoginController',function($scope,$state,$http,$localStorage){
-        
+app.controller('LoginController',function($scope,$resource,$state,$http,$localStorage){
+       
     $scope.password;
+    $scope.publicKey;
 	$scope.user = {loginAccount: "", passwd: "", captchaCode: ""};
+	
+	if($localStorage.token != null){
+		// already login, go to dashboard
+    	var $com = $resource($scope.app.appUrl + "/api/auth");
+        $com.get(function(){
+            $state.go('app.dashboard');
+        }); 
+    }else{
+    	// get RSA public key
+    	$http({method:'GET',url:'api/secret'}).success(function(response) {
+    		if(response.success){
+    			$scope.publicKey = response.result;
+    		}
+		});
+    }
+	
 	
 	$("#captchaCodeImg").unbind("click").click(function(){
 		var imgSrc = $(this).attr("src");
@@ -28,46 +45,37 @@ app.controller('LoginController',function($scope,$state,$http,$localStorage){
 	
 	$("#login_btn").unbind("click").click(function(){
 		if($scope.validator.form()){
+				
+			$scope.user.passwd = CommonUtil.encryptPasswd($scope.user.loginAccount, $scope.password, $scope.publicKey);
 			
-			$http({method:'GET',url:'api/secret'}).success(function(response) {
-				if(response.success){
-					var publicKey = response.result;
-					$scope.user.passwd = CommonUtil.encryptPasswd($scope.user.loginAccount, $scope.password, publicKey);
-					
-					$http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) { 
-						
-			        	if(response.success){
-			        		$http.defaults.headers.common['X-API-Token'] = response.result.USER_TOKEN;
-			        		$localStorage.token = response.result.USER_TOKEN;
+			$http({method:'POST',url:'api/login',data:$scope.user}).success(function(response) { 
+				
+	        	if(response.success){
+	        		$http.defaults.headers.common['X-API-Token'] = response.result.USER_TOKEN;
+	        		$localStorage.token = response.result.USER_TOKEN;
 
-			        		$scope.session_user = $localStorage.session_user = response.result.USER_SESSION; //保存用户信息
-			        		
-			        		$state.go('app.dashboard');
-			        	}else{
-			        		
-			        		if(response.returnCode == returnCode.CAPTCHA_ERROR){
-			        			var msg = returnCode.CAPTCHA_ERROR_MSG;
-			            		msgDiv.error("#login-msg-area",null,msg,true);
-								$("#login-msg-area").show();
-			        		}else{
-			        			var msg = returnCode.LOGIN_ERROR_MSG;
-			            		msgDiv.error("#login-msg-area",null,msg,true);
-								$("#login-msg-area").show();
-								
-								$("#captchaCodeImg").click();
-								$scope.user.captchaCode = "";
-								
-			        		}
-			        	}
-			     	});
-					
-					
-					
-					
+	        		$localStorage.session_user = response.result.USER_SESSION; //保存用户信息
+	        		$scope.user = $localStorage.session_user.userAccount;
+	        		
+	        		$state.go('app.dashboard');
 	        	}else{
-	        		alert.topCenter(true).success("System error, Please try later.");
+	        		
+	        		if(response.returnCode == returnCode.CAPTCHA_ERROR){
+	        			var msg = returnCode.CAPTCHA_ERROR_MSG;
+	            		msgDiv.error("#login-msg-area",null,msg,true);
+						$("#login-msg-area").show();
+	        		}else{
+	        			var msg = returnCode.LOGIN_ERROR_MSG;
+	            		msgDiv.error("#login-msg-area",null,msg,true);
+						$("#login-msg-area").show();
+						
+						$("#captchaCodeImg").click();
+						$scope.user.captchaCode = "";
+						
+	        		}
 	        	}
-			});
+	     	});
+					
 		}
 	});
 		
@@ -121,5 +129,6 @@ app.controller('LoginController',function($scope,$state,$http,$localStorage){
     });
     	
 });
+
 
 

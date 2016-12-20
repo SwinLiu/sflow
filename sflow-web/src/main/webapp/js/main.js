@@ -68,7 +68,11 @@ angular.module('app')
         $scope.lang.isopen = !$scope.lang.isopen;
       };
 
-      $scope.user = $localStorage.session_user.userAccount;
+      if($localStorage.session_user != null){
+    	  $scope.user = $localStorage.session_user.userAccount;
+      }else{
+    	  $scope.user = null;
+      }
       
       $scope.logout = function(){
     	  $http.defaults.headers.common['X-API-Token'] = "";
