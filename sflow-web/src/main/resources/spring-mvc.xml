@@ -11,6 +11,7 @@
 						http://www.springframework.org/schema/context 
 						http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<!-- 静态资源默认配置 -->
 	<mvc:default-servlet-handler/>
 	
 	<!-- 设置使用注解的类所在的jar包 -->
@@ -18,9 +19,6 @@
     
 	<!-- 开始SpringMVC注解配置  -->
     <mvc:annotation-driven />
-    
-    <!-- 静态资源默认配置 -->
-    <mvc:default-servlet-handler />
     
     <context:property-placeholder location="classpath:mailServer.properties" file-encoding="utf-8" ignore-unresolvable="true"/>
 	
@@ -42,29 +40,6 @@
         </property>
     </bean>
     
-    <context:property-placeholder location="classpath:jdbc.properties" />
-	
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
-		
-		<property name="driverClass" value="${jdbc.driver}"></property>
-		  <property name="jdbcUrl" value="${jdbc.url}"></property>
-		  <property name="user" value="${jdbc.username}"></property>
-		  <property name="password" value="${jdbc.password}"></property>
-		  <property name="minPoolSize"><value>1</value></property>
-		  <property name="maxPoolSize"><value>10</value></property>
-		  <property name="maxIdleTime"><value>1800</value></property>
-		  <property name="acquireIncrement"><value>2</value></property>
-		  <property name="maxStatements"><value>0</value></property>
-		  <!-- 配置连接池的初始值 -->
-		  <property name="initialPoolSize"><value>2</value></property>
-		  <property name="idleConnectionTestPeriod"><value>1800</value></property>
-		  <property name="acquireRetryAttempts"><value>30</value></property>
-		  <property name="breakAfterAcquireFailure"><value>true</value></property>
-		  
-	</bean>
-	
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+    
 	
 </beans>
