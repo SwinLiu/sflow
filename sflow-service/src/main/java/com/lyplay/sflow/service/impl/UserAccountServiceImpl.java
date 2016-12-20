@@ -38,7 +38,7 @@ public class UserAccountServiceImpl implements IUserAccountService{
 		
 		Sequence sequence = sequenceDAO.getNextSequence(SequenceEnum.USER_ACCOUNT_SEQ.getName());
 		userAccount.setId(sequence.getSequenceStr(true));
-		userAccount.setStatus(AccountStatusEnum.ACTIVE);
+		userAccount.setStatus(AccountStatusEnum.ACTIVE.getStatus());
 		
 		userPwd.setId(userAccount.getId());
 		userPwd.setLockTime(null);

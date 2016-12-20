@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lyplay.sflow.api.auth.AuthPassport;
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.PasswdUtil;
@@ -38,6 +39,7 @@ public class RegisterController {
 	@Autowired
 	private IUserAccountService userAccountService;
 
+	@AuthPassport(validate = false)
 	@RequestMapping(value = "/api/register", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public RestResult register(RegisterUser registerUser, HttpSession session) throws Exception {

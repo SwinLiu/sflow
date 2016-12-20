@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lyplay.sflow.api.auth.AuthPassport;
 import com.lyplay.sflow.common.UserSession;
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.AccountStatusEnum;
 import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
+import com.lyplay.sflow.common.util.JacksonUtil;
 import com.lyplay.sflow.common.util.PasswdUtil;
 import com.lyplay.sflow.common.util.TokenUtil;
 import com.lyplay.sflow.po.UserAccount;
@@ -44,6 +46,7 @@ public class LoginController {
 	@Autowired
 	private IUserAccountService userAccountService;
 
+	@AuthPassport(validate = false)
 	@RequestMapping(value = "/api/login", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public RestResult login(
@@ -65,7 +68,7 @@ public class LoginController {
 		userAccount.setUserName("Swin.Liu");
 		userAccount.setEmail("test@test.com");
 		userAccount.setPhone("123123123");
-		userAccount.setStatus(AccountStatusEnum.ACTIVE);
+		userAccount.setStatus(AccountStatusEnum.ACTIVE.getStatus());
 		
 		UserSession sserSession = new UserSession();
 		sserSession.setUserAccount(userAccount);
@@ -74,7 +77,7 @@ public class LoginController {
 		Map<String,Object> result = new HashMap<String,Object>();
 		
 		Map<String, Object> claims = new HashMap<String, Object>(1);
-		claims.put(Constant.USER_SESSION, sserSession);
+		claims.put(Constant.USER_SESSION, JacksonUtil.bean2Json(sserSession));
 		
 		result.put(Constant.USER_TOKEN, TokenUtil.getJWTString(claims, null));
 		result.put(Constant.USER_SESSION, sserSession);
@@ -96,6 +99,16 @@ public class LoginController {
 	@ResponseBody
 	public RestResult auth() throws Exception {
 		return success();
+	}
+	
+	// TODO add filter for login check
+	@RequestMapping(value = "/api/logout", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public RestResult logout(HttpSession session) throws Exception {
+		//清除Session  
+        session.invalidate();
+        
+        return success();
 	}
 	
 }

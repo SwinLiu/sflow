@@ -1,8 +1,12 @@
 app.controller('LoadingController',function($scope,$resource,$state,$localStorage){
     if($localStorage.token != null){
     	var $com = $resource($scope.app.appUrl + "/api/auth");
-        $com.get(function(){
-            $state.go('app.dashboard');
+        $com.get(function(response){
+        	if(response.success == true){
+        		$state.go('app.dashboard');
+        	}else{
+        		$state.go('auth.login');
+        	}
         },function(){	
             $state.go('auth.login');
         }); 
@@ -19,19 +23,16 @@ app.controller('LoginController',function($scope,$resource,$state,$http,$localSt
     $scope.publicKey;
 	$scope.user = {loginAccount: "", passwd: "", captchaCode: ""};
 	
+	
+	
 	if($localStorage.token != null){
-		// already login, go to dashboard
-    	var $com = $resource($scope.app.appUrl + "/api/auth");
-        $com.get(function(){
-            $state.go('app.dashboard');
-        }); 
+    	$state.go('app.dashboard');
     }else{
-    	// get RSA public key
     	$http({method:'GET',url:'api/secret'}).success(function(response) {
     		if(response.success){
     			$scope.publicKey = response.result;
     		}
-		});
+    	});
     }
 	
 	

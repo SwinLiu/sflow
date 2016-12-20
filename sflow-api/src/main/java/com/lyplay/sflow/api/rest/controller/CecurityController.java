@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lyplay.sflow.api.auth.AuthPassport;
 import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.util.CaptchaImageCode;
 import com.lyplay.sflow.common.util.Constant;
@@ -37,6 +38,7 @@ public class CecurityController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	@AuthPassport(validate = false)
 	@RequestMapping(value = "/api/captcha/{size}", method = RequestMethod.GET, produces = "application/json")
 	public void getCaptchaPic(@PathVariable("size") String size,
 			HttpServletResponse response, HttpSession session)
@@ -69,6 +71,7 @@ public class CecurityController {
 
 	}
 	
+	@AuthPassport(validate = false)
 	@RequestMapping(value = "/api/secret", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public RestResult getEncryptKey(HttpSession session) throws Exception {

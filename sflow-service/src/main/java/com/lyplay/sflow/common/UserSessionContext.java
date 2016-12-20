@@ -9,8 +9,16 @@ public class UserSessionContext implements AutoCloseable{
         current.set(userSession);
     }
 	
+	public static void setUserSession(UserSession userSession) {
+        current.set(userSession);
+    }
+	
 	public static UserSession getUserSession() {
 		return current.get();
+	}
+	
+	public static void removeUserSession() {
+		current.remove();
 	}
 	
 	@Override

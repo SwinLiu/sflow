@@ -72,6 +72,16 @@ public class TokenUtil {
 		return jwtString;
 	}
 	
+	public static Claims parseJWT(String jwt) {
+		if(isValid(jwt)){
+			return Jwts.parser()        
+				   .setSigningKey(RSAUtil.getPrivateKey(keyPair))
+				   .parseClaimsJws(jwt).getBody();
+		} else {
+			return null;
+		}
+	}
+	
 	public static boolean isValid(String token) {
 		try {
 			Jwts.parser().setSigningKey(RSAUtil.getPrivateKey(keyPair)).parseClaimsJws(token.trim());

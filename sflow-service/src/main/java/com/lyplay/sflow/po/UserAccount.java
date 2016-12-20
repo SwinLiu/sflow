@@ -69,8 +69,4 @@ public class UserAccount implements Serializable {
 		this.status = status;
 	}
 	
-	public void setStatus(AccountStatusEnum accountStatus) {
-		this.status = accountStatus.getStatus();
-	}
-
 }
