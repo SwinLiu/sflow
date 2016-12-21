@@ -8,3 +8,253 @@ http://blog.csdn.net/iamnieo/article/details/50474399
 
 http://bbs.csdn.net/topics/392006333
 http://blog.csdn.net/u011537073/article/details/52177204
+
+
+
+
+angularjs给Model添加拦截过滤器,路由增加限制，实现用户登录状态判断
+http://www.brafox.com/post/2015/javascript/angularjs/angularjs-router-interceptor.html
+
+AngularJS 应用身份认证的技巧
+https://blog.coding.net/blog/techniques-for-authentication-in-angular-js-applications?type=hot
+
+Angular应用中的登陆与身份验证
+http://www.tuicool.com/articles/2ieIJb2
+
+
+
+
+No-login
+当我们想进入某个路由时，如何对路由进行权限控制。比如说，“个人中心” 这个页面，就需要用户先登录，如果用户还没有登录，我们就需要跳转到页面登录。
+
+以下是我们设想的界面文件
+
+```
+|-- index.html 公共的，每个人都可以看到
+|-- login.html 登录界面
+|-- teacher.html 登录后，角色为 teacher|admin 的可以查看
+|-- student.html 登录后，角色为 student|admin 的可以查看
+```
+
+然后在 `index.html` 中引入 `angular.js` 和 `angular-ui-router.js` ，页面代码非常简单。
+
+#index.html
+<!DOCTYPE html>
+<html ng-app="LoginApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>公共的界面</title>
+    <script type="text/javascript" src="./styles/angular.min.js"></script>
+    <script type="text/javascript" src="./styles/angular-ui-router.min.js"></script>
+</head>
+
+<body ng-controller="ParentController">
+    <div>
+        <div ui-view></div>
+    </div>
+</body>
+
+</html>
+
+
+为了使代码能够正常运行，我们先为它建立一个控制器文件
+
+# controllers/parentController.js
+angular.module('LoginApp', [])
+	.controller('ParentController', function($scope) {
+	// 在 index.html 中引用此脚本
+})
+
+
+接下来，我们建立 `teacher.html` 和 `student.html`，并为其设置路由状态
+
+# teacher.html
+<div>只有角色为 teacher 或 admin 的人才能查看此界面</div>
+
+# student.html
+<div>只有角色为 student 或 admin 的人才能查看此界面</div>
+
+# home.html
+<div>这是一个公共的界面</div>
+
+# router.js
+# 注意在 parentController.js 中的 module 添加依赖 `ui.router`
+# 所以在 index.html 中引用 router.js 时，要放在 parentController.js 的后面
+angular.module('LoginApp').config(['$stateProvider', '$urlRouterProvider',function($stateProvider, $urlRouterProvider) 
+{
+
+	$urlRouterProvider.otherwise("/");
+
+	$stateProvider.state('home', {
+		url: "/",
+		templateUrl: "./home.html"
+	}).state('teacher', {
+		url: "/teacher",
+		templateUrl: "./teacher.html"
+	}).state('student', {
+		url: "/student",
+		templateUrl: "./student.html"
+	})
+}]);
+
+
+刷新 `index.html`，检查界面是否正确显示。一切通过之后，我们再修改 `index.html` 为各页面添加链接。
+
+...
+<body ng-controller="ParentController">
+    <div>点击跳转</div>
+    <div>
+        <a ui-sref="home">Home</a>
+        <a ui-sref="teacher">Teacher</a>
+        <a ui-sref="student">Student</a>
+    </div>
+    <div>
+        <div ui-view></div>
+    </div>
+</body>
+...
+
+
+
+刷新 `index.html`，检查各个跳转都能够正常显示。接下来我们将进行权限的设置，如果当前用户还没有登录，那么就只能点击 `Home`，没办法进入 `Teacher` 或 `Student` 界面。首先我们新建一个服务 `Auth`，它的任务就是有
+
+* 检测当前用户是否登录
+* 当前用户的角色
+
+# services/session.js 用户的基本信息
+angular.module('LoginApp').service('Session', function() {
+    this.create = function(user) {
+        this.user = user;
+        this.userRole = user.userRole;
+    };
+    return this;
+})
+
+# services/auth.js 认证
+# 函数的内容要怎么写，还没有想好，先返回 false
+angular.module('LoginApp').
+service('Auth', ['Session', function(Session) {
+    var authService = {};
+    // 是否已经登录
+    authService.isAuthenticated = function() {
+    	return false;
+    };
+    // 是否有进入的权限
+    authService.isAuthorized = function(authorizedRoles) {
+    	return false;
+    };
+    return authService;
+}])
+
+
+现在我们要在哪里插入这些代码呢？回想一下之前的流程，我们希望在点击某个链接的时候，就自动判断是否有进入的权限。那么我们就可以考虑监听路由状态的变化了, 新建 `app.js` 文件，并监听路由的变化事件
+
+# app.js
+angular.module('LoginApp').run(function($rootScope) {
+    $rootScope.$on('$stateChangeStart', function(event, next) {
+        console.log('路由发生变化了');
+    })
+})
+
+
+现在，刷新 `index.html`，点击链接，查看控制台是否在每次链接变化时都输出信息。一切通过之后，接下来我们将会使用到 ui-route 的几个功能
+
+* 预载入 Resolve，提前载入依赖或数据
+* 数据 Data 与预载入的区别是不会被注入到控制器中
+
+这两个属性都可以实现在进入控制器之前，先执行其中的代码。我们选择 `data`，因为权限的控制好像并不需要注入到控制器中。修改 `router.js` 文件，为 `teacher` 添加数据
+
+...
+.state('teacher', {
+	url: "/teacher",
+	templateUrl: "./teacher.html",
+	data: { // 设置进入角色为 admin 或 teacher
+		authorizedRoles:['admin','teacher']
+	}
+})
+...
+
+
+我们已经为路由添加了进要进入的角色，现在就可以在 `app.js` 中修改监听代码，如果当前用户角色在列表中，就通过，如果不在列表中，就不通过。
+
+# app.js
+angular.module('LoginApp').run(function($rootScope, Auth) {
+    $rootScope.$on('$stateChangeStart', function(event, next) {
+
+        if (angular.isDefined(next.data)) {
+            var roles = next.data.authorizedRoles;
+
+            if (Auth.isAuthorized(roles)) {
+                console.log('用户角色在列表中');
+            } else {
+                console.log('用户角色没有在列表中')
+            }
+        }
+    })
+})
+
+
+刷新界面并打开控制台，当我们点击跳转到 `Teacher` 时，控制台就会输出信息，判断角色是否在列表中。继续添加代码，实现如果用户角色没有在列表中，就阻止 `teacher` 内容的显示，在 `app.js` 中适当位置添加 `event.preventDefault();`，再次刷新界面，可以看到，我们的目的已经实现了。
+
+现在我们再次修改下，实现以下功能
+
+* 如果用户没有登录，让用户跳转到登录界面
+* 如果用户已经登录，但没有操作权限，告诉用户不能操作
+
+继续修改 `app.js`
+
+angular.module('LoginApp').run(function($rootScope, Auth) {
+    $rootScope.$on('$stateChangeStart', function(event, next) {
+
+        if (angular.isDefined(next.data)) {
+            var roles = next.data.authorizedRoles;
+            if (!Auth.isAuthenticated()) {
+                console.log('还未登录');
+                event.preventDefault();
+            } else if (Auth.isAuthorized(roles)) {
+                console.log('用户角色在列表中');
+            } else {
+                console.log('用户角色没有在列表中')
+                event.preventDefault();
+            }
+        }
+    })
+})
+
+
+如果我们将 `没有登录` , `没有权限` 的处理逻辑代码全都放在 `app.js` 中，那文件不是太杂乱了。为了便于维护，我们继续修改它，当没有登录时，就对外广播没有登录，然后由某个处理器去专门处理没有登录，没有权限的操作。
+
+if (angular.isDefined(next.data)) {
+	var roles = next.data.authorizedRoles;
+
+	if (!Auth.isAuthenticated()) {
+		event.preventDefault();
+		$rootScope.$broadcast('noLogin');
+	} else if (!Auth.isAuthorized(roles)) {
+		event.preventDefault();
+		$rootScope.$broadcast('noAccess');
+	}
+}
+
+
+
+OK，广播已经搞定了，在哪里接收呢？这里我们就把处理逻辑放在 `parentController` 中吧。
+
+angular.module('LoginApp', ['ui.router'])
+    .controller('ParentController', function($scope, $rootScope, $state) {
+        console.log('ParentController');
+
+        var noLogin = function() {
+            $state.go('login');
+            // 在 route.js 中添加新的路由状态
+        }
+        var noAccess = function() {
+            alert('没有进入的权限')
+        }
+        $rootScope.$on('noLogin', noLogin);
+        $rootScope.$on('noAccess', noAccess);
+    })
+
+
+OK，搞定了，其它的处理细节就自己处理吧。最后的代码就放在这里

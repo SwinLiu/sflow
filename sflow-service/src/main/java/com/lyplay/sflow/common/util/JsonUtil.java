@@ -9,7 +9,8 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-public class JacksonUtil {
+public class JsonUtil {
+	
 	private static ObjectMapper mapper = new ObjectMapper();
     
     public static String bean2Json(Object obj) throws IOException {
@@ -24,4 +25,5 @@ public class JacksonUtil {
             throws JsonParseException, JsonMappingException, IOException {
         return mapper.readValue(jsonStr, objClass);
     }
+    
 }

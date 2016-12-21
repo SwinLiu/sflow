@@ -24,7 +24,7 @@ import com.lyplay.sflow.common.dto.RestResult;
 import com.lyplay.sflow.common.enums.AccountStatusEnum;
 import com.lyplay.sflow.common.enums.ErrorCode;
 import com.lyplay.sflow.common.util.Constant;
-import com.lyplay.sflow.common.util.JacksonUtil;
+import com.lyplay.sflow.common.util.JsonUtil;
 import com.lyplay.sflow.common.util.PasswdUtil;
 import com.lyplay.sflow.common.util.TokenUtil;
 import com.lyplay.sflow.po.UserAccount;
@@ -77,7 +77,7 @@ public class LoginController {
 		Map<String,Object> result = new HashMap<String,Object>();
 		
 		Map<String, Object> claims = new HashMap<String, Object>(1);
-		claims.put(Constant.USER_SESSION, JacksonUtil.bean2Json(sserSession));
+		claims.put(Constant.USER_SESSION, JsonUtil.bean2Json(sserSession));
 		
 		result.put(Constant.USER_TOKEN, TokenUtil.getJWTString(claims, null));
 		result.put(Constant.USER_SESSION, sserSession);

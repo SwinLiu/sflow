@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.lyplay.sflow.api.exception.AuthenticateException;
 import com.lyplay.sflow.common.UserSession;
 import com.lyplay.sflow.common.util.Constant;
-import com.lyplay.sflow.common.util.JacksonUtil;
+import com.lyplay.sflow.common.util.JsonUtil;
 import com.lyplay.sflow.common.util.TokenUtil;
 
 public class APIAuthenticator implements Authenticator {
@@ -36,7 +36,7 @@ public class APIAuthenticator implements Authenticator {
 		if(claims != null){
 			try {
 				String userSessionJson = (String) claims.get(Constant.USER_SESSION);
-				return JacksonUtil.json2Bean(userSessionJson, UserSession.class);
+				return JsonUtil.json2Bean(userSessionJson, UserSession.class);
 			} catch (Exception e) {
 				logger.error(e.getMessage(), e);
 				return null;

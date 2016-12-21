@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="LoginApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>公共的界面</title>
+    <script type="text/javascript" src="./styles/angular.min.js"></script>
+    <script type="text/javascript" src="./styles/angular-ui-router.min.js"></script>
+</head>
+
+<body ng-controller="ParentController">
+    <div>点击跳转</div>
+    <div>
+        <a ui-sref="home">Home</a>
+        <a ui-sref="teacher">Teacher</a>
+        <a ui-sref="student">Student</a>
+    </div>
+    <div>
+        <div ui-view></div>
+    </div>
+</body>
+<script type="text/javascript" src="controller/parentController.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="router.js"></script>
+<script type="text/javascript" src="services/session.js"></script>
+<script type="text/javascript" src="services/auth.js"></script>
+
+</html>
