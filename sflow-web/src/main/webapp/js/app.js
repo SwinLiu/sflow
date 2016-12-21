@@ -1,7 +1,7 @@
 'use strict';
 
 
-angular.module('app', [
+var app = angular.module('app', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
@@ -11,8 +11,26 @@ angular.module('app', [
     'ui.router',
     'ui.bootstrap',
     'ui.load',
+    'appSession',
+    'appAuthService',
     'ui.jq',
     'ui.validate',
     'oc.lazyLoad',
     'pascalprecht.translate'
 ]);
+
+app.constant('USER_ROLES', {
+  all: '*',
+  admin: 'admin',
+  editor: 'editor',
+  guest: 'guest'
+});
+
+app.constant('AUTH_EVENTS', {
+  loginSuccess: 'auth-login-success',
+  loginFailed: 'auth-login-failed',
+  logoutSuccess: 'auth-logout-success',
+  sessionTimeout: 'auth-session-timeout',
+  notAuthenticated: 'auth-not-authenticated',
+  notAuthorized: 'auth-not-authorized'
+});

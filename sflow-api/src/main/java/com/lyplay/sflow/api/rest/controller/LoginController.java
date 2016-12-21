@@ -73,6 +73,7 @@ public class LoginController {
 		UserSession sserSession = new UserSession();
 		sserSession.setUserAccount(userAccount);
 		
+		session.setAttribute(Constant.USER_SESSION, sserSession);
 		
 		Map<String,Object> result = new HashMap<String,Object>();
 		

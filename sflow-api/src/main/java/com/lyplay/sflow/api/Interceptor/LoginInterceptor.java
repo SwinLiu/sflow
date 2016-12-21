@@ -28,8 +28,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception e)
 			throws Exception {
-		// TODO Auto-generated method stub
-		logger.info("afterCompletion " + handler.getClass().getName());
 		UserSessionContext.removeUserSession();
 	}
 
@@ -39,8 +37,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler, ModelAndView map) throws Exception {
-		// TODO Auto-generated method stub
-		logger.info("postHandle " + handler.getClass().getName());
 	}
 
 	/** 
@@ -49,10 +45,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
 			Object handler) throws Exception {
-		boolean defaultReturn = true;
+		boolean returnFlag = true;
 		if(handler.getClass().isAssignableFrom(HandlerMethod.class)){
-			
-			logger.info("preHandle " + ((HandlerMethod)handler).getMethod().getName());
 			
             AuthPassport authPassport = ((HandlerMethod) handler).getMethodAnnotation(AuthPassport.class);
             
@@ -62,16 +56,17 @@ public class LoginInterceptor implements HandlerInterceptor {
         	   UserSession userSession = tryGetAuthenticatedUser(request, response);
         	   if(userSession != null){
         		   UserSessionContext.setUserSession(userSession);
-        		   return true;
         	   }else{
-        		   return false;
+        		   returnFlag = false;
         	   }
-           } else {                
-               return true;  
            }
         }
+		
+		if(!returnFlag){
+			//response.setStatus(401);
+		}
             
-		return defaultReturn;   
+		return returnFlag;   
 	}
 	
 	private UserSession tryGetAuthenticatedUser(HttpServletRequest request,

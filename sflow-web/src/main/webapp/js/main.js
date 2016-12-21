@@ -80,6 +80,18 @@ angular.module('app')
   		  $state.go('auth.login');
       }
       
+      $scope.noLogin = function() {
+          $state.go('auth.login');
+      }
+      
+      $scope.noAccess = function() {
+          console.log("No access.");
+      }
+      
+//      $rootScope.$on('noLogin', noLogin);
+      
+//      $rootScope.$on('noAccess', noAccess);
+      
       function isSmartDevice( $window )
       {
           // Adapted from http://www.detectmobilebrowsers.com

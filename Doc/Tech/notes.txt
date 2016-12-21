@@ -15,11 +15,19 @@ http://blog.csdn.net/u011537073/article/details/52177204
 angularjs给Model添加拦截过滤器,路由增加限制，实现用户登录状态判断
 http://www.brafox.com/post/2015/javascript/angularjs/angularjs-router-interceptor.html
 
-AngularJS 应用身份认证的技巧
+AngularJS 应用身份认证的技巧 ***
 https://blog.coding.net/blog/techniques-for-authentication-in-angular-js-applications?type=hot
 
-Angular应用中的登陆与身份验证
+Angular应用中的登陆与身份验证 *
 http://www.tuicool.com/articles/2ieIJb2
+
+angularjs 用户认证实现步骤详解 **
+http://www.111cn.net/wy/js-ajax/93676.htm
+
+http://blog.csdn.net/liubinwyzbt/article/details/52882219
+
+http://www.111cn.net/wy/js-ajax/93676.htm
+
 
 
 
@@ -223,7 +231,8 @@ angular.module('LoginApp').run(function($rootScope, Auth) {
 })
 
 
-如果我们将 `没有登录` , `没有权限` 的处理逻辑代码全都放在 `app.js` 中，那文件不是太杂乱了。为了便于维护，我们继续修改它，当没有登录时，就对外广播没有登录，然后由某个处理器去专门处理没有登录，没有权限的操作。
+如果我们将 `没有登录` , `没有权限` 的处理逻辑代码全都放在 `app.js` 中，那文件不是太杂乱了。
+为了便于维护，我们继续修改它，当没有登录时，就对外广播没有登录，然后由某个处理器去专门处理没有登录，没有权限的操作。
 
 if (angular.isDefined(next.data)) {
 	var roles = next.data.authorizedRoles;

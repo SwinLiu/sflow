@@ -5,11 +5,30 @@
  */
 angular.module('app')
   .run(
-    [          '$rootScope', '$state', '$stateParams', '$http', '$localStorage',
-      function ($rootScope,   $state,   $stateParams,   $http,   $localStorage) {
+    [          '$rootScope', '$state', '$stateParams', '$http', '$localStorage', 
+      function ($rootScope,   $state,   $stateParams,   $http,   $localStorage,   AUTH_EVENTS,   AuthService
+    		  ) {
+    	  
     	  $http.defaults.headers.common['X-API-Token'] = $localStorage.token;
           $rootScope.$state = $state;
-          $rootScope.$stateParams = $stateParams;        
+          $rootScope.$stateParams = $stateParams;
+          
+          $rootScope.$on('$stateChangeStart', function (event, next) {
+        	  
+//    	    var authorizedRoles = next.data.authorizedRoles;
+//    	    if (!AuthService.isAuthorized(authorizedRoles)) {
+//    	      event.preventDefault();
+//    	      if (AuthService.isAuthenticated()) {
+//    	        // user is not allowed
+//    	        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+//    	      } else {
+//    	        // user is not logged in
+//    	        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+//    	      }
+//    	    }
+        	  
+    	  });
+          
       }
     ]
   )
