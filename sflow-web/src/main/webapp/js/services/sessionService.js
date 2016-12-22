@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('appSession', [])
-.service('sessionService', function () {
+angular.module('app').service('SessionService', function () {
 
 	this.create = function(sessionId, userId, userRole) {
 		this.id = sessionId;

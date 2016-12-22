@@ -11,8 +11,6 @@ var app = angular.module('app', [
     'ui.router',
     'ui.bootstrap',
     'ui.load',
-    'appSession',
-    'appAuthService',
     'ui.jq',
     'ui.validate',
     'oc.lazyLoad',
@@ -34,3 +32,4 @@ app.constant('AUTH_EVENTS', {
   notAuthenticated: 'auth-not-authenticated',
   notAuthorized: 'auth-not-authorized'
 });
+

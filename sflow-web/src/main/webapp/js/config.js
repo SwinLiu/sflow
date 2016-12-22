@@ -83,7 +83,12 @@ angular.module('app')
  }])
 .factory('AuthInterceptor', ['$rootScope', '$q', function ($rootScope, $q, AUTH_EVENTS) {
 	  return {
+		'response': function (response) {
+		  console.log("response : " + response);
+          return response || $q.when(response);
+        },
 	    responseError: function (response) { 
+	      console.log(response);
 	      $rootScope.$broadcast({
 	        401: AUTH_EVENTS.notAuthenticated,
 	        403: AUTH_EVENTS.notAuthorized,

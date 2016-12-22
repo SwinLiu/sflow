@@ -63,7 +63,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 		
 		if(!returnFlag){
-			//response.setStatus(401);
+			response.setStatus(401);
 		}
             
 		return returnFlag;   

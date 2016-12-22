@@ -2,11 +2,7 @@ app.controller('LoadingController',function($scope,$resource,$state,$localStorag
     if($localStorage.token != null){
     	var $com = $resource($scope.app.appUrl + "/api/auth");
         $com.get(function(response){
-        	if(response.success == true){
-        		$state.go('app.dashboard');
-        	}else{
-        		$state.go('auth.login');
-        	}
+        	$state.go('app.dashboard');
         },function(){	
             $state.go('auth.login');
         }); 

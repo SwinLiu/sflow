@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('appAuthService', [])
-	.service('AuthService', ['$http', 'SessionService', function ($http, SessionService) {
 
+angular.module('app')
+.service('AuthService', ['$http', 'SessionService', function ($http, SessionService) {
+	
 	var authService = {};
 
 	authService.login = function(credentials) {
