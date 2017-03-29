@@ -1,17 +1,26 @@
 package com.lyplay.sflow.orm.utils;
 
-import java.util.List;
+import java.util.Collection;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.springframework.dao.support.DataAccessUtils;
 
 
-public class ResultUtil {
+public class ResultUtil extends DataAccessUtils{
 	
-	public static <T> T getFrist(List<T> list){
-		if(CollectionUtils.isEmpty(list)){
+	/**
+	 * Return a single result object from the given Collection.
+	 * <p>Returns {@code null} if 0 result objects found;
+	 * returns first result object if more than 1 element found.
+	 * @param results the result Collection (can be {@code null})
+	 * @return the first result object, or {@code null} if none
+	 * element has been found in the given Collection
+	 */
+	public static <T> T firstResult(Collection<T> results) {
+		int size = (results != null ? results.size() : 0);
+		if (size == 0) {
 			return null;
-		}else{
-			return list.get(0);
+		} else {
+			return results.iterator().next();
 		}
 	}
 	

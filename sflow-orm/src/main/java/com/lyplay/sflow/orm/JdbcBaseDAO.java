@@ -177,7 +177,7 @@ public class JdbcBaseDAO<T> implements IBaseDAO<T>{
 		
 		if(sqlAndParams != null){
 			PrintUtil.printDebugSql(logger, sqlAndParams);
-			Object existPo = ResultUtil.getFrist(jdbcTemplate.query(sqlAndParams.getSql(), sqlAndParams.getParams(), new CommonRowMapper<>(po.getClass())));
+			Object existPo = ResultUtil.firstResult(jdbcTemplate.query(sqlAndParams.getSql(), sqlAndParams.getParams(), new CommonRowMapper<>(po.getClass())));
 			if(existPo == null){
 				return save(po);
 			}else{

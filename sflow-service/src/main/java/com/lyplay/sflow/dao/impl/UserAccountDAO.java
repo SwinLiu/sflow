@@ -16,25 +16,25 @@ public class UserAccountDAO extends BaseDAO<UserAccount> implements IUserAccount
 	@Override
 	public String getIdByPhone(String phone) {
 		String sql = String.format(" select id from %s where phone = ? ",userAccount.getTableName());
-		return ResultUtil.getFrist(this.getJdbcTemplate().queryForList(sql, String.class, phone));
+		return ResultUtil.firstResult(this.getJdbcTemplate().queryForList(sql, String.class, phone));
 	}
 
 	@Override
 	public String getIdByEmail(String email) {
 		String sql = String.format(" select id from %s where email = ? ",userAccount.getTableName());
-		return ResultUtil.getFrist(this.getJdbcTemplate().queryForList(sql, String.class, email));
+		return ResultUtil.firstResult(this.getJdbcTemplate().queryForList(sql, String.class, email));
 	}
 
 	@Override
 	public String getIdByUserName(String userName) {
 		String sql = String.format(" select id from %s where user_name = ? ",userAccount.getTableName());
-		return ResultUtil.getFrist(this.getJdbcTemplate().queryForList(sql, String.class, userName));
+		return ResultUtil.firstResult(this.getJdbcTemplate().queryForList(sql, String.class, userName));
 	}
 
 	@Override
 	public UserAccount get(String id) {
 		String sql = String.format(" select %s from %s where id = ? ",userAccount.getColumns(),userAccount.getTableName());
-		return ResultUtil.getFrist(this.getJdbcTemplate().query(sql, userAccount.getRowMapper(), id));
+		return ResultUtil.firstResult(this.getJdbcTemplate().query(sql, userAccount.getRowMapper(), id));
 	}
 
 	@Override
